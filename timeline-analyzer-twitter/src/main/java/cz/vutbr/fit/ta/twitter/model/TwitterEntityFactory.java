@@ -6,7 +6,9 @@
 package cz.vutbr.fit.ta.twitter.model;
 
 import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 
+import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Content;
 import cz.vutbr.fit.ta.ontology.Entry;
 import cz.vutbr.fit.ta.ontology.Image;
@@ -20,11 +22,21 @@ import cz.vutbr.fit.ta.ontology.Timeline;
  */
 public class TwitterEntityFactory implements TAFactory
 {
+    private static final TwitterEntityFactory instance = new TwitterEntityFactory();
+    
+    public static TwitterEntityFactory getInstance()
+    {
+        return instance;
+    }
+    
+    protected TwitterEntityFactory()
+    {
+    }
 
     @Override
     public Content createContent(IRI iri)
     {
-        return null;
+        return null; //content is never created, use sublcasses
     }
 
     @Override
@@ -45,10 +57,20 @@ public class TwitterEntityFactory implements TAFactory
         return new TwitterEntry(iri);
     }
 
+    public Entry createEntry(long statusId)
+    {
+        return createEntry(ResourceFactory.createResourceIRI("twitter", "entry", String.valueOf(statusId)));
+    }
+    
     @Override
     public Timeline createTimeline(IRI iri)
     {
         return new TwitterTimeline(iri);
+    }
+    
+    public Timeline createTimeline(String username)
+    {
+        return createTimeline(ResourceFactory.createResourceIRI("twitter", "timeline", username));
     }
 
 }
