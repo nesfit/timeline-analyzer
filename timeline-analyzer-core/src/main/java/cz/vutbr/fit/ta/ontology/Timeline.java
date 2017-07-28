@@ -29,6 +29,10 @@ abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntit
 		return sourceId;
 	}
 
+	public void setSourceId(String sourceId) {
+		this.sourceId = sourceId;
+	}
+
 	@Override
 	public void addToModel(Model model) {
 		addValue(model, TA.sourceId, sourceId);

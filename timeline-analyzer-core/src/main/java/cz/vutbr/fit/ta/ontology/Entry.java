@@ -46,20 +46,28 @@ abstract public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 		return sourceTimeline;
 	}
 
-	public Set<Content> getContains() {
-		return contains;
+	public void setSourceTimeline(Timeline sourceTimeline) {
+		this.sourceTimeline = sourceTimeline;
 	}
 
-	public void setContains(Set<Content> contains) {
-		this.contains = contains;
+	public Set<Content> getContains() {
+		return contains;
 	}
 
 	public String getSourceId() {
 		return sourceId;
 	}
 
+	public void setSourceId(String sourceId) {
+		this.sourceId = sourceId;
+	}
+
 	public java.util.Date getTimestamp() {
 		return timestamp;
+	}
+
+	public void setTimestamp(java.util.Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@Override
