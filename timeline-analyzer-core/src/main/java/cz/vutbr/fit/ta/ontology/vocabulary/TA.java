@@ -1,4 +1,4 @@
-package cz.vutbr.fit.ta.ontology;
+package cz.vutbr.fit.ta.ontology.vocabulary;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.ValueFactory;
@@ -20,6 +20,13 @@ public class TA {
 
 	/** {@code ta} **/
 	public static final String PREFIX = "ta";
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#contains}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#contains">contains</a>
+	 */
+	public static final IRI contains;
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#Content}.
@@ -49,6 +56,15 @@ public class TA {
 	public static final IRI Image;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#sourceId}.
+	 * <p>
+	 * An identifier of the entry in the source timeline (e.g. Twitter id)
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sourceId">sourceId</a>
+	 */
+	public static final IRI sourceId;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#sourceTimeline}.
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">sourceTimeline</a>
@@ -73,15 +89,25 @@ public class TA {
 	 */
 	public static final IRI Timeline;
 
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#timestamp}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#timestamp">timestamp</a>
+	 */
+	public static final IRI timestamp;
+
 	static {
 		ValueFactory factory = SimpleValueFactory.getInstance();
 
+		contains = factory.createIRI(TA.NAMESPACE, "contains");
 		Content = factory.createIRI(TA.NAMESPACE, "Content");
 		Entry = factory.createIRI(TA.NAMESPACE, "Entry");
 		Image = factory.createIRI(TA.NAMESPACE, "Image");
+		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");
 		sourceTimeline = factory.createIRI(TA.NAMESPACE, "sourceTimeline");
 		TextContent = factory.createIRI(TA.NAMESPACE, "TextContent");
 		Timeline = factory.createIRI(TA.NAMESPACE, "Timeline");
+		timestamp = factory.createIRI(TA.NAMESPACE, "timestamp");
 	}
 
 	private TA() {
