@@ -45,10 +45,20 @@ public class TwitterEntityFactory implements TAFactory
         return new TwitterTextContent(iri);
     }
 
+    public TextContent createTextContent(long statusId)
+    {
+        return createTextContent(ResourceFactory.createResourceIRI("twitter", "entryText", String.valueOf(statusId)));
+    }
+    
     @Override
     public Image createImage(IRI iri)
     {
         return new TwitterImage(iri);
+    }
+    
+    public Image createImage(long imageId)
+    {
+        return createImage(ResourceFactory.createResourceIRI("twitter", "image", String.valueOf(imageId)));
     }
 
     @Override

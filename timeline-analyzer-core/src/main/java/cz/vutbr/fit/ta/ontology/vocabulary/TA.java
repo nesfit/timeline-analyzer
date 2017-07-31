@@ -72,6 +72,15 @@ public class TA {
 	public static final IRI sourceTimeline;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#sourceUrl}.
+	 * <p>
+	 * Source URL of the media.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sourceUrl">sourceUrl</a>
+	 */
+	public static final IRI sourceUrl;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#TextContent}.
 	 * <p>
 	 * Text contained in an entry.
@@ -91,6 +100,8 @@ public class TA {
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#timestamp}.
+	 * <p>
+	 * Entry creation timestamp
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#timestamp">timestamp</a>
 	 */
@@ -105,6 +116,7 @@ public class TA {
 		Image = factory.createIRI(TA.NAMESPACE, "Image");
 		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");
 		sourceTimeline = factory.createIRI(TA.NAMESPACE, "sourceTimeline");
+		sourceUrl = factory.createIRI(TA.NAMESPACE, "sourceUrl");
 		TextContent = factory.createIRI(TA.NAMESPACE, "TextContent");
 		Timeline = factory.createIRI(TA.NAMESPACE, "Timeline");
 		timestamp = factory.createIRI(TA.NAMESPACE, "timestamp");

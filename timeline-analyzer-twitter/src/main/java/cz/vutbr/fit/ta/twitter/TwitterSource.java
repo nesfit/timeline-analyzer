@@ -9,6 +9,8 @@ import java.util.List;
 
 import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.ontology.Entry;
+import cz.vutbr.fit.ta.ontology.Image;
+import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.twitter.model.TwitterEntityFactory;
 import twitter4j.MediaEntity;
@@ -66,7 +68,28 @@ public class TwitterSource extends TimelineSource
             entry.setSourceId(String.valueOf(status.getId()));
             entry.setTimestamp(status.getCreatedAt());
             timeline.addEntry(entry);
-            //TODO add media and text
+            
+            //text
+            if (status.getText() != null)
+            {
+                TextContent tc = ef.createTextContent(status.getId());
+                entry.getContains().add(tc);
+            }
+            //images
+            MediaEntity[] media = status.getMediaEntities();
+            if (media != null)
+            {
+                for (MediaEntity entity : media)
+                {
+                    if (entity.getType().equals("photo"))
+                    {
+                        Image img = ef.createImage(entity.getId());
+                        img.setSourceUrl(entity.getMediaURL());
+                    }
+                }
+            }
+            
+            
         }
         
         return timeline;

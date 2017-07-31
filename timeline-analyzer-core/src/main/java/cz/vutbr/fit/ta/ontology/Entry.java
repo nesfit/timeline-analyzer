@@ -33,6 +33,8 @@ abstract public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 	private String sourceId;
 
 	/**
+	 * Entry creation timestamp.
+	 * <p>
 	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#timestamp>}
 	 */
 	private java.util.Date timestamp;

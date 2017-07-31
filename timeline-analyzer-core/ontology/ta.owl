@@ -67,12 +67,24 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#sourceUrl -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sourceUrl">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Image"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Source URL of the media.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#timestamp -->
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#timestamp">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Entry"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:comment>Entry creation timestamp</rdfs:comment>
     </owl:DatatypeProperty>
     
 
