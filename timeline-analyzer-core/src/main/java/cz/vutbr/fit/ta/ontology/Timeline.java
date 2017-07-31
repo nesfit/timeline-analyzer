@@ -1,5 +1,7 @@
 package cz.vutbr.fit.ta.ontology;
 
+import java.util.Set;
+import java.util.HashSet;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
@@ -20,6 +22,9 @@ abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntit
 	 */
 	private String sourceId;
 
+	/** Inverse collection for Entry.sourceTimeline. */
+	private Set<Entry> entries;
+
 
 	public Timeline(IRI iri) {
 		super(iri);
@@ -33,6 +38,16 @@ abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntit
 		this.sourceId = sourceId;
 	}
 
+	public Set<Entry> getEntries() {
+		return (entries == null) ? java.util.Collections.emptySet() : entries;
+	}
+
+	public void addEntry(Entry entry) {
+		if (entries == null) entries = new HashSet<>();
+		entries.add(entry);
+		entry.setSourceTimeline(this);
+	}
+
 	@Override
 	public void addToModel(Model model) {
 		addValue(model, TA.sourceId, sourceId);
@@ -40,6 +55,10 @@ abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntit
 
 	@Override
 	public void loadFromModel(Model model, EntityFactory efactory) {
+		if (!(efactory instanceof TAFactory))
+			throw new IllegalArgumentException("factory must be instance of TAFactory");
+		final TAFactory factory = (TAFactory) efactory;
+
 		final Model m = model.filter(getIRI(), null, null);
 		sourceId = loadStringValue(m, TA.sourceId);
 	}

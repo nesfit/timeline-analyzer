@@ -65,7 +65,7 @@ public class TwitterSource extends TimelineSource
             Entry entry = ef.createEntry(status.getId());
             entry.setSourceId(String.valueOf(status.getId()));
             entry.setTimestamp(status.getCreatedAt());
-            //TODO add to timeline
+            timeline.addEntry(entry);
             //TODO add media and text
         }
         
