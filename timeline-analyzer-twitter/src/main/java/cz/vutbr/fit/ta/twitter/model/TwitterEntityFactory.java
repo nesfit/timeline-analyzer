@@ -6,15 +6,16 @@
 package cz.vutbr.fit.ta.twitter.model;
 
 import org.eclipse.rdf4j.model.IRI;
-import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 
 import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Content;
 import cz.vutbr.fit.ta.ontology.Entry;
+import cz.vutbr.fit.ta.ontology.GeoContent;
 import cz.vutbr.fit.ta.ontology.Image;
 import cz.vutbr.fit.ta.ontology.TAFactory;
 import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
+import cz.vutbr.fit.ta.ontology.URLContent;
 
 /**
  * 
@@ -81,6 +82,28 @@ public class TwitterEntityFactory implements TAFactory
     public Timeline createTimeline(String username)
     {
         return createTimeline(ResourceFactory.createResourceIRI("twitter", "timeline", username));
+    }
+
+    @Override
+    public GeoContent createGeoContent(IRI iri)
+    {
+        return new TwitterGeoContent(iri);
+    }
+
+    public GeoContent createGeoContent(long statusId)
+    {
+        return new TwitterGeoContent(ResourceFactory.createResourceIRI("twitter", "geo", String.valueOf(statusId)));
+    }
+
+    @Override
+    public URLContent createURLContent(IRI iri)
+    {
+        return new TwitterURLContent(iri);
+    }
+
+    public URLContent createURLContent(long statusId, int position)
+    {
+        return new TwitterURLContent(ResourceFactory.createResourceIRI("twitter", "url", statusId + "-" + position));
     }
 
 }

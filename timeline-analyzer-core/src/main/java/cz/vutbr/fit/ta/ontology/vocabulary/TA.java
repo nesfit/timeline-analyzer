@@ -47,6 +47,13 @@ public class TA {
 	public static final IRI Entry;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#GeoContent}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#GeoContent">GeoContent</a>
+	 */
+	public static final IRI GeoContent;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#Image}.
 	 * <p>
 	 * An image contained in an entry.
@@ -54,6 +61,20 @@ public class TA {
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#Image">Image</a>
 	 */
 	public static final IRI Image;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#latitude}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#latitude">latitude</a>
+	 */
+	public static final IRI latitude;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#longitude}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#longitude">longitude</a>
+	 */
+	public static final IRI longitude;
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#sourceId}.
@@ -79,6 +100,13 @@ public class TA {
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sourceUrl">sourceUrl</a>
 	 */
 	public static final IRI sourceUrl;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#text}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#text">text</a>
+	 */
+	public static final IRI text;
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#TextContent}.
@@ -107,19 +135,31 @@ public class TA {
 	 */
 	public static final IRI timestamp;
 
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#URLContent}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#URLContent">URLContent</a>
+	 */
+	public static final IRI URLContent;
+
 	static {
 		ValueFactory factory = SimpleValueFactory.getInstance();
 
 		contains = factory.createIRI(TA.NAMESPACE, "contains");
 		Content = factory.createIRI(TA.NAMESPACE, "Content");
 		Entry = factory.createIRI(TA.NAMESPACE, "Entry");
+		GeoContent = factory.createIRI(TA.NAMESPACE, "GeoContent");
 		Image = factory.createIRI(TA.NAMESPACE, "Image");
+		latitude = factory.createIRI(TA.NAMESPACE, "latitude");
+		longitude = factory.createIRI(TA.NAMESPACE, "longitude");
 		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");
 		sourceTimeline = factory.createIRI(TA.NAMESPACE, "sourceTimeline");
 		sourceUrl = factory.createIRI(TA.NAMESPACE, "sourceUrl");
+		text = factory.createIRI(TA.NAMESPACE, "text");
 		TextContent = factory.createIRI(TA.NAMESPACE, "TextContent");
 		Timeline = factory.createIRI(TA.NAMESPACE, "Timeline");
 		timestamp = factory.createIRI(TA.NAMESPACE, "timestamp");
+		URLContent = factory.createIRI(TA.NAMESPACE, "URLContent");
 	}
 
 	private TA() {

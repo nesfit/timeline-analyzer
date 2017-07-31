@@ -9,16 +9,20 @@ import java.util.List;
 
 import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.ontology.Entry;
+import cz.vutbr.fit.ta.ontology.GeoContent;
 import cz.vutbr.fit.ta.ontology.Image;
 import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
+import cz.vutbr.fit.ta.ontology.URLContent;
 import cz.vutbr.fit.ta.twitter.model.TwitterEntityFactory;
+import twitter4j.GeoLocation;
 import twitter4j.MediaEntity;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.URLEntity;
 import twitter4j.User;
 
 /**
@@ -85,10 +89,30 @@ public class TwitterSource extends TimelineSource
                     {
                         Image img = ef.createImage(entity.getId());
                         img.setSourceUrl(entity.getMediaURL());
+                        entry.getContains().add(img);
                     }
                 }
             }
-            
+            //URLs
+            URLEntity[] urls = status.getURLEntities();
+            if (urls != null)
+            {
+                for (URLEntity entity : urls)
+                {
+                    URLContent url = ef.createURLContent(status.getId(), entity.getStart());
+                    url.setSourceUrl(entity.getURL());
+                    url.setText(entity.getText());
+                }
+            }
+            //GEO entries
+            GeoLocation loc = status.getGeoLocation();
+            if (loc != null)
+            {
+                GeoContent geo = ef.createGeoContent(status.getId());
+                geo.setLatitude(loc.getLatitude());
+                geo.setLongitude(loc.getLongitude());
+                entry.getContains().add(geo);
+            }
             
         }
         

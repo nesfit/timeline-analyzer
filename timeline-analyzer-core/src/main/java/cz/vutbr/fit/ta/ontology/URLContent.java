@@ -5,21 +5,26 @@ import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 /**
- * Text contained in an entry..
- * <p>
- * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#TextContent>}
+ * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#URLContent>}
  */
-abstract public class TextContent extends Content
+abstract public class URLContent extends Content
 {
-	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#TextContent");
+	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#URLContent");
 
 	/**
 	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#text>}
 	 */
 	private String text;
 
+	/**
+	 * Source URL of the media..
+	 * <p>
+	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#sourceUrl>}
+	 */
+	private String sourceUrl;
 
-	public TextContent(IRI iri) {
+
+	public URLContent(IRI iri) {
 		super(iri);
 	}
 
@@ -31,14 +36,24 @@ abstract public class TextContent extends Content
 		this.text = text;
 	}
 
+	public String getSourceUrl() {
+		return sourceUrl;
+	}
+
+	public void setSourceUrl(String sourceUrl) {
+		this.sourceUrl = sourceUrl;
+	}
+
 	@Override
 	public void addToModel(Model model) {
 		addValue(model, TA.text, text);
+		addValue(model, TA.sourceUrl, sourceUrl);
 	}
 
 	@Override
 	public void loadFromModel(Model model, EntityFactory efactory) {
 		final Model m = model.filter(getIRI(), null, null);
 		text = loadStringValue(m, TA.text);
+		sourceUrl = loadStringValue(m, TA.sourceUrl);
 	}
 }

@@ -55,6 +55,26 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#latitude -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#latitude">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#GeoContent"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://nesfit.github.io/ontology/ta.owl#longitude -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#longitude">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#GeoContent"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#sourceId -->
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sourceId">
@@ -72,8 +92,20 @@
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sourceUrl">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Image"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#URLContent"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>Source URL of the media.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://nesfit.github.io/ontology/ta.owl#text -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#text">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#TextContent"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#URLContent"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
 
@@ -116,6 +148,14 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#GeoContent -->
+
+    <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#GeoContent">
+        <rdfs:subClassOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#Content"/>
+    </owl:Class>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#Image -->
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Image">
@@ -138,6 +178,14 @@
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Timeline">
         <rdfs:comment>A sequence of entries displayed in a signle time line.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://nesfit.github.io/ontology/ta.owl#URLContent -->
+
+    <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#URLContent">
+        <rdfs:subClassOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#Content"/>
     </owl:Class>
 </rdf:RDF>
 
