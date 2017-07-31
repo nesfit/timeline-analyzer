@@ -39,7 +39,7 @@ abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntit
 	}
 
 	public Set<Entry> getEntries() {
-		return (entries == null) ? java.util.Collections.emptySet() : entries;
+		return (entries == null) ? new HashSet<>() : entries;
 	}
 
 	public void addEntry(Entry entry) {

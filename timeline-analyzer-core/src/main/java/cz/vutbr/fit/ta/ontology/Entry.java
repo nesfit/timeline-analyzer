@@ -42,6 +42,7 @@ abstract public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 
 	public Entry(IRI iri) {
 		super(iri);
+		contains = new HashSet<Content>();
 	}
 
 	public Timeline getSourceTimeline() {

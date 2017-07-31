@@ -65,6 +65,7 @@ public class TwitterSource extends TimelineSource
     {
         final TwitterEntityFactory ef = TwitterEntityFactory.getInstance(); 
         Timeline timeline = ef.createTimeline(username);
+        timeline.setSourceId(username);
         
         for (Status status : statuses)
         {
