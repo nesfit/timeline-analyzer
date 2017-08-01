@@ -11,7 +11,7 @@ import cz.vutbr.fit.ta.ontology.vocabulary.TA;
  * <p>
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#Timeline>}
  */
-abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntity
+public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntity
 {
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#Timeline");
 
@@ -28,6 +28,11 @@ abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntit
 
 	public Timeline(IRI iri) {
 		super(iri);
+	}
+
+	@Override
+	public IRI getClassIRI() {
+		return Timeline.CLASS_IRI;
 	}
 
 	public String getSourceId() {
@@ -50,11 +55,13 @@ abstract public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntit
 
 	@Override
 	public void addToModel(Model model) {
+		super.addToModel(model);
 		addValue(model, TA.sourceId, sourceId);
 	}
 
 	@Override
 	public void loadFromModel(Model model, EntityFactory efactory) {
+		super.loadFromModel(model, efactory);
 		if (!(efactory instanceof TAFactory))
 			throw new IllegalArgumentException("factory must be instance of TAFactory");
 		final TAFactory factory = (TAFactory) efactory;

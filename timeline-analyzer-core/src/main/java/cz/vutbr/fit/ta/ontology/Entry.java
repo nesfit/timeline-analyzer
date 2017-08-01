@@ -11,7 +11,7 @@ import cz.vutbr.fit.ta.ontology.vocabulary.TA;
  * <p>
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#Entry>}
  */
-abstract public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
+public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 {
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#Entry");
 
@@ -45,6 +45,11 @@ abstract public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 		contains = new HashSet<Content>();
 	}
 
+	@Override
+	public IRI getClassIRI() {
+		return Entry.CLASS_IRI;
+	}
+
 	public Timeline getSourceTimeline() {
 		return sourceTimeline;
 	}
@@ -75,6 +80,7 @@ abstract public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 
 	@Override
 	public void addToModel(Model model) {
+		super.addToModel(model);
 		addObject(model, TA.sourceTimeline, sourceTimeline);
 		addCollection(model, TA.contains, contains);
 		addValue(model, TA.sourceId, sourceId);
@@ -83,6 +89,7 @@ abstract public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 
 	@Override
 	public void loadFromModel(Model model, EntityFactory efactory) {
+		super.loadFromModel(model, efactory);
 		if (!(efactory instanceof TAFactory))
 			throw new IllegalArgumentException("factory must be instance of TAFactory");
 		final TAFactory factory = (TAFactory) efactory;

@@ -7,7 +7,7 @@ import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 /**
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#GeoContent>}
  */
-abstract public class GeoContent extends Content
+public class GeoContent extends Content
 {
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#GeoContent");
 
@@ -24,6 +24,11 @@ abstract public class GeoContent extends Content
 
 	public GeoContent(IRI iri) {
 		super(iri);
+	}
+
+	@Override
+	public IRI getClassIRI() {
+		return GeoContent.CLASS_IRI;
 	}
 
 	public double getLatitude() {
@@ -44,12 +49,14 @@ abstract public class GeoContent extends Content
 
 	@Override
 	public void addToModel(Model model) {
+		super.addToModel(model);
 		addValue(model, TA.latitude, latitude);
 		addValue(model, TA.longitude, longitude);
 	}
 
 	@Override
 	public void loadFromModel(Model model, EntityFactory efactory) {
+		super.loadFromModel(model, efactory);
 		final Model m = model.filter(getIRI(), null, null);
 		latitude = loadDoubleValue(m, TA.latitude);
 		longitude = loadDoubleValue(m, TA.longitude);

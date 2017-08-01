@@ -22,10 +22,9 @@ public class TwitterTimeline extends Timeline
     }
 
     @Override
-    public IRI createIRI()
+    public String getLabel()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "@" + getSourceId();
     }
-
+    
 }

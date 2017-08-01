@@ -21,11 +21,4 @@ public class TwitterGeoContent extends GeoContent
         super(iri);
     }
 
-    @Override
-    public IRI createIRI()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }

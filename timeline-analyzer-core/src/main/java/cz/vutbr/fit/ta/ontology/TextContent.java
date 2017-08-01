@@ -9,7 +9,7 @@ import cz.vutbr.fit.ta.ontology.vocabulary.TA;
  * <p>
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#TextContent>}
  */
-abstract public class TextContent extends Content
+public class TextContent extends Content
 {
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#TextContent");
 
@@ -23,6 +23,11 @@ abstract public class TextContent extends Content
 		super(iri);
 	}
 
+	@Override
+	public IRI getClassIRI() {
+		return TextContent.CLASS_IRI;
+	}
+
 	public String getText() {
 		return text;
 	}
@@ -33,11 +38,13 @@ abstract public class TextContent extends Content
 
 	@Override
 	public void addToModel(Model model) {
+		super.addToModel(model);
 		addValue(model, TA.text, text);
 	}
 
 	@Override
 	public void loadFromModel(Model model, EntityFactory efactory) {
+		super.loadFromModel(model, efactory);
 		final Model m = model.filter(getIRI(), null, null);
 		text = loadStringValue(m, TA.text);
 	}

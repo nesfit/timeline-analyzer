@@ -21,11 +21,4 @@ public class TwitterEntry extends Entry
         super(iri);
     }
 
-    @Override
-    public IRI createIRI()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }
