@@ -57,6 +57,7 @@ public class Timeline extends com.github.radkovo.rdf4j.builder.RDFEntity
 	public void addToModel(Model model) {
 		super.addToModel(model);
 		addValue(model, TA.sourceId, sourceId);
+		addCollectionData(model, entries);
 	}
 
 	@Override

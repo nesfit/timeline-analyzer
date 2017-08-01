@@ -78,6 +78,7 @@ public class TwitterSource extends TimelineSource
             if (status.getText() != null)
             {
                 TextContent tc = ef.createTextContent(status.getId());
+                tc.setText(status.getText());
                 entry.getContains().add(tc);
             }
             //images

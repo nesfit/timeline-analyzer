@@ -82,7 +82,7 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 	public void addToModel(Model model) {
 		super.addToModel(model);
 		addObject(model, TA.sourceTimeline, sourceTimeline);
-		addCollection(model, TA.contains, contains);
+		addCollectionWithData(model, TA.contains, contains);
 		addValue(model, TA.sourceId, sourceId);
 		addValue(model, TA.timestamp, timestamp);
 	}
