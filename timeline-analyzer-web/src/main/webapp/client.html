@@ -17,7 +17,14 @@
 
 <script type="text/javascript">
 
-var rdf = new RDFClient("http://localhost:8080/rdf4j-server", "test");
+var ns = {
+	DEFAULT: 'http://nesfit.github.io/ontology/ta.owl#',
+	rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+	rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+	tares: 'http://nesfit.github.io/resource/ta#'
+};
+
+var rdf = new RDFClient("http://localhost:8080/rdf4j-server", "test", ns);
 if (rdf.checkConnection())
 	document.write('Connection OK');
 else

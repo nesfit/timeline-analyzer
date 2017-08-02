@@ -10,9 +10,10 @@
 /**
  * Creates a new RDF client.
  */
-var RDFClient = function(serverUrl, repositoryName) {
+var RDFClient = function(serverUrl, repositoryName, namespaces) {
 	this.url = serverUrl;
 	this.repo = repositoryName;
+	this.ns = namespaces;
 };
 
 /**
@@ -48,14 +49,53 @@ RDFClient.prototype.sendQuery = function(query, success, error = null) {
 	    },
 	    async: true,
 	    success: function(data) {
-	    	success(client.parseResponse(data));
+	    	success(client.parseResponseObjects(data));
 	    },
 	    error: error
 	});			
 };
 
-RDFClient.prototype.parseResponse = function(data) {
-	return data; //TODO
+/**
+ * Parses the RDF4J server response and creates a set of object with the given properties.
+ */
+RDFClient.prototype.parseResponseObjects = function(data) {
+	var ret = {};
+	var bindings = data.results.bindings;
+	for (var i = 0; i < bindings.length; i++) {
+		var item = bindings[i];
+		if (item.s.type == 'uri') { //process only URI subjects
+			var subject = item.s.value;
+			var property = this.getPropertyName(item.p.value);
+			var value;
+			if (item.o.type == 'uri')
+				value = { uri: item.o.value };
+			else
+				value = item.o.value;
+			
+			if (ret[subject] === undefined)
+				ret[subject] = {};
+			ret[subject][property] = value;
+		}
+	}
+	return ret;
 };
 
-
+/**
+ * Computes an object property name from the property URI according to the currently
+ * configured namespaces.
+ */
+RDFClient.prototype.getPropertyName = function(uri) {
+	for (var ns in this.ns) {
+		if (this.ns.hasOwnProperty(ns)) {
+			var prefix = this.ns[ns];
+			if (uri.startsWith(prefix)) {
+				var name = uri.substring(prefix.length);
+				if (ns == 'DEFAULT')
+					return name;
+				else
+					return ns + '_' + name;
+			}
+		}
+	}
+	return uri;
+}
