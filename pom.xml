@@ -41,6 +41,7 @@
 	<modules>
 		<module>timeline-analyzer-core</module>
 		<module>timeline-analyzer-twitter</module>
+		<module>timeline-analyzer-web</module>
 	</modules>
 	
 	<dependencies>

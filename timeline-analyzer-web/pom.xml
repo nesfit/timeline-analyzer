@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cz.vutbr.fit.tarzan</groupId>
+		<artifactId>timeline-analyzer</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>timeline-analyzer-web</artifactId>
+	<packaging>war</packaging>
+	<name>Timeline Analyzer Web Client</name>
+	<url></url>
+	
+	<build>
+		<finalName>timeline-analyzer-web</finalName>
+	</build>
+	<dependencies>
+	</dependencies>
+	
+</project>
