@@ -83,6 +83,21 @@ RDFClient.prototype.getObjectsWhere = function(where, success, error = null) {
 }
 
 /**
+ * Loads a single object with the given IRI.
+ */
+RDFClient.prototype.getObject = function(iri) {
+	var client = this;
+	return new Promise(function(resolve, reject) {
+		var p = client.getObjectsWhere('FILTER (?s = <' + iri + '>)');
+		p.then(function(objects) {
+			resolve(objects[iri]);
+		}).catch(function(reason) {
+			reject(reason);
+		});
+	});
+}
+
+/**
  * Parses the RDF4J server response and creates a set of object with the given properties.
  */
 RDFClient.prototype.parseResponseObjects = function(data) {
@@ -107,6 +122,9 @@ RDFClient.prototype.parseResponseObjects = function(data) {
 	return ret;
 };
 
+/**
+ * Generates the SPARQL prefix string based on the registered namespaces.
+ */
 RDFClient.prototype.getPrefixes = function() {
 	var ret = '';
 	for (var ns in this.ns) {

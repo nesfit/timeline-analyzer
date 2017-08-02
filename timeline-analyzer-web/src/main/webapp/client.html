@@ -41,6 +41,10 @@ ta.getTimelines().then(function(timelines) {
 			
 			ta.getEntries(timeline).then(function(entries) {
 				console.log(entries);
+				var u = 'http://nesfit.github.io/resource/ta#twitter-entry-892092223021617155';
+				console.log(entries[u]);
+				ta.loadEntry(entries[u]);
+				console.log(entries[u]);
 			});
 			
 		}

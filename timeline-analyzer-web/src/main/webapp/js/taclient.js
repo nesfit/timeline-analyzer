@@ -28,5 +28,13 @@ TAClient.prototype.getTimelines = function() {
 
 TAClient.prototype.getEntries = function(timelineUri) {
 	return this.client.getObjectsWhere('?s rdf:type ta:Entry . ?s ta:sourceTimeline <' + timelineUri + '>');
-}
+};
 
+TAClient.prototype.loadEntry = function(entry) {
+	for (prop in entry) {
+		if (entry.hasOwnProperty(prop) && typeof entry[prop] === 'object' && entry[prop].uri !== undefined) {
+			var uri = entry[prop].uri;
+			entry[prop] = this.client.getObject(uri);
+		}
+	}
+};
