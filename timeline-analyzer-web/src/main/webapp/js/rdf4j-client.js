@@ -14,7 +14,12 @@ var RDFClient = function(serverUrl, repositoryName, namespaces) {
 	this.url = serverUrl;
 	this.repo = repositoryName;
 	this.ns = namespaces;
+	this.defaultNS = 'rdf';
 };
+
+RDFClient.prototype.setDefaultNamespace = function(ns) {
+	this.defaultNS = ns;
+}
 
 /**
  * Checks the connection to the RDF4J server.
@@ -37,7 +42,6 @@ RDFClient.prototype.checkConnection = function() {
  * Executes a query on the server.
  */
 RDFClient.prototype.sendQuery = function(query, success, error = null) {
-	var client = this;
 	$.ajax({
 	    url: this.url + '/repositories/' + this.repo,
 	    type: 'POST',
@@ -49,11 +53,27 @@ RDFClient.prototype.sendQuery = function(query, success, error = null) {
 	    },
 	    async: true,
 	    success: function(data) {
-	    	success(client.parseResponseObjects(data));
+	    	success(data);
 	    },
 	    error: error
 	});			
 };
+
+/**
+ * Executes a query on the server.
+ */
+RDFClient.prototype.getObjectsWhere = function(where, success, error = null) {
+	var client = this;
+	var w = '?s ?p ?o';
+	if (where)
+		w += ' . ' + where;
+	var query = this.getPrefixes() + 'SELECT ?s ?p ?o WHERE {' + w + '}';
+	console.log('Q: ' + query);
+	this.sendQuery(query, function(data) {
+			success(client.parseResponseObjects(data));
+		},
+		error);
+}
 
 /**
  * Parses the RDF4J server response and creates a set of object with the given properties.
@@ -80,6 +100,17 @@ RDFClient.prototype.parseResponseObjects = function(data) {
 	return ret;
 };
 
+RDFClient.prototype.getPrefixes = function() {
+	var ret = '';
+	for (var ns in this.ns) {
+		if (this.ns.hasOwnProperty(ns)) {
+			console.log('prefix ' + ns)
+			ret += 'PREFIX ' + ns + ': <' + this.ns[ns] + '>\n';
+		}
+	}
+	return ret;
+}
+
 /**
  * Computes an object property name from the property URI according to the currently
  * configured namespaces.
@@ -90,7 +121,7 @@ RDFClient.prototype.getPropertyName = function(uri) {
 			var prefix = this.ns[ns];
 			if (uri.startsWith(prefix)) {
 				var name = uri.substring(prefix.length);
-				if (ns == 'DEFAULT')
+				if (ns == this.defaultNS)
 					return name;
 				else
 					return ns + '_' + name;
@@ -98,4 +129,4 @@ RDFClient.prototype.getPropertyName = function(uri) {
 		}
 	}
 	return uri;
-}
+};
