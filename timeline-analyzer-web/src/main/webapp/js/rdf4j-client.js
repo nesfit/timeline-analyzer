@@ -41,22 +41,25 @@ RDFClient.prototype.checkConnection = function() {
 /**
  * Executes a query on the server.
  */
-RDFClient.prototype.sendQuery = function(query, success, error = null) {
-	$.ajax({
-	    url: this.url + '/repositories/' + this.repo,
-	    type: 'POST',
-	    data: query,
-	    contentType: 'application/sparql-query',
-	    dataType: 'json',
-	    headrs: {
-	    	Accept: 'application/sparql-results+json'
-	    },
-	    async: true,
-	    success: function(data) {
-	    	success(data);
-	    },
-	    error: error
-	});			
+RDFClient.prototype.sendQuery = function(query) {
+	var client = this;
+	return new Promise(function(resolve, reject) {
+		$.ajax({
+		    url: client.url + '/repositories/' + client.repo,
+		    type: 'POST',
+		    data: query,
+		    contentType: 'application/sparql-query',
+		    dataType: 'json',
+		    headrs: {
+		    	Accept: 'application/sparql-results+json'
+		    },
+		    async: true,
+		    success: function(data) {
+		    	resolve(data);
+		    },
+		    error: reject
+		});
+	});
 };
 
 /**
@@ -69,10 +72,14 @@ RDFClient.prototype.getObjectsWhere = function(where, success, error = null) {
 		w += ' . ' + where;
 	var query = this.getPrefixes() + 'SELECT ?s ?p ?o WHERE {' + w + '}';
 	console.log('Q: ' + query);
-	this.sendQuery(query, function(data) {
-			success(client.parseResponseObjects(data));
-		},
-		error);
+	return new Promise(function(resolve, reject) {
+		var p = client.sendQuery(query);
+		p.then(function(data) {
+			resolve(client.parseResponseObjects(data));
+		}).catch(function(reason) {
+			reject(reason);
+		});
+	});
 }
 
 /**

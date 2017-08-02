@@ -25,12 +25,13 @@ if (rdf.checkConnection())
 else
 	document.write('Connection FAILED');
 
-rdf.getObjectsWhere('', function(data) {
+var p = rdf.getObjectsWhere('').then(function(data) {
 	console.log('got something: ' + data)
 	console.log(data);
 });
 
-ta.getTimelines(function(timelines) {
+
+ta.getTimelines().then(function(timelines) {
 	console.log('timelines: ' + timelines);
 	console.log(timelines);
 	
@@ -38,7 +39,7 @@ ta.getTimelines(function(timelines) {
 		if (timelines.hasOwnProperty(timeline)) {
 			console.log('TIMELINE: ' + timeline);
 			
-			ta.getEntries(timeline, function(entries) {
+			ta.getEntries(timeline).then(function(entries) {
 				console.log(entries);
 			});
 			

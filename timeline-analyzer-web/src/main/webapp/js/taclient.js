@@ -22,11 +22,11 @@ var TAClient = function(serverUrl, repositoryName) {
 	this.client.setDefaultNamespace('ta');
 };
 
-TAClient.prototype.getTimelines = function(done, error = null) {
-	return this.client.getObjectsWhere('?s rdf:type ta:Timeline', done, error);
+TAClient.prototype.getTimelines = function() {
+	return this.client.getObjectsWhere('?s rdf:type ta:Timeline');
 };
 
-TAClient.prototype.getEntries = function(timelineUri, done, error) {
-	return this.client.getObjectsWhere('?s rdf:type ta:Entry . ?s ta:sourceTimeline <' + timelineUri + '>', done, error);
+TAClient.prototype.getEntries = function(timelineUri) {
+	return this.client.getObjectsWhere('?s rdf:type ta:Entry . ?s ta:sourceTimeline <' + timelineUri + '>');
 }
 
