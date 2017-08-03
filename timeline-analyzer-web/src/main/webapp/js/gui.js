@@ -40,13 +40,37 @@ GUITimeline.prototype.initTimeline = function(timeline) {
 };
 
 GUITimeline.prototype.addEntries = function(entries) {
+	//console.log(entries);
 	for (var i = 0; i < entries.length; i++) {
 		this.addEntry(entries[i]);
 	}
 };
 
 GUITimeline.prototype.addEntry = function(entry) {
-	var elem = $('<div class="entry"><div>');
+	var elem = $('<div class="entry"><div>').attr('resource', entry.URI);
 	elem.append($('<div class="timestamp"></div>').text(entry.timestamp));
 	this.el.append(elem);
+	
+	Promise.all(TA.loadEntryContents(entry)).then(function(values) {
+		for (var i = 0; i < values.length; i++) {
+			var val = values[i];
+			var type = TA.client.getRDFObjectType(val);
+			
+			var div = $('<div class="content"></div>');
+			div.attr('resource', val.URI);
+			if (type == "TextContent") {
+				div.addClass('text');
+				div.text(values[i].text);
+				elem.append(div);
+			} else if (type == "Image") {
+				div.addClass('image');
+				div.append('<img src="' + values[i].sourceUrl + '" alt="">');
+				elem.append(div);
+			} else {
+				div.addClass('unknown');
+				elem.append($('<div class="content"></div>').text('Unknown ' + type));
+			}
+		}
+	});
+	
 }

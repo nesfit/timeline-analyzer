@@ -30,11 +30,17 @@ TAClient.prototype.getEntries = function(timelineUri) {
 	return this.client.getObjectArrayWhere('?s rdf:type ta:Entry . ?s ta:timestamp ?time . ?s ta:sourceTimeline <' + timelineUri + '>', 'ASC(?time)');
 };
 
-TAClient.prototype.loadEntry = function(entry) {
-	for (prop in entry) {
-		if (entry.hasOwnProperty(prop) && typeof entry[prop] === 'object' && entry[prop].uri !== undefined) {
-			var uri = entry[prop].uri;
-			entry[prop] = this.client.getObject(uri);
-		}
+/**
+ * Loads all the entry contents.
+ * @return a set of promises.
+ */
+TAClient.prototype.loadEntryContents = function(entry) {
+	var cont = entry.contains;
+	if (!Array.isArray(cont))
+		cont = [ cont ];
+	var promises = [];
+	for (var i = 0; i < cont.length; i++) {
+		promises[promises.length] = this.client.getObject(cont[i].uri);
 	}
+	return promises;
 };

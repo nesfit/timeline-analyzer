@@ -138,6 +138,7 @@ RDFClient.prototype.parseResponseObjects = function(data) {
 			else
 				value = item.o.value;
 			
+			//create a new object when it does not exist yet for the subject URI
 			if (ret[subject] === undefined) {
 				ret[subject] = { URI: subject };
 			}
@@ -165,11 +166,19 @@ RDFClient.prototype.parseResponseObjectsToArray = function(data) {
 			else
 				value = item.o.value;
 			
+			//create a new object when it does not exist yet for the subject URI
 			if (ret[subject] === undefined) {
 				ret[subject] = { URI: subject };
 				uris[uris.length] = subject;
 			}
-			ret[subject][property] = value;
+			//if there are more values for a single property, convert it to array
+			if(ret[subject][property] !== undefined) {
+				if (!Array.isArray(ret[subject][property])) //convert to array
+					ret[subject][property] = [ ret[subject][property] ];
+				ret[subject][property][ret[subject][property].length] = value;
+			} else {
+				ret[subject][property] = value; //a single value
+			}
 		}
 	}
 	//replace uris with the objects and return
@@ -210,4 +219,8 @@ RDFClient.prototype.getPropertyName = function(uri) {
 		}
 	}
 	return uri;
+};
+
+RDFClient.prototype.getRDFObjectType = function(obj) {
+	return this.getPropertyName(obj.rdf_type.uri);
 };
