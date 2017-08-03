@@ -114,8 +114,9 @@ RDFClient.prototype.parseResponseObjects = function(data) {
 			else
 				value = item.o.value;
 			
-			if (ret[subject] === undefined)
-				ret[subject] = {};
+			if (ret[subject] === undefined) {
+				ret[subject] = { URI: subject };
+			}
 			ret[subject][property] = value;
 		}
 	}
