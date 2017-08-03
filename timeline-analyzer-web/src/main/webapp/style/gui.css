@@ -1,6 +1,29 @@
 
 .timeline {
-	/*width: 30em;
-	min-height: 20em;
-	background: #eee;*/
+
+}
+
+.timeline .entry {
+	padding: 1.5em 0.3em;
+	border-bottom: 1px solid #ddd;
+}
+
+.timeline .entry .timestamp {
+	font-style: italic;
+}
+
+.timeline .entry .text {
+	font-size: 150%;
+}
+
+.timeline .entry .image {
+	background-color: #eef;
+	border: 1px solid #ddd;
+}
+
+.timeline .entry .image img {
+	width: 90%;
+	height: auto;
+	display: block;
+	margin: 1em auto 1em auto;
 }

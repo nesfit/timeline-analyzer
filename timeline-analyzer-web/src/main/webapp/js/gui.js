@@ -4,7 +4,7 @@
  */
 
 var createTimelineElement = function(parent) {
-	var ret = $('<div class="timeline panel panel-default"></div>');
+	var ret = $('<div class="timeline panel panel-primary"></div>');
 	parent.append(ret);
 	return ret;
 };
