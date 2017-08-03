@@ -64,8 +64,30 @@ RDFClient.prototype.sendQuery = function(query) {
 
 /**
  * Executes a query on the server.
+ * @return an object that maps subject URIs to loaded objects.
  */
-RDFClient.prototype.getObjectsWhere = function(where, order = null) {
+RDFClient.prototype.getObjectsWhere = function(where) {
+	var client = this;
+	var w = '?s ?p ?o';
+	if (where)
+		w += ' . ' + where;
+	var query = this.getPrefixes() + 'SELECT ?s ?p ?o WHERE {' + w + '}';
+	console.log('Q: ' + query);
+	return new Promise(function(resolve, reject) {
+		var p = client.sendQuery(query);
+		p.then(function(data) {
+			resolve(client.parseResponseObjects(data));
+		}).catch(function(reason) {
+			reject(reason);
+		});
+	});
+}
+
+/**
+ * Executes a query on the server. The resulting array may be ordered.
+ * @return an ordered array of objects found.
+ */
+RDFClient.prototype.getObjectArrayWhere = function(where, order = null) {
 	var client = this;
 	var w = '?s ?p ?o';
 	if (where)
@@ -77,7 +99,7 @@ RDFClient.prototype.getObjectsWhere = function(where, order = null) {
 	return new Promise(function(resolve, reject) {
 		var p = client.sendQuery(query);
 		p.then(function(data) {
-			resolve(client.parseResponseObjects(data));
+			resolve(client.parseResponseObjectsToArray(data));
 		}).catch(function(reason) {
 			reject(reason);
 		});
@@ -100,7 +122,7 @@ RDFClient.prototype.getObject = function(iri) {
 }
 
 /**
- * Parses the RDF4J server response and creates a set of object with the given properties.
+ * Parses the RDF4J server response and creates a set of objects with the given properties.
  */
 RDFClient.prototype.parseResponseObjects = function(data) {
 	var ret = {};
@@ -123,6 +145,37 @@ RDFClient.prototype.parseResponseObjects = function(data) {
 		}
 	}
 	return ret;
+};
+
+/**
+ * Parses the RDF4J server response and creates an array of objects with the given properties.
+ */
+RDFClient.prototype.parseResponseObjectsToArray = function(data) {
+	var ret = {};
+	var uris = []; //subject uris ordered by the query result order
+	var bindings = data.results.bindings;
+	for (var i = 0; i < bindings.length; i++) {
+		var item = bindings[i];
+		if (item.s.type == 'uri') { //process only URI subjects
+			var subject = item.s.value;
+			var property = this.getPropertyName(item.p.value);
+			var value;
+			if (item.o.type == 'uri')
+				value = { uri: item.o.value };
+			else
+				value = item.o.value;
+			
+			if (ret[subject] === undefined) {
+				ret[subject] = { URI: subject };
+				uris[uris.length] = subject;
+			}
+			ret[subject][property] = value;
+		}
+	}
+	//replace uris with the objects and return
+	for (var i = 0; i < uris.length; i++)
+		uris[i] = ret[uris[i]];
+	return uris;
 };
 
 /**

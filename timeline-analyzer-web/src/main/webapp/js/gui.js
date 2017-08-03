@@ -40,10 +40,8 @@ GUITimeline.prototype.initTimeline = function(timeline) {
 };
 
 GUITimeline.prototype.addEntries = function(entries) {
-	for (euri in entries) {
-		if (entries.hasOwnProperty(euri)) {
-			this.addEntry(entries[euri]);
-		}
+	for (var i = 0; i < entries.length; i++) {
+		this.addEntry(entries[i]);
 	}
 };
 
