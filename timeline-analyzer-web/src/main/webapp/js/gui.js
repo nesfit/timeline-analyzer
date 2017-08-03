@@ -64,7 +64,7 @@ GUITimeline.prototype.addEntry = function(entry) {
 				elem.append(div);
 			} else if (type == "Image") {
 				div.addClass('image');
-				div.append('<img src="' + values[i].sourceUrl + '" alt="">');
+				div.append('<a href="' + val.sourceUrl + '"><img src="' + val.sourceUrl + '" alt=""></a>');
 				elem.append(div);
 			} else {
 				div.addClass('unknown');
