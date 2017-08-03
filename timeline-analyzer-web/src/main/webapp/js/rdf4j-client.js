@@ -65,12 +65,14 @@ RDFClient.prototype.sendQuery = function(query) {
 /**
  * Executes a query on the server.
  */
-RDFClient.prototype.getObjectsWhere = function(where, success, error = null) {
+RDFClient.prototype.getObjectsWhere = function(where, order = null) {
 	var client = this;
 	var w = '?s ?p ?o';
 	if (where)
 		w += ' . ' + where;
 	var query = this.getPrefixes() + 'SELECT ?s ?p ?o WHERE {' + w + '}';
+	if (order)
+		query += ' ORDER BY ' + order;
 	console.log('Q: ' + query);
 	return new Promise(function(resolve, reject) {
 		var p = client.sendQuery(query);

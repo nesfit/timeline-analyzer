@@ -27,7 +27,7 @@ TAClient.prototype.getTimelines = function() {
 };
 
 TAClient.prototype.getEntries = function(timelineUri) {
-	return this.client.getObjectsWhere('?s rdf:type ta:Entry . ?s ta:sourceTimeline <' + timelineUri + '>');
+	return this.client.getObjectsWhere('?s rdf:type ta:Entry . ?s ta:timestamp ?time . ?s ta:sourceTimeline <' + timelineUri + '>', 'ASC(?time)');
 };
 
 TAClient.prototype.loadEntry = function(entry) {
