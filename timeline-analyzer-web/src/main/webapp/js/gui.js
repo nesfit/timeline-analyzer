@@ -3,11 +3,22 @@
  * (c) Radek Burget 2017
  */
 
-var createTimelineElement = function(parent) {
-	var ret = $('<div class="timeline panel panel-primary"></div>');
-	parent.append(ret);
-	return ret;
-};
+var GUI = {
+
+	createTimelineElement: function(parent) {
+		var ret = $('<div class="timeline panel panel-primary"></div>');
+		parent.append(ret);
+		return ret;
+	},
+
+	addTimeline: function(uri, parentRow) {
+		var col = $('<div class="col-md-4"></div>');
+		parentRow.append(col);
+		var panel = this.createTimelineElement(col);
+		var timeline = new GUITimeline(uri, panel)
+	}
+	
+}
 
 //==================================================================================
 

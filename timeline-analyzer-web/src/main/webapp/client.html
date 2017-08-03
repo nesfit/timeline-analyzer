@@ -45,10 +45,14 @@
 
 <script type="text/javascript">
 
-var col = $('<div class="col-md-4"></div>');
+/*var col = $('<div class="col-md-4"></div>');
 $('#timelines').append(col);
 var panel = createTimelineElement(col);
-var timeline = new GUITimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra', panel)
+var timeline = new GUITimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra', panel)*/
+
+var parent = $('#timelines');
+GUI.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra', parent);
+GUI.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-DVTVcz', parent);
 
 function test()
 {
