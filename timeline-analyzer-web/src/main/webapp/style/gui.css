@@ -5,7 +5,8 @@
 
 .timeline .entry {
 	padding: 1.5em 0.3em;
-	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	margin: 0;
 }
 
 .timeline .entry .timestamp {

@@ -72,7 +72,7 @@ RDFClient.prototype.getObjectsWhere = function(where) {
 	if (where)
 		w += ' . ' + where;
 	var query = this.getPrefixes() + 'SELECT ?s ?p ?o WHERE {' + w + '}';
-	console.log('Q: ' + query);
+	//console.log('Q: ' + query);
 	return new Promise(function(resolve, reject) {
 		var p = client.sendQuery(query);
 		p.then(function(data) {
@@ -95,7 +95,7 @@ RDFClient.prototype.getObjectArrayWhere = function(where, order = null) {
 	var query = this.getPrefixes() + 'SELECT ?s ?p ?o WHERE {' + w + '}';
 	if (order)
 		query += ' ORDER BY ' + order;
-	console.log('Q: ' + query);
+	//console.log('Q: ' + query);
 	return new Promise(function(resolve, reject) {
 		var p = client.sendQuery(query);
 		p.then(function(data) {
@@ -194,7 +194,6 @@ RDFClient.prototype.getPrefixes = function() {
 	var ret = '';
 	for (var ns in this.ns) {
 		if (this.ns.hasOwnProperty(ns)) {
-			console.log('prefix ' + ns)
 			ret += 'PREFIX ' + ns + ': <' + this.ns[ns] + '>\n';
 		}
 	}

@@ -50,9 +50,11 @@ $('#timelines').append(col);
 var panel = createTimelineElement(col);
 var timeline = new GUITimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra', panel)*/
 
-var parent = $('#timelines');
-GUI.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra', parent);
-GUI.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-DVTVcz', parent);
+var mainset = new GUITimelineSet($('#timelines'));
+mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra');
+mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-DVTVcz');
+
+mainset.recomputeOffsets();
 
 function test()
 {
