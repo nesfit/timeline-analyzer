@@ -45,6 +45,8 @@ GUITimelineSet.prototype.recomputeOffsets = function() {
 		var lastdate = new Date(entry.timestamp);
 		var lastStart = entry.GUIElem.offset().top;
 		var lastEnd = entry.GUIElem.offset().top + entry.GUIElem.outerHeight();
+		var curDateBlock = { date: lastdate, start: lastStart };
+		var dateBlocks = [ curDateBlock ];
 		for (var i = 1; i < entries.length; i++) {
 			entry = entries[i];
 			var curdate = new Date(entry.timestamp);
@@ -52,7 +54,10 @@ GUITimelineSet.prototype.recomputeOffsets = function() {
 			var ofs = lastStart + 20;
 			if (curdate.toDateString() != lastdate.toDateString()) {
 				//console.log(curdate.toDateString() + " x " + lastdate.toDateString());
-				var ofs = lastEnd + 10;
+				curDateBlock.end = lastEnd;
+				curDateBlock = { date: curdate, start: entry.GUIElem.offset().top };
+				dateBlocks.push(curDateBlock);
+				ofs = lastEnd + 10;
 			}
 			
 			var dif = ofs - entry.GUIElem.offset().top;
@@ -63,6 +68,8 @@ GUITimelineSet.prototype.recomputeOffsets = function() {
 			lastStart = entry.GUIElem.offset().top;
 			lastEnd = Math.max(lastEnd, entry.GUIElem.offset().top + entry.GUIElem.outerHeight()); 
 		}
+		curDateBlock.end = lastEnd;
+		this.timeAxis.refresh(dateBlocks);
 	}
 };
 
@@ -149,16 +156,24 @@ GUITimeline.prototype.addEntry = function(entry) {
 //==================================================================================
 
 var GUITimeAxis = function(parentElement) {
-	this.blocks = {};
-	this.entries = [];
-	
-	this.el = $('<div class="col-md-1"></div>');
+	this.el = $('<div class="col-md-1 timeaxis"></div>');
 	parentElement.append(this.el);
 };
 
 GUITimeAxis.prototype.clear = function() {
-	this.offsets = [];
-	this.entries = [];
 	this.el.empty();
 };
 
+GUITimeAxis.prototype.refresh = function(blocks) {
+	this.clear();
+	for (var i = 0; i < blocks.length; i++) {
+		var block = blocks[i];
+		var blockEl = $('<div class="day"><span>' + block.date.toLocaleDateString() + '<span></div>');
+		this.el.append(blockEl);
+		
+		var ofs = block.start - blockEl.offset().top;
+		if (ofs > 0)
+			blockEl.css('margin-top', ofs + 'px');
+		blockEl.css('height', (block.end - block.start) + 'px');
+	}
+};

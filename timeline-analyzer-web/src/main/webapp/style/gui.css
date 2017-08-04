@@ -3,6 +3,8 @@
 
 }
 
+/*== Timeline Entries ==*/
+
 .timeline .entry {
 	padding: 1.5em 0.3em;
 	border-top: 1px solid #ddd;
@@ -27,4 +29,22 @@
 	height: auto;
 	display: block;
 	margin: 1em auto 1em auto;
+}
+
+/*== Time axis ==*/
+
+.timeaxis .day {
+	color: white;
+	background-color: rgb(51, 122, 183);
+	font-weight: bold;
+}
+
+.timeaxis .day:nth-child(2n+1) {
+	background-color: rgb(49, 112, 143);
+}
+
+.timeaxis .day span {
+	display: block;
+	text-align: center;
+	padding-top: 1.5em;
 }
