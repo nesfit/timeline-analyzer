@@ -156,7 +156,7 @@ GUITimeline.prototype.addEntry = function(entry) {
 //==================================================================================
 
 var GUITimeAxis = function(parentElement) {
-	this.el = $('<div class="col-md-1 timeaxis"></div>');
+	this.el = $('<div class="timeaxis"></div>');
 	parentElement.append(this.el);
 };
 

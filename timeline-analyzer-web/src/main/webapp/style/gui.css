@@ -1,13 +1,17 @@
 
-.timeline {
-
+.timeline-set {
+	padding-left: 8em;
 }
 
 /*== Timeline Entries ==*/
 
+.timeline {
+
+}
+
 .timeline .entry {
 	padding: 1.5em 0.3em;
-	border-top: 1px solid #ddd;
+	border: 1px solid #ddd;
 	margin: 0;
 }
 
@@ -33,10 +37,19 @@
 
 /*== Time axis ==*/
 
+.timeaxis {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
 .timeaxis .day {
 	color: white;
 	background-color: rgb(51, 122, 183);
 	font-weight: bold;
+	opacity: 0.8;
 }
 
 .timeaxis .day:nth-child(2n+1) {
@@ -45,6 +58,6 @@
 
 .timeaxis .day span {
 	display: block;
-	text-align: center;
 	padding-top: 1.5em;
+	padding-left: 1.5em;
 }
