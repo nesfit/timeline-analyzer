@@ -42,6 +42,7 @@
 		<module>timeline-analyzer-core</module>
 		<module>timeline-analyzer-twitter</module>
 		<module>timeline-analyzer-web</module>
+		<module>timeline-analyzer-local</module>
 	</modules>
 	
 	<dependencies>
