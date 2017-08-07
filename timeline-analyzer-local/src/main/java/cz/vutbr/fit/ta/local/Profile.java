@@ -6,6 +6,7 @@
 package cz.vutbr.fit.ta.local;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,5 +51,9 @@ abstract public class Profile
     }
     
     abstract public List<Cookie> getCookies();
+    
+    abstract public List<HistoryItem> getVisited(Date fromDate, Date toDate);
+    
+    abstract public List<HistoryItem> getDownloaded(Date fromDate, Date toDate);
     
 }
