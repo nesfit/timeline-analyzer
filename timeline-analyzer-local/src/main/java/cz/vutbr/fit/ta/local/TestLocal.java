@@ -7,7 +7,13 @@ package cz.vutbr.fit.ta.local;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+
+import cz.vutbr.fit.ta.core.RDFConnector;
+import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.ontology.Timeline;
 
 /**
  * 
@@ -22,6 +28,8 @@ public class TestLocal
     public static void main(String[] args)
     {
         try {
+            final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
+
             OS os = new OS();
             System.out.println(os.toString());
             FirefoxBrowser ff = new FirefoxBrowser(os);
@@ -32,12 +40,28 @@ public class TestLocal
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date fromDate = sdf.parse("01/01/2010");
                 Date toDate = new Date();
+                
                 //List<HistoryItem> items = prof.getVisited(fromDate, toDate);
-                List<HistoryItem> items = prof.getDownloaded(fromDate, toDate);
+                /*List<HistoryItem> items = prof.getDownloaded(fromDate, toDate);
                 for (HistoryItem item : items)
                 {
                     System.out.println(item);
-                }
+                }*/
+                
+                LocalProfileSource src = new LocalProfileSource(prof, fromDate, toDate);
+                Timeline timeline = src.getTimeline();
+                
+                Model model = new LinkedHashModel();
+                timeline.addToModel(model);
+                //System.out.println(model);
+                System.out.println("Model created, " + model.size() + " triples");
+                
+                System.out.println("Start at " + (new Date()));
+                RDFConnector rdfcon = new RDFConnectorSesame(REPO);
+                rdfcon.add(model);
+                rdfcon.closeConnection();
+                System.out.println("Finished at " + (new Date()));
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
