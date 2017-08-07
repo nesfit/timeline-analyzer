@@ -16,17 +16,24 @@ public class HistoryItem
 {
     public enum Type { VISIT, DOWNLOAD } 
     
+    private int id;
     private Type type;
     private Date date;
     private URL url;
     private int count;
     private String title;
     
-    public HistoryItem(Type type, Date date, URL url)
+    public HistoryItem(int id, Type type, Date date, URL url)
     {
+        this.id = id;
         this.type = type;
         this.date = date;
         this.url = url;
+    }
+
+    public int getId()
+    {
+        return id;
     }
 
     public Type getType()
@@ -79,10 +86,15 @@ public class HistoryItem
         this.title = title;
     }
 
+    public String getSourceId()
+    {
+        return ((getType() == Type.DOWNLOAD) ? "D" : "V") + getId();
+    }
+    
     @Override
     public String toString()
     {
-        String ret = getType() + " " + getDate();
+        String ret = getType() + "#" + getId() + " " + getDate();
         if (getTitle() != null)
             ret += " " + getTitle();
         if (getUrl() != null)

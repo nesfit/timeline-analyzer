@@ -73,6 +73,7 @@ public class FirefoxProfile extends Profile
                             do 
                             {
                                 //CREATE TABLE moz_historyvisits (id INTEGER PRIMARY KEY, from_visit INTEGER, place_id INTEGER, visit_date INTEGER, visit_type INTEGER, session INTEGER);
+                                int id = (int) cursor.getInteger(0);
                                 int placeId = (int) cursor.getInteger(2);
                                 Date visited = new Date();
                                 visited.setTime(cursor.getInteger(3) / 1000);
@@ -80,7 +81,7 @@ public class FirefoxProfile extends Profile
                                 if (visited.after(fromDate) && visited.before(toDate)) 
                                 {
                                     Place place = getPlaces().get(placeId);
-                                    HistoryItem item = new HistoryItem(HistoryItem.Type.VISIT, visited, place.url);
+                                    HistoryItem item = new HistoryItem(id, HistoryItem.Type.VISIT, visited, place.url);
                                     item.setTitle(place.title);
                                     item.setCount(place.count);
                                     dest.add(item);
@@ -121,6 +122,7 @@ public class FirefoxProfile extends Profile
                                         expiration INTEGER DEFAULT 0,type INTEGER DEFAULT 0,dateAdded INTEGER DEFAULT 0,
                                         lastModified INTEGER DEFAULT 0);*/
                                 
+                                int id = (int) cursor.getInteger(0);
                                 int placeId = (int) cursor.getInteger(1);
                                 String content = cursor.getString(4);
                                 int type = (int) cursor.getInteger(2);
@@ -131,7 +133,7 @@ public class FirefoxProfile extends Profile
                                 if (visited.after(fromDate) && visited.before(toDate) && type == 8) 
                                 {
                                     Place place = getPlaces().get(placeId);
-                                    HistoryItem curItem = new HistoryItem(HistoryItem.Type.DOWNLOAD, visited, place.url);
+                                    HistoryItem curItem = new HistoryItem(id, HistoryItem.Type.DOWNLOAD, visited, place.url);
                                     curItem.setTitle(content);
                                     dest.add(curItem);
                                 }
