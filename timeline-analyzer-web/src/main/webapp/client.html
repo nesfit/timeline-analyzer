@@ -50,9 +50,12 @@ $('#timelines').append(col);
 var panel = createTimelineElement(col);
 var timeline = new GUITimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra', panel)*/
 
+TA.setDateSpan(new Date('2017-07-31'), new Date('2017-08-04'));
+
 var mainset = new GUITimelineSet($('#timelines'));
 mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra');
 mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-DVTVcz');
+mainset.addTimeline('http://nesfit.github.io/resource/ta#local-timeline-kgvf5nvq');
 
 mainset.recomputeOffsets();
 

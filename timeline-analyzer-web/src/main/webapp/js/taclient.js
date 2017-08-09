@@ -20,6 +20,14 @@ var TAClient = function(serverUrl, repositoryName) {
 	this.repo = repositoryName;
 	this.client = new RDFClient(this.url, this.repo, this.ns);
 	this.client.setDefaultNamespace('ta');
+	
+	this.dateStart = null;
+	this.dateEnd = null;
+};
+
+TAClient.prototype.setDateSpan = function(dateStart, dateEnd) {
+	this.dateStart = dateStart;
+	this.dateEnd = dateEnd;
 };
 
 TAClient.prototype.getTimelines = function() {
@@ -27,7 +35,11 @@ TAClient.prototype.getTimelines = function() {
 };
 
 TAClient.prototype.getEntries = function(timelineUri) {
-	return this.client.getObjectArrayWhere('?s rdf:type ta:Entry . ?s ta:timestamp ?time . ?s ta:sourceTimeline <' + timelineUri + '>', 'ASC(?time)');
+	var filter = '';
+	if (this.dateStart && this.dateEnd) {
+		filter = ' FILTER (?time >= "' + this.dateStart.toISOString() + '"^^xsd:dateTime && ?time <= "' + this.dateEnd.toISOString() + '"^^xsd:dateTime)';
+	}
+	return this.client.getObjectArrayWhere('?s rdf:type ta:Entry . ?s ta:timestamp ?time . ?s ta:sourceTimeline <' + timelineUri + '>' + filter, 'ASC(?time)');
 };
 
 /**
