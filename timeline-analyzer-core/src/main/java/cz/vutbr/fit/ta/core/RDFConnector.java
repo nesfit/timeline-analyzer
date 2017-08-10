@@ -1,8 +1,10 @@
 package cz.vutbr.fit.ta.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
-import org.eclipse.rdf4j.model.Namespace;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
@@ -29,6 +31,7 @@ public class RDFConnector
 	protected RepositoryConnection connection;
 	protected Repository repo;
 	protected ValueFactory vf;
+	protected Map<String, String> prefixes;
 
 	/**
 	 * Establishes a connection to the SPARQL endpoint.
@@ -40,6 +43,7 @@ public class RDFConnector
 		endpointUrl = endpoint;
 		connection = null;
 		vf = SimpleValueFactory.getInstance();
+		initPrefixes();
 		initRepository();
 	}
 	
@@ -65,6 +69,25 @@ public class RDFConnector
         if (connection != null)
             connection.close();
         connection = null;
+    }
+    
+    protected void initPrefixes()
+    {
+        prefixes = new HashMap<>();
+        prefixes.put("ta", "http://nesfit.github.io/ontology/ta.owl#");
+        prefixes.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        prefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        prefixes.put("tares", "http://nesfit.github.io/resource/ta#");
+    }
+    
+    public String getPrefixString()
+    {
+        String ret = "";
+        for (Map.Entry<String, String> entry : prefixes.entrySet())
+        {
+            ret += "PREFIX " + entry.getKey() + ": <" + entry.getValue() + "> ";
+        }
+        return ret;
     }
     
     /**
@@ -117,15 +140,10 @@ public class RDFConnector
 	 */
 	public TupleQueryResult executeQuery(String queryString) throws RepositoryException, MalformedQueryException, QueryEvaluationException 
 	{
-		try {
-			TupleQuery query = this.connection.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
-			TupleQueryResult tqr = query.evaluate();
-        	return tqr;
-		}
-		catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		return null;
+	    String qs = getPrefixString() + queryString;
+		TupleQuery query = this.connection.prepareTupleQuery(QueryLanguage.SPARQL, qs);
+		TupleQueryResult tqr = query.evaluate();
+    	return tqr;
 	}
 	
 }

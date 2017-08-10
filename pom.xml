@@ -43,6 +43,7 @@
 		<module>timeline-analyzer-twitter</module>
 		<module>timeline-analyzer-web</module>
 		<module>timeline-analyzer-local</module>
+		<module>timeline-analyzer-links</module>
 	</modules>
 	
 	<dependencies>
