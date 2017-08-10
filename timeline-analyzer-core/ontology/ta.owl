@@ -34,12 +34,30 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#contextLink -->
+
+    <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#contextLink">
+        <rdfs:comment>A generic link between two profile entities (e.g. profiles, entries, contents).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#sourceTimeline -->
 
     <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Entry"/>
         <rdfs:range rdf:resource="http://nesfit.github.io/ontology/ta.owl#Timeline"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://nesfit.github.io/ontology/ta.owl#urlMention -->
+
+    <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#urlMention">
+        <rdfs:subPropertyOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#contextLink"/>
+        <rdfs:comment>Indicates that the URL of a content (image, other URL, etc.) is mentioned in another entry.</rdfs:comment>
+        <rdfs:label>URL mentioned in</rdfs:label>
     </owl:ObjectProperty>
     
 

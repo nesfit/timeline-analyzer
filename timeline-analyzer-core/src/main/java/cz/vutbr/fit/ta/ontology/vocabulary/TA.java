@@ -38,6 +38,16 @@ public class TA {
 	public static final IRI Content;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#contextLink}.
+	 * <p>
+	 * A generic link between two profile entities (e.g. profiles, entries,
+	 * contents).
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#contextLink">contextLink</a>
+	 */
+	public static final IRI contextLink;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#Entry}.
 	 * <p>
 	 * An entry in the timeline
@@ -142,11 +152,24 @@ public class TA {
 	 */
 	public static final IRI URLContent;
 
+	/**
+	 * URL mentioned in
+	 * <p>
+	 * {@code http://nesfit.github.io/ontology/ta.owl#urlMention}.
+	 * <p>
+	 * Indicates that the URL of a content (image, other URL, etc.) is
+	 * mentioned in another entry.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#urlMention">urlMention</a>
+	 */
+	public static final IRI urlMention;
+
 	static {
 		ValueFactory factory = SimpleValueFactory.getInstance();
 
 		contains = factory.createIRI(TA.NAMESPACE, "contains");
 		Content = factory.createIRI(TA.NAMESPACE, "Content");
+		contextLink = factory.createIRI(TA.NAMESPACE, "contextLink");
 		Entry = factory.createIRI(TA.NAMESPACE, "Entry");
 		GeoContent = factory.createIRI(TA.NAMESPACE, "GeoContent");
 		Image = factory.createIRI(TA.NAMESPACE, "Image");
@@ -160,6 +183,7 @@ public class TA {
 		Timeline = factory.createIRI(TA.NAMESPACE, "Timeline");
 		timestamp = factory.createIRI(TA.NAMESPACE, "timestamp");
 		URLContent = factory.createIRI(TA.NAMESPACE, "URLContent");
+		urlMention = factory.createIRI(TA.NAMESPACE, "urlMention");
 	}
 
 	private TA() {
