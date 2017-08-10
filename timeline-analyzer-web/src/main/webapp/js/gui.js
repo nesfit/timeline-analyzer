@@ -147,9 +147,40 @@ GUITimeline.prototype.addEntry = function(entry) {
 				div.addClass('unknown');
 				elem.append($('<div class="content"></div>').text('Unknown ' + type));
 			}
+			
+			self.appendLinks(elem, val.URI);
 		}
 		self.parentSet.recomputeOffsets();
 	});
+	
+};
+
+GUITimeline.prototype.appendLinks = function(parent, uri) {
+	TA.loadLinks(uri).then(function(links) {
+		if (links.length > 0) {
+			console.log('Links for ' + uri);
+			console.log(links);
+			
+			var ul = $('<ul class="links"></ul>');
+			parent.append(ul);
+			for (var i = 0; i < links.length; i++) {
+				var link = links[i];
+				var dtime = new Date(link.dtime);
+				var li = $('<dl><dt>' + 
+						'[<a href="#" class="etime">' + dtime.toLocaleString() + '</a>] ' +
+					'</dt><dd>' +
+						'<span class="linkname">' + link.label + '</span> ' + 
+						'<a href="#" class="proflabel">' + link.srclabel + '</a> ' + 
+						'(<span class="etext">' + link.text + '</span>) ' +
+					'</dd></dl>');
+				ul.append(li);
+			}
+		}
+	});
+	
+	/*var links = $('<div class="links"></div>');
+	elem.append(links);
+	self.loadLinks*/
 	
 };
 

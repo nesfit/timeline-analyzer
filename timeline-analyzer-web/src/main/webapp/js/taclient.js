@@ -23,6 +23,9 @@ var TAClient = function(serverUrl, repositoryName) {
 	
 	this.dateStart = null;
 	this.dateEnd = null;
+	
+	this.linkProperties = {};
+	this.loadMetadata();
 };
 
 TAClient.prototype.setDateSpan = function(dateStart, dateEnd) {
@@ -42,6 +45,18 @@ TAClient.prototype.getEntries = function(timelineUri) {
 	return this.client.getObjectArrayWhere('?s rdf:type ta:Entry . ?s ta:timestamp ?time . ?s ta:sourceTimeline <' + timelineUri + '>' + filter, 'ASC(?time)');
 };
 
+TAClient.prototype.loadMetadata = function() {
+	var self = this;
+	this.client.getObjectArrayWhere('?s rdfs:subPropertyOf ta:contextLink').then(function(props) {
+		for (var i = 0; i < props.length; i++) {
+			var prop = props[i];
+			var name = self.client.getPropertyName(prop.URI);
+			var label = prop.rdfs_label ? prop.rdfs_label : name;
+			self.linkProperties[name] = label;
+		}
+	});
+};
+
 /**
  * Loads all the entry contents.
  * @return a set of promises.
@@ -55,4 +70,19 @@ TAClient.prototype.loadEntryContents = function(entry) {
 		promises[promises.length] = this.client.getObject(cont[i].uri);
 	}
 	return promises;
+};
+
+TAClient.prototype.loadLinks = function(uri) {
+	//var where = "?s ?p ?o . <" + uri + "> ?link ?s . ?link rdfs:subPropertyOf ta:contextLink";
+	//var where = "?s ?p ?o . <" + uri + "> ?p ?o . ?p rdfs:subPropertyOf ta:contextLink";
+	//return this.client.getObjectArrayWhere(where);
+	
+	var q = "SELECT ?p ?o ?label ?dtime ?text ?src ?srclabel"
+		+ " WHERE {<" + uri + "> ?p ?o . ?p rdfs:subPropertyOf ta:contextLink ." 
+		+ " ?p rdfs:label ?label ." 
+		+ " ?o ta:timestamp ?dtime ."
+		+ " ?o ta:contains ?textc . ?textc rdf:type ta:TextContent . ?textc ta:text ?text ."
+		+ " ?o ta:sourceTimeline ?src . ?src rdfs:label ?srclabel}";
+	return this.client.queryObjects(q);
+	
 };

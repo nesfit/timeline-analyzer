@@ -63,6 +63,43 @@ RDFClient.prototype.sendQuery = function(query) {
 };
 
 /**
+ * Executes an arbitrary query and creates an array of objects with the corresponsing properies.
+ */
+RDFClient.prototype.queryObjects = function(query) {
+	var client = this;
+	var q = this.getPrefixes() + " " + query;
+	return new Promise(function(resolve, reject) {
+		var p = client.sendQuery(q);
+		p.then(function(data) {
+			resolve(client.bindingsToArray(data.results.bindings));
+		}).catch(function(reason) {
+			reject(reason);
+		});
+	});
+};
+
+RDFClient.prototype.bindingsToArray = function(bindings) {
+	var ret = [];
+	for (var i = 0; i < bindings.length; i++) {
+		var item = bindings[i];
+		var newitem = {};
+		for (var prop in item) {
+			if (item.hasOwnProperty(prop)) {
+				var value;
+				if (item[prop].type == 'uri')
+					value = { uri: item[prop].value };
+				else
+					value = item[prop].value;
+				newitem[prop] = value;
+			}
+		}
+		ret.push(newitem);
+	}
+	return ret;
+}
+
+
+/**
  * Executes a query on the server.
  * @return an object that maps subject URIs to loaded objects.
  */
@@ -81,7 +118,7 @@ RDFClient.prototype.getObjectsWhere = function(where) {
 			reject(reason);
 		});
 	});
-}
+};
 
 /**
  * Executes a query on the server. The resulting array may be ordered.

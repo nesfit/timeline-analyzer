@@ -35,6 +35,14 @@
 	margin: 1em auto 1em auto;
 }
 
+.timeline .links {
+	background-color: #faa;
+}
+
+.timeline .links dt {
+	margin-left: -2em;
+}
+
 /*== Time axis ==*/
 
 .timeaxis {
