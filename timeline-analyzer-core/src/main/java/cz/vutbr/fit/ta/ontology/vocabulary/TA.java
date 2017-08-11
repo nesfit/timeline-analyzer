@@ -87,6 +87,18 @@ public class TA {
 	public static final IRI longitude;
 
 	/**
+	 * URL also published in
+	 * <p>
+	 * {@code http://nesfit.github.io/ontology/ta.owl#sameURL}.
+	 * <p>
+	 * Indicates that the URL has been also published in an entry in another
+	 * profile
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sameURL">sameURL</a>
+	 */
+	public static final IRI sameURL;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#sourceId}.
 	 * <p>
 	 * An identifier of the entry in the source timeline (e.g. Twitter id)
@@ -153,7 +165,7 @@ public class TA {
 	public static final IRI URLContent;
 
 	/**
-	 * URL mentioned in
+	 * Source URL mentioned in
 	 * <p>
 	 * {@code http://nesfit.github.io/ontology/ta.owl#urlMention}.
 	 * <p>
@@ -175,6 +187,7 @@ public class TA {
 		Image = factory.createIRI(TA.NAMESPACE, "Image");
 		latitude = factory.createIRI(TA.NAMESPACE, "latitude");
 		longitude = factory.createIRI(TA.NAMESPACE, "longitude");
+		sameURL = factory.createIRI(TA.NAMESPACE, "sameURL");
 		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");
 		sourceTimeline = factory.createIRI(TA.NAMESPACE, "sourceTimeline");
 		sourceUrl = factory.createIRI(TA.NAMESPACE, "sourceUrl");

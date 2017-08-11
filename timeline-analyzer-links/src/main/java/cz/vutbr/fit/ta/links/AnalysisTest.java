@@ -25,6 +25,7 @@ public class AnalysisTest
         RDFConnector repo = new RDFConnectorSesame(REPO);
         URLLinkAnalyzer la = new URLLinkAnalyzer(repo);
         la.findImageURLs();
+        la.findSharedURLs();
         
         la.saveModel();
         repo.closeConnection();

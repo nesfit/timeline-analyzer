@@ -93,38 +93,40 @@ public class URLLinkAnalyzer
     
     /**
      * Finds all occurences of the published URLs in other posts. Represents the connections
-     * as the {@code ta:urlMention} links in the repo.
+     * as the {@code ta:sameUrl} links in the repo.
      */
     public Model findSharedURLs()
     {
         Model ret = new LinkedHashModel();
         
         //find all image URLs
-        String q1 = "SELECT ?img ?url WHERE {?img ta:sourceUrl ?url . ?img rdf:type ta:Image}";
+        String q1 = "SELECT ?cont ?url WHERE {?cont ta:sourceUrl ?url . ?cont rdf:type ta:URLContent}";
         TupleQueryResult r1 = repo.executeQuery(q1);
         while (r1.hasNext())
         {
             BindingSet data = r1.next();
             String urlVal = data.getValue("url").stringValue();
-            log.debug("Image URL: <{}>", urlVal);
+            IRI srcIri = (IRI) data.getValue("cont");
+            log.debug("Search URL: <{}>", urlVal);
             
-            String q2 = "SELECT ?entry WHERE {?entry ta:contains ?content . ?content ta:sourceUrl \"" + urlVal + "\" . ?content rdf:type ta:URLContent}";
+            String q2 = "SELECT ?entry ?content WHERE {?entry ta:contains ?content . ?content ta:sourceUrl \"" + urlVal + "\" . ?content rdf:type ta:URLContent}";
             TupleQueryResult r2 = repo.executeQuery(q2);
             while (r2.hasNext())
             {
                 BindingSet row = r2.next();
-                Value val = row.getValue("entry");
-                if (val instanceof IRI)
+                IRI destIri = (IRI) row.getValue("content");
+                Value entry = row.getValue("entry");
+                if (entry instanceof IRI && !srcIri.equals(destIri))
                 {
-                    log.debug("    Adding ta:urlConnection to {}", val.stringValue());
-                    ret.add((IRI) data.getValue("img"), TA.urlMention, (IRI) val);
+                    log.debug("    Adding ta:sameUrl to {}", entry.stringValue());
+                    ret.add(srcIri, TA.sameURL, (IRI) entry);
                 }
             }
             r2.close();
         }
         r1.close();
         
-        log.debug("findImageURLs: found {} links", ret.size());
+        log.debug("findSharedURLs: found {} links", ret.size());
         model.addAll(ret);
         return ret;
     }

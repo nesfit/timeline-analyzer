@@ -42,6 +42,16 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#sameURL -->
+
+    <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sameURL">
+        <rdfs:subPropertyOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#contextLink"/>
+        <rdfs:comment>Indicates that the URL has been also published in an entry in another profile</rdfs:comment>
+        <rdfs:label>URL also published in</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#sourceTimeline -->
 
     <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">
@@ -57,7 +67,7 @@
     <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#urlMention">
         <rdfs:subPropertyOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#contextLink"/>
         <rdfs:comment>Indicates that the URL of a content (image, other URL, etc.) is mentioned in another entry.</rdfs:comment>
-        <rdfs:label>URL mentioned in</rdfs:label>
+        <rdfs:label>Source URL mentioned in</rdfs:label>
     </owl:ObjectProperty>
     
 
