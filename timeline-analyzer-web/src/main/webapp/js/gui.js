@@ -143,6 +143,10 @@ GUITimeline.prototype.addEntry = function(entry) {
 				div.addClass('image');
 				div.append('<a href="' + val.sourceUrl + '"><img src="' + val.sourceUrl + '" alt=""></a>');
 				elem.append(div);
+			} else if (type == "URLContent") {
+				div.addClass('url');
+				div.append('URL: <a href="' + val.sourceUrl + '">' + val.text + '</a>');
+				elem.append(div);
 			} else {
 				div.addClass('unknown');
 				elem.append($('<div class="content"></div>').text('Unknown ' + type));
