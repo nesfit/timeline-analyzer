@@ -104,6 +104,7 @@ public class TwitterSource extends TimelineSource
                     URLContent url = ef.createURLContent(status.getId(), entity.getStart());
                     url.setSourceUrl(entity.getURL());
                     url.setText(entity.getText());
+                    entry.getContains().add(url);
                 }
             }
             //GEO entries
@@ -132,7 +133,7 @@ public class TwitterSource extends TimelineSource
         System.out.println();
         System.out.println("User: " + u);
         
-        Paging p = new Paging(1, 10);
+        Paging p = new Paging(1, 100);
         statuses = twitter.getUserTimeline(user, p);
         
         System.out.println("Showing @" + user + "'s user timeline.");
