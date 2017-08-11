@@ -16,17 +16,13 @@ import cz.vutbr.fit.ta.ontology.Timeline;
  * 
  * @author burgetr
  */
-public class Test
+public class TestTwitter
 {
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args)
+    public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
+    
+    public static void downloadTimeline(String username, RDFConnector rdfcon)
     {
-        final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
-        
-        TwitterSource twitter = new TwitterSource("okundra");
+        TwitterSource twitter = new TwitterSource(username);
         Timeline timeline = twitter.getTimeline();
         
         System.out.println("Got timeline of " + twitter.getUsername() + " of " + timeline.getEntries().size() + " entries");
@@ -35,11 +31,22 @@ public class Test
         timeline.addToModel(model);
         System.out.println(model);
         
-        RDFConnector rdfcon = new RDFConnectorSesame(REPO);
         rdfcon.add(model);
-        rdfcon.closeConnection();
+    }
+    
+    /**
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        RDFConnector rdfcon = new RDFConnectorSesame(REPO);
         
-
+        downloadTimeline("iROZHLAScz", rdfcon);
+        downloadTimeline("RESPEKT_CZ", rdfcon);
+        downloadTimeline("DVTVcz", rdfcon);
+        downloadTimeline("veselovskyma", rdfcon);
+        
+        rdfcon.closeConnection();
     }
 
 }

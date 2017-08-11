@@ -38,7 +38,7 @@ public class TestLocal
                 Profile prof = ff.getProfiles().get(0);
                 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date fromDate = sdf.parse("01/06/2017");
+                Date fromDate = sdf.parse("01/08/2017");
                 Date toDate = new Date();
                 
                 //List<HistoryItem> items = prof.getVisited(fromDate, toDate);

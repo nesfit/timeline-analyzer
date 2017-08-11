@@ -102,8 +102,8 @@ public class TwitterSource extends TimelineSource
                 for (URLEntity entity : urls)
                 {
                     URLContent url = ef.createURLContent(status.getId(), entity.getStart());
-                    url.setSourceUrl(entity.getURL());
-                    url.setText(entity.getText());
+                    url.setSourceUrl(entity.getExpandedURL());
+                    url.setText(entity.getDisplayURL());
                     entry.getContains().add(url);
                 }
             }
