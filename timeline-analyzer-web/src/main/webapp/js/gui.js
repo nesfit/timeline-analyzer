@@ -16,7 +16,7 @@ var GUITimelineSet = function(parentElement) {
 };
 
 GUITimelineSet.prototype.addTimeline = function(uri) {
-	var col = $('<div class="col-md-4"></div>');
+	var col = $('<div class="col-md-1"></div>');
 	this.parent.append(col);
 	var panel = this.createTimelineElement(col);
 	var timeline = new GUITimeline(this, uri, panel);

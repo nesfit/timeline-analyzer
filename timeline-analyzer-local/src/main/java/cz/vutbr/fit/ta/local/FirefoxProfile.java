@@ -245,7 +245,7 @@ public class FirefoxProfile extends Profile
                                     place.url = new URL(cursor.getString(1));
                                 } catch (MalformedURLException e) {
                                     place.url = null;
-                                    log.error("Invalid url ", cursor.getString(1));
+                                    log.error("Invalid url {}", cursor.getString(1));
                                 }
                                 place.title = cursor.getString(2);
                                 place.count = (int) cursor.getInteger(4);

@@ -50,15 +50,23 @@ $('#timelines').append(col);
 var panel = createTimelineElement(col);
 var timeline = new GUITimeline('http://nesfit.github.io/resource/ta#twitter-timeline-okundra', panel)*/
 
-TA.setDateSpan(new Date('2017-08-08'), new Date('2017-08-12'));
+TA.setDateSpan(new Date('2017-12-01'), new Date('2017-12-10'));
 
+var PREFIX = "http://nesfit.github.io/resource/ta#";
 var mainset = new GUITimelineSet($('#timelines'));
-mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-DVTVcz');
-mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-iROZHLAScz');
-mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-RESPEKT_CZ');
-//mainset.addTimeline('http://nesfit.github.io/resource/ta#twitter-timeline-veselovskyma');
+/*mainset.addTimeline(PREFIX + 'twitter-timeline-DVTVcz');
+mainset.addTimeline(PREFIX + 'twitter-timeline-iROZHLAScz');
+mainset.addTimeline(PREFIX + 'twitter-timeline-RESPEKT_CZ');
+mainset.addTimeline(PREFIX + 'twitter-timeline-veselovskyma');
+mainset.addTimeline(PREFIX + 'twitter-timeline-ekonom_cz');
+mainset.addTimeline(PREFIX + 'twitter-timeline-CT24zive');
+mainset.addTimeline(PREFIX + 'twitter-timeline-CzechTV');
+mainset.addTimeline(PREFIX + 'twitter-timeline-Aktualnecz');*/
+mainset.addTimeline(PREFIX + 'twitter-timeline-hospodarky');
+mainset.addTimeline(PREFIX + 'twitter-timeline-cermak');
+mainset.addTimeline(PREFIX + 'twitter-timeline-LudekStanek');
 
-//mainset.addTimeline('http://nesfit.github.io/resource/ta#local-timeline-kgvf5nvq');
+mainset.addTimeline(PREFIX + 'local-timeline-0u4pt59a');
 
 mainset.recomputeOffsets();
 

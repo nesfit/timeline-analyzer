@@ -45,6 +45,13 @@ public class TestTwitter
         downloadTimeline("RESPEKT_CZ", rdfcon);
         downloadTimeline("DVTVcz", rdfcon);
         downloadTimeline("veselovskyma", rdfcon);
+        downloadTimeline("ekonom_cz", rdfcon);
+        downloadTimeline("hospodarky", rdfcon);
+        downloadTimeline("CT24zive", rdfcon);
+        downloadTimeline("CzechTV", rdfcon);
+        downloadTimeline("Aktualnecz", rdfcon);
+        downloadTimeline("cermak", rdfcon);
+        downloadTimeline("LudekStanek", rdfcon);
         
         rdfcon.closeConnection();
     }

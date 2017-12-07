@@ -133,7 +133,7 @@ public class TwitterSource extends TimelineSource
         System.out.println();
         System.out.println("User: " + u);
         
-        Paging p = new Paging(1, 100);
+        Paging p = new Paging(1, 500);
         statuses = twitter.getUserTimeline(user, p);
         
         System.out.println("Showing @" + user + "'s user timeline.");
