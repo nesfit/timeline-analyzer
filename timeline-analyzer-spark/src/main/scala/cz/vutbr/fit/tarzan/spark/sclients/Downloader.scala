@@ -1,15 +1,12 @@
-package org.sia.chapter03App
+package cz.vutbr.fit.tarzan.spark.sclients
 
 import org.apache.spark.sql.SparkSession
 
-/**
- * @author ${user.name}
- */
-object App {
-
-  def main(args : Array[String]) {
+object Downloader {
+  
+    def main(args : Array[String]) {
     val spark = SparkSession.builder()
-      .appName("The swankiest Spark app ever")
+      .appName("Profile Downloader")
       .master("local[*]")
       .getOrCreate()
 
