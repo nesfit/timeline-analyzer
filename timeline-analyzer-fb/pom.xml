@@ -8,10 +8,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>timeline-analyzer-twitter</artifactId>
+	<artifactId>timeline-analyzer-fb</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Timeline Analyzer - Twitter Client</name>
+	<name>Timeline Analyzer - Facebook Client</name>
 	<url>https://github.com/nesfit/timeline-analyzer</url>
 
 	<properties>
@@ -47,17 +47,11 @@
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-model</artifactId>
         </dependency> 
-        
 		<dependency>
-		    <groupId>org.twitter4j</groupId>
-		    <artifactId>twitter4j-core</artifactId>
-		    <version>4.0.6</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.github.zengde</groupId>
-		    <artifactId>lire</artifactId>
-		    <version>1.0b2</version>
-		</dependency>
+			<groupId>com.restfb</groupId>
+			<artifactId>restfb</artifactId>
+			<version>2.2.0</version>
+		</dependency>        
         
 	</dependencies>
 </project>
