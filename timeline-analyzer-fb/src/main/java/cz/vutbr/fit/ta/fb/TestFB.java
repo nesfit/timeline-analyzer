@@ -10,19 +10,22 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
-import com.restfb.FacebookClient.AccessToken;
 import com.restfb.Parameter;
 import com.restfb.Version;
-import com.restfb.scope.FacebookPermissions;
-import com.restfb.scope.ScopeBuilder;
 import com.restfb.types.Post;
 import com.restfb.types.Post.Attachments;
+
+import cz.vutbr.fit.ta.core.RDFConnector;
+import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.ontology.Timeline;
+
 import com.restfb.types.StoryAttachment;
-import com.restfb.types.StoryAttachment.Image;
-import com.restfb.types.StoryAttachment.Media;
 import com.restfb.types.User;
 
 /**
@@ -31,13 +34,37 @@ import com.restfb.types.User;
  */
 public class TestFB
 {
-
+    public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
+    
+    public static void downloadTimeline(String username, RDFConnector rdfcon)
+    {
+        FBSource fb = new FBSource(username);
+        fb.setLimit(50);
+        Timeline timeline = fb.getTimeline();
+        
+        System.out.println("Got timeline of " + fb.getProfileId() + " of " + timeline.getEntries().size() + " entries");
+        
+        Model model = new LinkedHashModel();
+        timeline.addToModel(model);
+        System.out.println(model);
+        
+        rdfcon.add(model);
+    }
+    
+    
     /**
      * @param args
      */
     public static void main(String[] args)
     {
-        testWithApp();
+        RDFConnector rdfcon = new RDFConnectorSesame(REPO);
+
+        downloadTimeline("Aktualne.cz", rdfcon);
+        
+        rdfcon.closeConnection();
+        
+        
+        //testWithApp();
         
         /*ScopeBuilder scopeBuilder = new ScopeBuilder();
         scopeBuilder.addPermission(FacebookPermissions.USER_ABOUT_ME);
@@ -48,6 +75,8 @@ public class TestFB
         
     }
 
+    //========================================================================================================
+    
     protected static void testPublic()
     {
         FacebookClient fb = new DefaultFacebookClient(Version.VERSION_2_12);
@@ -133,7 +162,7 @@ public class TestFB
         System.out.println(user);
     }
     
-    private static Properties loadProperties()
+    protected static Properties loadProperties()
     {
         Properties prop = new Properties();
         InputStream input = null;
