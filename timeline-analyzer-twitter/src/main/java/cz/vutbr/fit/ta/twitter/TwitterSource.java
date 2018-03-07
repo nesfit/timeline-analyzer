@@ -7,6 +7,9 @@ package cz.vutbr.fit.ta.twitter;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.ontology.Entry;
 import cz.vutbr.fit.ta.ontology.GeoContent;
@@ -23,7 +26,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.URLEntity;
-import twitter4j.User;
 
 /**
  * 
@@ -31,6 +33,8 @@ import twitter4j.User;
  */
 public class TwitterSource extends TimelineSource
 {
+    private static Logger log = LoggerFactory.getLogger(TwitterSource.class);
+    
     private String username;
     private Twitter twitter;
     
@@ -126,32 +130,33 @@ public class TwitterSource extends TimelineSource
     {
         List<Status> statuses;
         
+        if (getStartDate() != null || getEndDate() != null)
+            log.warn("Start/end dates are not yet supported by TwitterSource");
+        
         //user = twitter.verifyCredentials().getScreenName();
         //statuses = twitter.getUserTimeline();
-        User u = twitter.showUser(user);
+        //User u = twitter.showUser(user);
         
-        System.out.println();
-        System.out.println("User: " + u);
+        log.info("Loading @{}'s user timeline, limit {} entries.", user, getLimit());
         
-        Paging p = new Paging(1, 500);
+        Paging p = new Paging(1, getLimit());
         statuses = twitter.getUserTimeline(user, p);
         
-        System.out.println("Showing @" + user + "'s user timeline.");
-        for (Status status : statuses) {
-            System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-            System.out.println("   Time: " + status.getCreatedAt());
-            System.out.println("   GEO: " + status.getGeoLocation());
+        for (Status status : statuses) 
+        {
+            log.info("@" + status.getUser().getScreenName() + " - " + status.getText());
+            log.info("   Time: " + status.getCreatedAt());
+            log.info("   GEO: " + status.getGeoLocation());
             MediaEntity[] media = status.getMediaEntities();
             if (media != null && media.length > 0)
             {
-                System.out.println("   Media: ");
+                log.info("   Media: ");
                 for (MediaEntity entity : media)
-                    System.out.println("       - " + entity);
+                    log.info("       - " + entity);
             }
         }
         
         return statuses;
-        
     }
     
 }
