@@ -39,7 +39,7 @@ public class TestFB
     public static void downloadTimeline(String username, RDFConnector rdfcon)
     {
         FBSource fb = new FBSource(username);
-        fb.setLimit(50);
+        fb.setLimit(1000);
         Timeline timeline = fb.getTimeline();
         
         System.out.println("Got timeline of " + fb.getProfileId() + " of " + timeline.getEntries().size() + " entries");
@@ -59,7 +59,17 @@ public class TestFB
     {
         RDFConnector rdfcon = new RDFConnectorSesame(REPO);
 
+        downloadTimeline("iROZHLAS.cz", rdfcon);
+        downloadTimeline("tydenikrespekt", rdfcon);
+        downloadTimeline("DVTV.cz", rdfcon);
+        downloadTimeline("ekonom.cz", rdfcon);
+        downloadTimeline("ihned.cz", rdfcon);
+        downloadTimeline("CT24.cz", rdfcon);
+        downloadTimeline("ceskatelevize", rdfcon);
         downloadTimeline("Aktualne.cz", rdfcon);
+        downloadTimeline("SeznamZpravy", rdfcon);
+        downloadTimeline("sedlacekt", rdfcon);
+        downloadTimeline("lidovky.cz", rdfcon);
         
         rdfcon.closeConnection();
         

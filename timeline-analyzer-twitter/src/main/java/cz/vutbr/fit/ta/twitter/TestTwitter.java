@@ -23,6 +23,7 @@ public class TestTwitter
     public static void downloadTimeline(String username, RDFConnector rdfcon)
     {
         TwitterSource twitter = new TwitterSource(username);
+        twitter.setLimit(1000);
         Timeline timeline = twitter.getTimeline();
         
         System.out.println("Got timeline of " + twitter.getUsername() + " of " + timeline.getEntries().size() + " entries");
@@ -52,6 +53,10 @@ public class TestTwitter
         downloadTimeline("Aktualnecz", rdfcon);
         downloadTimeline("cermak", rdfcon);
         downloadTimeline("LudekStanek", rdfcon);
+        downloadTimeline("JanHrebejk", rdfcon);
+        downloadTimeline("Seznam_Zpravy", rdfcon);
+        downloadTimeline("atomsedlacek", rdfcon);
+        downloadTimeline("lidovky", rdfcon);
         
         rdfcon.closeConnection();
     }
