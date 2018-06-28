@@ -1,10 +1,10 @@
 
 <section class="timelines">
 	<form>
-		<span *ngFor="let t of timelines">
-			<input type="checkbox" name="{{t.sourceId}}" id="{{t.sourceId}}">
-			<label for="{{t.sourceId}}">{{t.label}}</label>
-		</span>
+		<div class="form-check form-check-inline" *ngFor="let t of timelines">
+			<input class="form-check-input" type="checkbox" name="{{t.sourceId}}" id="{{t.sourceId}}">
+			<label class="form-check-label" for="{{t.sourceId}}">{{t.label}}</label>
+		</div>
 	</form>
 </section>
 
