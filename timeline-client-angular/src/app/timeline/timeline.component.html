@@ -1,14 +1,21 @@
 
 <section class="timelines">
 	<form>
-		<div class="form-check form-check-inline" *ngFor="let t of timelines">
-			<input class="form-check-input" type="checkbox" name="{{t.sourceId}}" id="{{t.sourceId}}">
+		<div class="form-check form-check-inline" *ngFor="let t of timelines; let i = index">
+			<input class="form-check-input" type="checkbox" name="{{t.sourceId}}" id="{{t.sourceId}}" [checked]="t.selected"
+				(change)="t.selected = !t.selected; changeSelection();">
 			<label class="form-check-label" for="{{t.sourceId}}">{{t.label}}</label>
 		</div>
 	</form>
 </section>
 
+
+Selected:
+<div class="column" *ngFor="let t of selected">
+	Selected timeline {{t.label}}
+</div>
+
 <p>
-  timeline works, {{ timelines ? timelines.length : 0 }} components.
+  timeline works, {{selected.length}} components.
   
 </p>
