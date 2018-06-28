@@ -37,7 +37,7 @@ export class Rdf4jService {
   getTimelines(): Observable<Timeline[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes()
-      + 'SELECT ?sourceId ?label WHERE {?s rdf:type ta:Timeline . ?s ta:sourceId ?sourceId . ?s rdfs:label ?label}';
+      + 'SELECT ?uri ?sourceId ?label WHERE {?uri rdf:type ta:Timeline . ?uri ta:sourceId ?sourceId . ?uri rdfs:label ?label}';
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToTimelines(res)));
   }
 
@@ -62,11 +62,13 @@ export class Rdf4jService {
   private bindingsToTimelines(res): Timeline[] {
     const bindings = res.results.bindings;
     const ret = new Array<Timeline>();
+    console.log(bindings);
     for (let i = 0; i < bindings.length; i++) {
       const item = bindings[i];
-      const newitem = new Timeline;
-      newitem.label = item.label;
-      newitem.sourceId = item.sourceId;
+      const newitem = new Timeline();
+      newitem.label = item.label.value;
+      newitem.sourceId = item.sourceId.value;
+      newitem.uri = item.uri.value;
       ret.push(newitem);
     }
     return ret;

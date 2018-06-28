@@ -1,4 +1,5 @@
 import { Rdf4jService } from '../rdf4j.service';
+import { Timeline } from './timeline';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,15 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimelineComponent implements OnInit {
 
-  data: any[];
+  timelines: Timeline[];
 
   ngOnInit() {
-    console.log('Query!');
-    this.data = [ 'ahoj' ];
-    const q = 'PREFIX ta: <http://nesfit.github.io/ontology/ta.owl#> ' +
-            'SELECT ?s ?p ?o ?e ?time ' +
-            'WHERE {?s ?p ?o . ?s ?p "???" . ?e ta:contains ?s . ?e ta:timestamp ?time } ';
-    this.rdf.query(q).subscribe(data => this.data = data);
+    this.rdf.getTimelines().subscribe(data => this.timelines = data);
   }
 
   constructor(private rdf: Rdf4jService) { }

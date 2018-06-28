@@ -1,3 +1,14 @@
+
+<section class="timelines">
+	<form>
+		<span *ngFor="let t of timelines">
+			<input type="checkbox" name="{{t.sourceId}}" id="{{t.sourceId}}">
+			<label for="{{t.sourceId}}">{{t.label}}</label>
+		</span>
+	</form>
+</section>
+
 <p>
-  timeline works, {{ data ? data.length : 0 }} components.
+  timeline works, {{ timelines ? timelines.length : 0 }} components.
+  
 </p>
