@@ -21,9 +21,12 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/vis/dist/vis.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+            	"node_modules/vis/dist/vis.js"
+            ]
           },
           "configurations": {
             "production": {
