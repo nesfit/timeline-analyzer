@@ -1,3 +1,4 @@
+import { Entry } from './timeline/entry';
 import { Timeline } from './timeline/timeline';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
@@ -41,6 +42,16 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToTimelines(res)));
   }
 
+  getEntries(t: Timeline, startDate: Date, limit: number): Observable<Entry[]> {
+    const url = this.getRepositoryUrl();
+    const q = this.getPrefixes()
+      + 'SELECT ?uri ?time'
+      + ' WHERE { ?uri ta:timestamp ?time . ?uri rdf:type ta:Entry . ?uri ta:sourceTimeline <' + t.uri + '> }'
+      + ' ORDER BY ASC(?time)'
+      + ' LIMIT ' + limit;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));
+  }
+
   // =========================================================================
 
   private getRepositoryUrl(): string {
@@ -69,6 +80,21 @@ export class Rdf4jService {
       newitem.label = item.label.value;
       newitem.sourceId = item.sourceId.value;
       newitem.uri = item.uri.value;
+      ret.push(newitem);
+    }
+    return ret;
+  }
+
+  private bindingsToEntries(res, src: Timeline): Entry[] {
+    const bindings = res.results.bindings;
+    const ret = new Array<Entry>();
+    console.log(bindings);
+    for (let i = 0; i < bindings.length; i++) {
+      const item = bindings[i];
+      const newitem = new Entry();
+      newitem.uri = item.uri.value;
+      newitem.sourceTimeline = src;
+      newitem.timestamp = new Date(item.time.value);
       ret.push(newitem);
     }
     return ret;
