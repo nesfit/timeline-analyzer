@@ -45,8 +45,10 @@ export class Rdf4jService {
   getEntries(t: Timeline, startDate: Date, limit: number): Observable<Entry[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes()
-      + 'SELECT ?uri ?time'
-      + ' WHERE { ?uri ta:timestamp ?time . ?uri rdf:type ta:Entry . ?uri ta:sourceTimeline <' + t.uri + '> }'
+      + 'SELECT ?uri ?time ?id ?label'
+      + ' WHERE { ?uri ta:timestamp ?time . ?uri rdf:type ta:Entry . ?uri ta:sourceTimeline <' + t.uri + '>'
+      + ' . ?uri ta:sourceId ?id'
+      + ' . OPTIONAL { ?uri rdfs:label ?label } }'
       + ' ORDER BY ASC(?time)'
       + ' LIMIT ' + limit;
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));

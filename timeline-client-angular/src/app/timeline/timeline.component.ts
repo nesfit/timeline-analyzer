@@ -1,4 +1,5 @@
 import { Rdf4jService } from '../rdf4j.service';
+import { Entry } from './entry';
 import { Timeline } from './timeline';
 import { Component, OnInit } from '@angular/core';
 import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataItem } from 'vis';
@@ -25,6 +26,57 @@ export class TimelineComponent implements OnInit {
 
   constructor(private rdf: Rdf4jService) { }
 
+  /**
+   * Initializes the time line.
+   */
+  createTimeline() {
+    const container = document.getElementById('visualization');
+
+    // Create a DataSet (allows two way data-binding)
+    this.tldata = new DataSet([
+        {id: 1, group: 1, content: 'item 1', start: '2018-01-20'},
+        {id: 2, group: 1, content: 'item 2', start: '2018-01-14'},
+        {id: 3, group: 1, content: 'item 3', start: '2018-01-18'},
+        {id: 4, group: 1, content: 'item 4', start: '2018-01-16', end: '2013-04-19'},
+        {id: 5, group: 1, content: 'item 5', start: '2018-01-25'},
+        {id: 6, group: 1, content: 'item 6', start: '2018-01-27'}
+    ]);
+    this.tlgroups = new DataSet([/*{id: 1, content: 'all'}*/]);
+
+    // Configuration for the Timeline
+    const options = {
+      orientation: 'both',
+      type: 'point', // point, box, range
+      stack: false
+    };
+
+    // Create a Timeline
+    this.tlview = new TL(container, this.tldata, this.tlgroups, options);
+
+  }
+
+  /**
+   * Fills the list of available time lines.
+   */
+  setTimelines(data: Timeline[]) {
+    this.timelines = data;
+    this.updateTimeLine(null, false);
+  }
+
+  // ======================================================================================
+
+  /**
+   * Called when a timeline is selected or deselected
+   */
+  changeSelection(t: Timeline, newstate: boolean) {
+    console.log('SEL ' + t.sourceId + ' state ' + newstate);
+    this.updateSelected();
+    this.updateTimeLine(t, newstate);
+  }
+
+  /**
+   * Updates the list of selected timelines
+   */
   updateSelected(): Timeline[] {
     this.selected = [];
     for (const t of this.timelines) {
@@ -35,44 +87,40 @@ export class TimelineComponent implements OnInit {
     return this.selected;
   }
 
-  changeSelection() {
-    console.log('SEL');
-    this.updateSelected();
-    this.updateTimeLine();
+  /**
+   * Updates the timeline data according to the selection parametres.
+   * @param t the selected timeline or null for updating all
+   */
+  updateTimeLine(t: Timeline, newstate: boolean) {
+    // TODO: caching?
+    if (t != null) {
+      if (newstate) {
+        this.addTimeLine(t);
+      } else {
+        this.removeTimeLine(t);
+      }
+    }
   }
 
-  setTimelines(data: Timeline[]) {
-    this.timelines = data;
-    this.changeSelection();
+  addTimeLine(t: Timeline) {
+    // add group
+    this.tlgroups.add({id: t.sourceId, content: t.label});
+    // add entries
+    this.rdf.getEntries(t, null, 500).subscribe(data => this.addEntries(t, data));
   }
 
-  createTimeline() {
-    const container = document.getElementById('visualization');
-
-    // Create a DataSet (allows two way data-binding)
-    this.tldata = new DataSet([
-        {id: 1, group: 1, content: 'item 1', start: '2013-04-20'},
-        {id: 2, group: 1, content: 'item 2', start: '2013-04-14'},
-        {id: 3, group: 1, content: 'item 3', start: '2013-04-18'},
-        {id: 4, group: 1, content: 'item 4', start: '2013-04-16', end: '2013-04-19'},
-        {id: 5, group: 1, content: 'item 5', start: '2013-04-25'},
-        {id: 6, group: 1, content: 'item 6', start: '2013-04-27'}
-    ]);
-    this.tlgroups = new DataSet([{id: 1, content: 'all'}]);
-
-    // Configuration for the Timeline
-    const options = {};
-
-    // Create a Timeline
-    this.tlview = new TL(container, this.tldata, this.tlgroups, options);
-
+  addEntries(t: Timeline, data: Entry[]) {
+    console.log('adding ' + data.length + ' entries');
+    for (let i = 0; i < data.length; i++) {
+      const e = data[i];
+      const text = '<small>' + e.timestamp.toLocaleDateString() + '</small>';
+      this.tldata.add({id: e.sourceId, group: t.sourceId, content: text, start: e.timestamp.toISOString() });
+    }
+    this.tldata.flush();
   }
 
-  updateTimeLine() {
-    const iid = this.tldata.length + 100;
-    console.log('adding ' + iid);
-    this.tldata.add({id: iid, group: 1, content: 'XXX', start: '2013-04-' + (iid - 90)});
-    // TODO: create groups from selected time lines, add the data (caching?)
+  removeTimeLine(t: Timeline) {
+    this.tlgroups.remove(t.sourceId);
   }
 
 }

@@ -1,17 +1,57 @@
 
-<section class="timelines">
-	<form>
-		<div class="form-check form-check-inline" *ngFor="let t of timelines; let i = index">
-			<input class="form-check-input" type="checkbox" name="{{t.sourceId}}" id="{{t.sourceId}}" [checked]="t.selected"
-				(change)="t.selected = !t.selected; changeSelection();">
-			<label class="form-check-label" for="{{t.sourceId}}">{{t.label}}</label>
+<div id="tools" class="container">
+
+	<div id="accordion">
+		<div class="card">
+			<div class="card-header" id="headingTwo">
+				<h5 class="mb-0">
+					<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+					Date/Time</button>
+				</h5>
+			</div>
+			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"	data-parent="#accordion">
+				<div class="card-body">
+					
+				</div>
+			</div>
 		</div>
-	</form>
-</section>
+		<div class="card">
+			<div class="card-header" id="headingOne">
+				<h5 class="mb-0">
+					<button class="btn btn-link" data-toggle="collapse"	data-target="#collapseOne" aria-expanded="true"	aria-controls="collapseOne">
+					Time lines</button>
+				</h5>
+			</div>
+			<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+				<div class="card-body">
+					<form>
+						<div class="form-check form-check-inline" *ngFor="let t of timelines; let i = index">
+							<input class="form-check-input" type="checkbox"
+								name="{{t.sourceId}}" id="{{t.sourceId}}" [checked]="t.selected"
+								(change)="t.selected = !t.selected; changeSelection(t, t.selected);">
+							<label class="form-check-label" for="{{t.sourceId}}">{{t.label}}</label>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header" id="headingThree">
+				<h5 class="mb-0">
+					<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+					Resources</button>
+				</h5>
+			</div>
+			<div id="collapseThree" class="collapse" aria-labelledby="headingThree"	data-parent="#accordion">
+				<div class="card-body">
+					Cosik
+				</div>
+			</div>
+		</div>
+	</div>
 
-
-Selected:
-<div class="column" *ngFor="let t of selected">
+	Selected:
+	<div class="column" *ngFor="let t of selected">
 	Selected timeline {{t.label}}
 </div>
 
@@ -19,6 +59,8 @@ Selected:
   timeline works, {{selected.length}}A components.
   
 </p>
+</div>
+
 
 <div id="visualization"></div>
 
