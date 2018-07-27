@@ -11,7 +11,32 @@
 			</div>
 			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"	data-parent="#accordion">
 				<div class="card-body">
-					
+					<form class="form-inline">
+					  <div class="form-group">
+					    <label for="fromdate">From:</label>
+					    <div class="input-group">
+					      <input id="fromdate" class="form-control" placeholder="yyyy-mm-dd"
+					             name="fromdate" [(ngModel)]="fromdate" ngbDatepicker #df="ngbDatepicker">
+					      <div class="input-group-append">
+					        <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
+					          <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+					        </button>
+					      </div>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="todate">To:</label>
+					    <div class="input-group">
+					      <input id="todate" class="form-control" placeholder="yyyy-mm-dd"
+					             name="todate" [(ngModel)]="todate" ngbDatepicker #dt="ngbDatepicker">
+					      <div class="input-group-append">
+					        <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
+					          <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+					        </button>
+					      </div>
+					    </div>
+					  </div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -56,7 +81,8 @@
 </div>
 
 <p>
-  timeline works, {{selected.length}}A components.
+  timeline works, {{selected.length}}A components {{fromdate.day}}.
+  
   
 </p>
 </div>

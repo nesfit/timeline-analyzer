@@ -2,6 +2,7 @@ import { Rdf4jService } from '../rdf4j.service';
 import { Entry } from './entry';
 import { Timeline } from './timeline';
 import { Component, OnInit } from '@angular/core';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataItem } from 'vis';
 
 @Component({
@@ -11,6 +12,8 @@ import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataIt
 })
 export class TimelineComponent implements OnInit {
 
+  fromdate: NgbDateStruct;
+  todate: NgbDateStruct;
   timelines: Timeline[];
   selected: Timeline[];
   tlview: TL;

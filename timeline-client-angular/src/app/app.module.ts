@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { TimelineComponent } from './timeline/timeline.component';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -17,7 +17,7 @@ import { TimelineComponent } from './timeline/timeline.component';
     TimelineComponent
   ],
   imports: [
-    // NgbModule.forRoot(),
+    NgbModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpClientModule,
