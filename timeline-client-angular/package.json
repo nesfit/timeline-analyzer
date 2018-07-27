@@ -21,10 +21,12 @@
     "@angular/platform-browser": "6.0.6",
     "@angular/platform-browser-dynamic": "6.0.6",
     "@angular/router": "6.0.6",
-    "@ng-bootstrap/ng-bootstrap": "^2.1.2",
+    "@ng-bootstrap/ng-bootstrap": "^2.2.1",
     "@types/vis": "^4.21.5",
     "bootstrap": "^4.1.1",
     "core-js": "^2.4.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
     "rxjs": "^6.2.1",
     "vis": "^4.21.0",
     "zone.js": "^0.8.26"
