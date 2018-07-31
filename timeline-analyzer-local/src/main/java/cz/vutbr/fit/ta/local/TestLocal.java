@@ -28,7 +28,7 @@ public class TestLocal
     public static void main(String[] args)
     {
         try {
-            final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
+            final String REPO = "http://localhost:8080/rdf4j-server/repositories/test2";
 
             OS os = new OS();
             System.out.println(os.toString());

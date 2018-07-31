@@ -63,9 +63,15 @@ public class LocalProfileSource extends TimelineSource
             TextContent text = factory.createTextContent(item.getSourceId());
             String title = (item.getTitle() == null) ? "" : item.getTitle();
             if (item.getType() == Type.VISIT)
+            {
+                entry.setTags("visit");
                 text.setText("Visited " + title);
+            }
             else
+            {
+                entry.setTags("download");
                 text.setText("Downloaded to " + title);
+            }
             entry.getContains().add(text);
             
             if (item.getUrl() != null)
@@ -73,6 +79,14 @@ public class LocalProfileSource extends TimelineSource
                 URLContent urlc = factory.createURLContent(item.getSourceId());
                 urlc.setSourceUrl(item.getUrl().toString());
                 urlc.setText(item.getUrl().toString());
+                entry.getContains().add(urlc);
+            }
+            //for download entries: add the target url
+            if (item.getType() == Type.DOWNLOAD && item.getTitle() != null)
+            {
+                URLContent urlc = factory.createURLContent(item.getSourceId() + "-target");
+                urlc.setSourceUrl(item.getTitle());
+                urlc.setText(item.getTitle());
                 entry.getContains().add(urlc);
             }
             
