@@ -127,6 +127,17 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#tags -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#tags">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Entry"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Tags specifying the properties of the entry (e.g. &apos;download&apos;, &apos;visit&apos;, etc.)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#text -->
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#text">

@@ -33,6 +33,14 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 	private String sourceId;
 
 	/**
+	 * Tags specifying the properties of the entry (e.g. 'download', 'visit',
+	 * etc.).
+	 * <p>
+	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#tags>}
+	 */
+	private String tags;
+
+	/**
 	 * Entry creation timestamp.
 	 * <p>
 	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#timestamp>}
@@ -70,6 +78,14 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 		this.sourceId = sourceId;
 	}
 
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
 	public java.util.Date getTimestamp() {
 		return timestamp;
 	}
@@ -84,6 +100,7 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 		addObject(model, TA.sourceTimeline, sourceTimeline);
 		addCollectionWithData(model, TA.contains, contains);
 		addValue(model, TA.sourceId, sourceId);
+		addValue(model, TA.tags, tags);
 		addValue(model, TA.timestamp, timestamp);
 	}
 
@@ -113,6 +130,7 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 			contains.add(item);
 		}
 		sourceId = loadStringValue(m, TA.sourceId);
+		tags = loadStringValue(m, TA.tags);
 		timestamp = loadDateValue(m, TA.timestamp);
 	}
 }

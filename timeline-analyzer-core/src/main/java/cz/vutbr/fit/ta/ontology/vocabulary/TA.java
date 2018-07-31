@@ -124,6 +124,16 @@ public class TA {
 	public static final IRI sourceUrl;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#tags}.
+	 * <p>
+	 * Tags specifying the properties of the entry (e.g. 'download', 'visit',
+	 * etc.)
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#tags">tags</a>
+	 */
+	public static final IRI tags;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#text}.
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#text">text</a>
@@ -191,6 +201,7 @@ public class TA {
 		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");
 		sourceTimeline = factory.createIRI(TA.NAMESPACE, "sourceTimeline");
 		sourceUrl = factory.createIRI(TA.NAMESPACE, "sourceUrl");
+		tags = factory.createIRI(TA.NAMESPACE, "tags");
 		text = factory.createIRI(TA.NAMESPACE, "text");
 		TextContent = factory.createIRI(TA.NAMESPACE, "TextContent");
 		Timeline = factory.createIRI(TA.NAMESPACE, "Timeline");
