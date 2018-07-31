@@ -12,17 +12,29 @@ import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataIt
 })
 export class TimelineComponent implements OnInit {
 
+  // selected dates
   fromdate: NgbDateStruct;
   todate: NgbDateStruct;
+  // used time lines
   timelines: Timeline[];
+  // selected time lines
   selected: Timeline[];
+  mindate: Date;
+  maxdate: Date;
+  // displated time line and its data
   tlview: TL;
   tldata: DataSet<DataItem>;
   tlgroups: DataSet<DataGroup>;
+  tloptions: any;
 
   ngOnInit() {
+    const now = new Date();
+    this.fromdate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
+    this.todate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
     this.timelines = [];
     this.selected = [];
+    this.mindate = new Date();
+    this.maxdate = new Date();
     this.rdf.getTimelines().subscribe(data => this.setTimelines(data));
     this.createTimeline();
   }
@@ -47,14 +59,14 @@ export class TimelineComponent implements OnInit {
     this.tlgroups = new DataSet([/*{id: 1, content: 'all'}*/]);
 
     // Configuration for the Timeline
-    const options = {
+    this.tloptions = {
       orientation: 'both',
-      type: 'point', // point, box, range
+      type: 'box', // point, box, range
       stack: false
     };
 
     // Create a Timeline
-    this.tlview = new TL(container, this.tldata, this.tlgroups, options);
+    this.tlview = new TL(container, this.tldata, this.tlgroups, this.tloptions);
 
   }
 
@@ -63,7 +75,14 @@ export class TimelineComponent implements OnInit {
    */
   setTimelines(data: Timeline[]) {
     this.timelines = data;
-    this.updateTimeLine(null, false);
+    const selcnt = 5;
+    for (let i = 0; i < selcnt; i++) {
+      this.timelines[i].selected = true;
+    }
+    this.updateSelected();
+    for (let i = 0; i < selcnt; i++) {
+      this.addTimeLine(this.timelines[i]);
+    }
   }
 
   // ======================================================================================
@@ -72,7 +91,7 @@ export class TimelineComponent implements OnInit {
    * Called when a timeline is selected or deselected
    */
   changeSelection(t: Timeline, newstate: boolean) {
-    console.log('SEL ' + t.sourceId + ' state ' + newstate);
+    // console.log('SEL ' + t.sourceId + ' state ' + newstate);
     this.updateSelected();
     this.updateTimeLine(t, newstate);
   }
@@ -87,6 +106,8 @@ export class TimelineComponent implements OnInit {
         this.selected.push(t);
       }
     }
+    this.rdf.getMinDate(this.selected).subscribe(date => this.mindate = date);
+    this.rdf.getMaxDate(this.selected).subscribe(date => this.maxdate = date);
     return this.selected;
   }
 
@@ -119,11 +140,38 @@ export class TimelineComponent implements OnInit {
       const text = '<small>' + e.timestamp.toLocaleDateString() + '</small>';
       this.tldata.add({id: e.sourceId, group: t.sourceId, content: text, start: e.timestamp.toISOString() });
     }
-    this.tldata.flush();
+    // this.tldata.flush();
   }
 
   removeTimeLine(t: Timeline) {
     this.tlgroups.remove(t.sourceId);
+  }
+
+  // ======================================================================================
+
+  useMinDate() {
+    this.fromdate = this.fromDate(this.mindate);
+    this.updateSpan();
+  }
+
+  useMaxDate() {
+    this.todate = this.fromDate(this.maxdate);
+    this.updateSpan();
+  }
+
+  updateSpan() {
+    console.log('update span');
+    this.tloptions.start = this.toDate(this.fromdate);
+    this.tloptions.end = this.toDate(this.todate);
+    this.tlview.setOptions(this.tloptions);
+  }
+
+  toDate(date: NgbDateStruct) {
+    return new Date(date.year, date.month - 1, date.day);
+  }
+
+  fromDate(now: Date) {
+    return { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
   }
 
 }

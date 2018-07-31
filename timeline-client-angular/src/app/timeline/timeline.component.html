@@ -9,14 +9,24 @@
 					Date/Time</button>
 				</h5>
 			</div>
-			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"	data-parent="#accordion">
+			<div id="collapseTwo" aria-labelledby="headingTwo"	data-parent="#accordion">
 				<div class="card-body">
+					<form class="form-inline">
+					  <div class="form-group">
+						<p>Selected time lines span from 
+							<a [routerLink]="" (click)="useMinDate()">{{mindate | date:'yyyy-MM-dd'}}</a>
+							to 
+							<a [routerLink]="" (click)="useMaxDate()">{{maxdate | date:'yyyy-MM-dd'}}</a>
+						</p>
+				      </div>
+				    </form>
 					<form class="form-inline">
 					  <div class="form-group">
 					    <label for="fromdate">From:</label>
 					    <div class="input-group">
 					      <input id="fromdate" class="form-control" placeholder="yyyy-mm-dd"
-					             name="fromdate" [(ngModel)]="fromdate" ngbDatepicker #df="ngbDatepicker">
+					             name="fromdate" [(ngModel)]="fromdate" ngbDatepicker #df="ngbDatepicker"
+					             (ngModelChange)="updateSpan()">
 					      <div class="input-group-append">
 					        <button class="btn btn-outline-secondary" (click)="df.toggle()" type="button">
 					          <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
@@ -28,7 +38,8 @@
 					    <label for="todate">To:</label>
 					    <div class="input-group">
 					      <input id="todate" class="form-control" placeholder="yyyy-mm-dd"
-					             name="todate" [(ngModel)]="todate" ngbDatepicker #dt="ngbDatepicker">
+					             name="todate" [(ngModel)]="todate" ngbDatepicker #dt="ngbDatepicker"
+					             (ngModelChange)="updateSpan()">
 					      <div class="input-group-append">
 					        <button class="btn btn-outline-secondary" (click)="dt.toggle()" type="button">
 					          <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
@@ -75,17 +86,8 @@
 		</div>
 	</div>
 
-	Selected:
-	<div class="column" *ngFor="let t of selected">
-	Selected timeline {{t.label}}
 </div>
 
-<p>
-  timeline works, {{selected.length}}A components {{fromdate.day}}.
-  
-  
-</p>
-</div>
 
 
 <div id="visualization"></div>
