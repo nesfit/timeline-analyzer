@@ -35,6 +35,8 @@ public class FirefoxProfile extends Profile
     private static final String HISTORY_TABLE = "moz_historyvisits";
     private static final String DOWNLOADS_FILE = "places.sqlite";
     private static final String DOWNLOADS_TABLE = "moz_annos";
+    private static final String ATTRIBUTES_TABLE = "moz_anno_attributes";
+    private static final String DOWNLOAD_URI_ANNOTATION = "downloads/destinationFileURI";
     
     private List<Cookie> cookies;
     private List<Place> places;
@@ -106,6 +108,35 @@ public class FirefoxProfile extends Profile
         File dbFile = new File(getPath(), DOWNLOADS_FILE);
         if (dbFile.exists())
         {
+            // Determine the 'downloads/destinationFileURI' annotation type
+            SqliteReader<Integer> areader = new SqliteReader<>();
+            List<Integer> annos = areader.readItemsFromTable(dbFile, ATTRIBUTES_TABLE, new SqlItemFactory<Integer>()
+            {
+                @Override
+                public void readItemsFromCursor(ISqlJetCursor cursor, List<Integer> dest) throws NumberFormatException, SqlJetException
+                {
+                    try {
+                        if (!cursor.eof()) 
+                        {
+                            do 
+                            {
+                                int id = (int) cursor.getInteger(0);
+                                String name = cursor.getString(1);
+                                if (DOWNLOAD_URI_ANNOTATION.equals(name))
+                                    dest.add(id);
+                            } while (cursor.next());
+                        }
+                    } finally {
+                        cursor.close();
+                    }
+                }
+            });
+            int dnlattr = !annos.isEmpty() ? annos.get(0) : 8;
+            if (annos.isEmpty())
+                log.error("Couldn't determine {} annotation type, using guessed value of 8", DOWNLOAD_URI_ANNOTATION);
+            else
+                log.info("{} annotation is {}", DOWNLOAD_URI_ANNOTATION, dnlattr);
+            // Find the download records
             SqliteReader<HistoryItem> reader = new SqliteReader<>();
             return reader.readItemsFromTable(dbFile, DOWNLOADS_TABLE, new SqlItemFactory<HistoryItem>()
             {
@@ -128,9 +159,9 @@ public class FirefoxProfile extends Profile
                                 int type = (int) cursor.getInteger(2);
                                 Date visited = new Date();
                                 visited.setTime(cursor.getInteger(8) / 1000);
-                                //System.out.println(type + " " + visited + " " + placeId + " " + content);
+                                System.out.println(type + " " + visited + " " + placeId + " " + content);
                                 
-                                if (visited.after(fromDate) && visited.before(toDate) && type == 8) 
+                                if (visited.after(fromDate) && visited.before(toDate) && type == dnlattr) 
                                 {
                                     Place place = getPlaces().get(placeId);
                                     HistoryItem curItem = new HistoryItem(id, HistoryItem.Type.DOWNLOAD, visited, place.url);
