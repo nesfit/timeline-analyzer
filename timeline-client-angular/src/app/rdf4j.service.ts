@@ -94,6 +94,28 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));
   }
 
+  getURLPrefixes(): Observable<string[]> {
+    const url = this.getRepositoryUrl();
+    const q = this.getPrefixes()
+      + 'SELECT DISTINCT (STRBEFORE(?url,":") as ?s)'
+      + ' WHERE { ?u rdf:type ta:URLContent . ?u ta:sourceUrl ?url }';
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
+  }
+
+  getURLsFiltered(prefix: string, contents: string): Observable<string[]> {
+    const url = this.getRepositoryUrl();
+    let filter = 'contains(?s, "' + contents + '")';
+    if (prefix !== '*') {
+      filter += ' && strStarts(?s, "' + prefix + '")';
+    }
+    const q = this.getPrefixes()
+      + 'SELECT DISTINCT ?s'
+      + ' WHERE { ?u rdf:type ta:URLContent . ?u ta:sourceUrl ?s'
+      + ' FILTER(' + filter + ')}'
+      + ' LIMIT 20';
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
+  }
+
   // =========================================================================
 
   private getRepositoryUrl(): string {
@@ -111,6 +133,15 @@ export class Rdf4jService {
   }
 
   // =========================================================================
+
+  private bindingsToStrings(res): string[] {
+    const bindings = res.results.bindings;
+    const ret = new Array<string>();
+    for (let i = 0; i < bindings.length; i++) {
+      ret.push(bindings[i].s.value);
+    }
+    return ret;
+  }
 
   private bindingsToDate(res): Date {
     const bindings = res.results.bindings;

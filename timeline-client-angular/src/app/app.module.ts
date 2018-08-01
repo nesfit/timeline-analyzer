@@ -9,12 +9,14 @@ import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { TimelineComponent } from './timeline/timeline.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ResourcesComponent } from './resources/resources.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TimelineComponent
+    TimelineComponent,
+    ResourcesComponent
   ],
   imports: [
     NgbModule.forRoot(),

@@ -1,0 +1,32 @@
+
+<div class="panel panel-default">
+<div class="panel-heading">
+	<div class="form-inline">
+		<div class="form-group">
+			<label for="prefix">Prefix</label>
+			<select id="prefix" [(ngModel)]="urlPrefix" (change)="filterChanged()" class="form-control">
+				<option value="*" selected="selected">*</option>
+				<option *ngFor="let prefix of urlPrefixes" value="{{prefix}}">{{prefix}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<input type="text" [(ngModel)]="urlFilter" (keyup)="filterChanged()" class="search-query form-control"
+				id="projects_search" placeholder="Search">
+		</div>
+	</div>
+</div>
+<div class="panel-body">
+<table class="table table-stripped table-bordered">
+	<thead>
+		<tr>
+			<th>URL</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let url of urls">
+			<td><a routerLink="">{{url}}</a></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
