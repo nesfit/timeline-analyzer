@@ -5,7 +5,7 @@
 		<div class="form-group">
 			<label for="prefix">Prefix</label>
 			<select id="prefix" [(ngModel)]="urlPrefix" (change)="filterChanged()" class="form-control">
-				<option value="*" selected="selected">*</option>
+				<option value="*">*</option>
 				<option *ngFor="let prefix of urlPrefixes" value="{{prefix}}">{{prefix}}</option>
 			</select>
 		</div>
@@ -24,7 +24,7 @@
 	</thead>
 	<tbody>
 		<tr *ngFor="let url of urls">
-			<td><a routerLink="">{{url}}</a></td>
+			<td><a [routerLink]="" (click)="showURL(url)">{{url}}</a></td>
 		</tr>
 	</tbody>
 </table>

@@ -116,6 +116,23 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
   }
 
+  getEntriesForURL(url: string): Observable<Entry[]> {
+    const repo = this.getRepositoryUrl();
+    const q = this.getPrefixes()
+      + 'SELECT DISTINCT ?uri ?time ?id ?label ?timeline ?tlid'
+      + ' WHERE { ?uri ta:timestamp ?time'
+      + ' . ?uri ta:sourceTimeline ?timeline'
+      + ' . ?timeline rdfs:label ?tlid'
+      + ' . ?uri rdf:type ta:Entry'
+      + ' . ?uri ta:sourceId ?id'
+      + ' . ?uri ta:contains ?rcont'
+      + ' . ?rcont ta:sourceUrl ?url'
+      + ' . OPTIONAL { ?uri rdfs:label ?label }'
+      + '   FILTER(?url = "file:///home/xvltav13/Downloads/orgfit_en.png")'
+      + ' } ORDER BY ASC(?time)';
+    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, null)));
+  }
+
   // =========================================================================
 
   private getRepositoryUrl(): string {
@@ -175,8 +192,15 @@ export class Rdf4jService {
       const item = bindings[i];
       const newitem = new Entry();
       newitem.uri = item.uri.value;
-      newitem.sourceTimeline = src;
       newitem.timestamp = new Date(item.time.value);
+      if (src) {
+        newitem.sourceTimeline = src;
+      } else {
+        const tl = new Timeline();
+        tl.uri = item.timeline.value;
+        tl.label = item.tlid.value;
+        newitem.sourceTimeline = tl;
+      }
       ret.push(newitem);
     }
     return ret;

@@ -1,0 +1,39 @@
+
+Entry contents by URL
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ta: <http://nesfit.github.io/ontology/ta.owl#>
+PREFIX tares: <http://nesfit.github.io/resource/ta#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?time ?tlid ?entry ?rcont ?cont ?url
+WHERE {
+  ?entry ta:timestamp ?time
+  . ?entry ta:sourceTimeline ?timeline
+  . ?timeline rdfs:label ?tlid
+  . ?entry rdf:type ta:Entry
+  . ?entry ta:contains ?rcont
+  . ?entry ta:contains ?cont
+  . ?rcont ta:sourceUrl ?url
+    FILTER(?url = "file:///home/xvltav13/Downloads/orgfit_en.png")
+}
+ORDER BY ASC(?time) ASC(?entry)
+
+
+Entries for given URL
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ta: <http://nesfit.github.io/ontology/ta.owl#>
+PREFIX tares: <http://nesfit.github.io/resource/ta#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?uri ?time ?id ?label ?timeline ?tlid
+WHERE { ?uri ta:timestamp ?time
+. ?uri ta:sourceTimeline ?timeline
+. ?timeline rdfs:label ?tlid
+. ?uri rdf:type ta:Entry
+. ?uri ta:sourceId ?id
+. ?uri ta:contains ?rcont
+. ?rcont ta:sourceUrl ?url
+. OPTIONAL { ?uri rdfs:label ?label }
+  FILTER(?url = "file:///home/xvltav13/Downloads/orgfit_en.png")
+}
+ORDER BY ASC(?time)
