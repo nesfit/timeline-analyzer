@@ -17,6 +17,9 @@ export class ResourcesComponent implements OnInit {
   
   //entry display
   entries: Entry[];
+  timelineUris: number[];
+  timelineLabels: string[];
+  contents: any[];
   
   constructor(private rdf: Rdf4jService) {}
 
@@ -36,12 +39,35 @@ export class ResourcesComponent implements OnInit {
   }
   
   showURL(url: string): void {
+    console.log(url);
     this.rdf.getEntriesForURL(url).subscribe(data => this.showEntries(data));
   }
   
   showEntries(entries: Entry[]): void {
     this.entries = entries;
     console.log(entries);
+    //find different timelines
+    this.timelineUris = [];
+    this.timelineLabels = [];
+    let last = 0;
+    for (let i = 0; i < entries.length; i++) {
+      const uri = entries[i].sourceTimeline.uri;
+      if (this.timelineUris[uri] == undefined) {
+        this.timelineLabels[last] = entries[i].sourceTimeline.label;
+        this.timelineUris[uri] = last++;
+      }
+    }
+    console.log(this.timelineUris);
+    console.log(this.timelineLabels);
+    //create contents
+    this.contents = [];
+    for (let i = 0; i < entries.length; i++) {
+      let cont = {col: 0; time: null; contains: []}
+      cont.col = this.timelineUris[entries[i].sourceTimeline.uri];
+      cont.time = entries[i].timestamp;
+      this.rdf.getContentsForEntry(entries[i]).subscribe(data => cont.contains = data);
+      this.contents.push(cont);
+    }
   }
   
 }

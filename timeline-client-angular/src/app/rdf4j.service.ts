@@ -128,9 +128,21 @@ export class Rdf4jService {
       + ' . ?uri ta:contains ?rcont'
       + ' . ?rcont ta:sourceUrl ?url'
       + ' . OPTIONAL { ?uri rdfs:label ?label }'
-      + '   FILTER(?url = "file:///home/xvltav13/Downloads/orgfit_en.png")'
+      + '   FILTER(?url = "' + url + '")'
       + ' } ORDER BY ASC(?time)';
     return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, null)));
+  }
+
+  getContentsForEntry(entry: Entry): Observable<any[]> {
+    const repo = this.getRepositoryUrl();
+    const q = this.getPrefixes()
+      + 'SELECT ?s ?text ?url'
+      + ' WHERE {'
+      + '   <' + entry.uri + '> ta:contains ?s'
+      + '     . OPTIONAL { ?s ta:text ?text }'
+      + '   . OPTIONAL { ?s ta:sourceUrl ?url }'
+      + ' }';
+    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToArray(res)));
   }
 
   // =========================================================================

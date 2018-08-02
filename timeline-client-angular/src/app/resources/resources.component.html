@@ -16,17 +16,45 @@
 	</div>
 </div>
 <div class="panel-body">
-<table class="table table-stripped table-bordered">
-	<thead>
-		<tr>
-			<th>URL</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let url of urls">
-			<td><a [routerLink]="" (click)="showURL(url)">{{url}}</a></td>
-		</tr>
-	</tbody>
-</table>
+	<table class="table table-stripped table-bordered">
+		<thead>
+			<tr>
+				<th>URL</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let url of urls">
+				<td><a [routerLink]="" (click)="showURL(url)">{{url}}</a></td>
+			</tr>
+		</tbody>
+	</table>
 </div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+	<table class="table table-stripped table-bordered">
+		<thead>
+			<tr *ngFor="let label of timelineLabels">
+				<th>{{label}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let cont of contents">
+				<td *ngFor="let label of timelineLabels; let i = index">
+					<div *ngIf="cont.col == i; else empty">
+						<time>{{cont.time}}</time>
+						<ul>
+							<li *ngFor="let c of cont.contains">
+								<span>{{c.text}} </span>
+								<a *ngIf="c.url != undefined" [routerLink]="" (click)="showURL(c.url)">{{c.url}}</a>
+							</li>
+						</ul>
+					</div>
+					<ng-template #empty>--</ng-template>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
 </div>
