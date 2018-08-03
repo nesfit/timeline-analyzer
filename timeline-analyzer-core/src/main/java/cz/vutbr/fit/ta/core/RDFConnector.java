@@ -1,5 +1,6 @@
 package cz.vutbr.fit.ta.core;
 
+import java.io.Closeable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
  * 
  * @author burgetr
  */
-public class RDFConnector
+public class RDFConnector implements Closeable
 {
 	protected String endpointUrl;
 	protected RepositoryConnection connection;
@@ -64,7 +65,8 @@ public class RDFConnector
      * Closes the current connection.
      * @throws RepositoryException
      */
-    public void closeConnection() throws RepositoryException
+    @Override
+    public void close() throws RepositoryException
     {
         if (connection != null)
             connection.close();
