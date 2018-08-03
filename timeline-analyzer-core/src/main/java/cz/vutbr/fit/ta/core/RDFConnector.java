@@ -11,6 +11,8 @@ import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.query.GraphQuery;
+import org.eclipse.rdf4j.query.GraphQueryResult;
 import org.eclipse.rdf4j.query.MalformedQueryException;
 import org.eclipse.rdf4j.query.QueryEvaluationException;
 import org.eclipse.rdf4j.query.QueryLanguage;
@@ -133,7 +135,7 @@ public class RDFConnector implements Closeable
 	}
 	
 	/**
-	 * Executes a SPARQL query and returns the result.
+	 * Executes a SPARQL SELECT query and returns the result.
 	 * @param queryString
 	 * @return
 	 * @throws RepositoryException
@@ -148,4 +150,20 @@ public class RDFConnector implements Closeable
     	return tqr;
 	}
 	
+    /**
+     * Executes a SPARQL CONSTRUCT query and returns the graph result.
+     * @param queryString
+     * @return
+     * @throws RepositoryException
+     * @throws MalformedQueryException
+     * @throws QueryEvaluationException 
+     */
+    public GraphQueryResult executeConstructQuery(String queryString) throws RepositoryException, MalformedQueryException, QueryEvaluationException 
+    {
+        String qs = getPrefixString() + queryString;
+        GraphQuery query = this.connection.prepareGraphQuery(QueryLanguage.SPARQL, qs);
+        GraphQueryResult tqr = query.evaluate();
+        return tqr;
+    }
+    
 }
