@@ -59,7 +59,7 @@ public class TestLocal
                 System.out.println("Start at " + (new Date()));
                 RDFConnector rdfcon = new RDFConnectorSesame(REPO);
                 rdfcon.add(model);
-                rdfcon.closeConnection();
+                rdfcon.close();
                 System.out.println("Finished at " + (new Date()));
                 
             }

@@ -71,7 +71,7 @@ public class TestFB
         downloadTimeline("sedlacekt", rdfcon);
         downloadTimeline("lidovky.cz", rdfcon);
         
-        rdfcon.closeConnection();
+        rdfcon.close();
         
         
         //testWithApp();

@@ -28,7 +28,7 @@ public class AnalysisTest
         la.findSharedURLs();
         
         la.saveModel();
-        repo.closeConnection();
+        repo.close();
     }
 
 }
