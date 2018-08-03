@@ -37,3 +37,45 @@ WHERE { ?uri ta:timestamp ?time
   FILTER(?url = "file:///home/xvltav13/Downloads/orgfit_en.png")
 }
 ORDER BY ASC(?time)
+
+
+Referenced image URLs
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ta: <http://nesfit.github.io/ontology/ta.owl#>
+SELECT ?img ?url ?content
+WHERE {
+  ?img ta:sourceUrl ?url
+    . ?img rdf:type ta:Image
+	. ?entry ta:contains ?content
+    . ?content rdf:type ta:URLContent
+    . ?content ta:sourceUrl ?url
+}
+
+Common URLs mentioned in different URLContent parts
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ta: <http://nesfit.github.io/ontology/ta.owl#>
+SELECT ?url ?entr ?cont ?entry ?content
+WHERE {
+  ?cont rdf:type ta:URLContent
+  . ?content rdf:type ta:URLContent
+  . ?cont ta:sourceUrl ?url
+  . ?content ta:sourceUrl ?url
+  . ?entr ta:contains ?cont
+  . ?entry ta:contains ?content
+  FILTER ( ?entr != ?entry )
+}
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ta: <http://nesfit.github.io/ontology/ta.owl#>
+CONSTRUCT {  ?cont ta:sameURL ?entry }
+WHERE {
+  ?cont rdf:type ta:URLContent
+  . ?content rdf:type ta:URLContent
+  . ?cont ta:sourceUrl ?url
+  . ?content ta:sourceUrl ?url
+  . ?entr ta:contains ?cont
+  . ?entry ta:contains ?content
+  FILTER ( ?entr != ?entry )
+}

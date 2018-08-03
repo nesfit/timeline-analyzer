@@ -1,0 +1,9 @@
+table.entries time {
+	font-size: 80%;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+table.entries td {
+	min-width: 30em;
+}

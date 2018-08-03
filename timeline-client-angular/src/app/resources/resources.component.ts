@@ -62,7 +62,7 @@ export class ResourcesComponent implements OnInit {
     //create contents
     this.contents = [];
     for (let i = 0; i < entries.length; i++) {
-      let cont = {col: 0; time: null; contains: []}
+      let cont = {col: 0, time: null, contains: []}
       cont.col = this.timelineUris[entries[i].sourceTimeline.uri];
       cont.time = entries[i].timestamp;
       this.rdf.getContentsForEntry(entries[i]).subscribe(data => cont.contains = data);
