@@ -156,6 +156,39 @@ public class RDFConnector implements Closeable
         }
     }
     
+    public void add(GraphQueryResult m, Resource context)
+    {
+        try {
+            this.connection.begin();
+            this.connection.add(m, context);
+            this.connection.commit();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void remove(GraphQueryResult statements)
+    {
+        try {
+            this.connection.begin();
+            this.connection.remove(statements);
+            this.connection.commit();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void remove(Model statements)
+    {
+        try {
+            this.connection.begin();
+            this.connection.remove(statements);
+            this.connection.commit();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+    }
+    
 	/**
 	 * Executes a SPARQL SELECT query and returns the result.
 	 * @param queryString

@@ -6,14 +6,18 @@
 package cz.vutbr.fit.ta.links;
 
 import org.eclipse.rdf4j.model.IRI;
+import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
+import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.GraphQueryResult;
 import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.repository.RepositoryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,6 +126,38 @@ public class URLLinkAnalyzer
         log.debug("findSharedURLs: found {} links", ret.size());
         model.addAll(ret);
         return ret;
+    }
+    
+    public void normalizeURLs()
+    {
+        ValueFactory vf = SimpleValueFactory.getInstance();
+        
+        RepositoryResult<Statement> r1 = repo.getConnection().getStatements(null, TA.sourceUrl, null);
+        
+        Model toDelete = new LinkedHashModel();
+        Model toInsert = new LinkedHashModel();
+        while (r1.hasNext()) 
+        {
+            final Statement st = r1.next();
+            if (st.getObject() instanceof Literal && st.getObject().stringValue().startsWith("https:"))
+            {
+                toDelete.add(st);
+                
+                String url = st.getObject().stringValue();
+                url = url.replaceFirst("https", "http");
+                Statement sti = vf.createStatement(st.getSubject(), st.getPredicate(), vf.createLiteral(url), st.getContext());
+                toInsert.add(sti);
+            }
+        }
+        r1.close();
+        
+        System.out.println("REMOVE:");
+        System.out.println(toDelete.size());
+        System.out.println("ADD:");
+        System.out.println(toInsert.size());
+        repo.remove(toDelete);
+        repo.add(toInsert);
+        System.out.println("done");
     }
     
 }
