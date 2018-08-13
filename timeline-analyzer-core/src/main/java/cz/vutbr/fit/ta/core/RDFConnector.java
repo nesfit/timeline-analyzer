@@ -123,6 +123,17 @@ public class RDFConnector implements Closeable
 		}
 	}
 
+    public void add(Resource s, IRI p, Value o, Resource context) 
+    {
+        try {
+            Statement stmt = vf.createStatement(s, p, o);
+            this.connection.add(stmt, context);
+            this.connection.commit();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+    }
+
 	public void add(Model m)
 	{
         try {
@@ -134,6 +145,17 @@ public class RDFConnector implements Closeable
         }
 	}
 	
+    public void add(Model m, Resource context)
+    {
+        try {
+            this.connection.begin();
+            this.connection.add(m, context);
+            this.connection.commit();
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+    }
+    
 	/**
 	 * Executes a SPARQL SELECT query and returns the result.
 	 * @param queryString

@@ -5,11 +5,18 @@
  */
 package cz.vutbr.fit.ta.twitter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Timeline;
 
 /**
@@ -19,6 +26,7 @@ import cz.vutbr.fit.ta.ontology.Timeline;
 public class TestTwitter
 {
     public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
+    private static Resource context;
     
     public static void downloadTimeline(String username, RDFConnector rdfcon)
     {
@@ -32,7 +40,15 @@ public class TestTwitter
         timeline.addToModel(model);
         System.out.println(model);
         
-        rdfcon.add(model);
+        rdfcon.add(model, context);
+    }
+    
+    protected static Resource getContext()
+    {
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date today = Calendar.getInstance().getTime();        
+        String stamp = df.format(today);
+        return ResourceFactory.createResourceIRI("twitter", "context", stamp);
     }
     
     /**
@@ -41,6 +57,7 @@ public class TestTwitter
     public static void main(String[] args)
     {
         RDFConnector rdfcon = new RDFConnectorSesame(REPO);
+        context = getContext();
         
         downloadTimeline("iROZHLAScz", rdfcon);
         downloadTimeline("RESPEKT_CZ", rdfcon);
@@ -58,7 +75,7 @@ public class TestTwitter
         downloadTimeline("atomsedlacek", rdfcon);
         downloadTimeline("lidovky", rdfcon);
         
-        rdfcon.closeConnection();
+        rdfcon.close();
     }
 
 }

@@ -5,14 +5,18 @@
  */
 package cz.vutbr.fit.ta.local;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Timeline;
 
 /**
@@ -58,7 +62,7 @@ public class TestLocal
                 
                 System.out.println("Start at " + (new Date()));
                 RDFConnector rdfcon = new RDFConnectorSesame(REPO);
-                rdfcon.add(model);
+                rdfcon.add(model, getContext());
                 rdfcon.close();
                 System.out.println("Finished at " + (new Date()));
                 
@@ -68,5 +72,15 @@ public class TestLocal
         }
 
     }
+    
+    protected static Resource getContext()
+    {
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date today = Calendar.getInstance().getTime();        
+        String stamp = df.format(today);
+        return ResourceFactory.createResourceIRI("local", "context", stamp);
+    }
+    
+
 
 }

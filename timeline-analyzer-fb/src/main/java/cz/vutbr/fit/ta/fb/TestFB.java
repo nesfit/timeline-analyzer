@@ -7,10 +7,15 @@ package cz.vutbr.fit.ta.fb;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 
 import com.restfb.Connection;
@@ -23,6 +28,7 @@ import com.restfb.types.Post.Attachments;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Timeline;
 
 import com.restfb.types.StoryAttachment;
@@ -35,6 +41,7 @@ import com.restfb.types.User;
 public class TestFB
 {
     public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
+    private static Resource context;
     
     public static void downloadTimeline(String username, RDFConnector rdfcon)
     {
@@ -48,16 +55,24 @@ public class TestFB
         timeline.addToModel(model);
         System.out.println(model);
         
-        rdfcon.add(model);
+        rdfcon.add(model, context);
     }
     
-    
+    protected static Resource getContext()
+    {
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date today = Calendar.getInstance().getTime();        
+        String stamp = df.format(today);
+        return ResourceFactory.createResourceIRI("twitter", "context", stamp);
+    }
+   
     /**
      * @param args
      */
     public static void main(String[] args)
     {
         RDFConnector rdfcon = new RDFConnectorSesame(REPO);
+        context = getContext();
 
         downloadTimeline("iROZHLAS.cz", rdfcon);
         downloadTimeline("tydenikrespekt", rdfcon);

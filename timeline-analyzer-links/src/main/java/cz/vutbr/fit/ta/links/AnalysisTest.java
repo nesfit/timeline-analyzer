@@ -5,8 +5,16 @@
  */
 package cz.vutbr.fit.ta.links;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.eclipse.rdf4j.model.Resource;
+
 import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.core.ResourceFactory;
 
 /**
  * 
@@ -27,8 +35,17 @@ public class AnalysisTest
         la.findImageURLs();
         la.findSharedURLs();
         
-        la.saveModel();
+        la.saveModel(getContext());
         repo.close();
     }
+
+    protected static Resource getContext()
+    {
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date today = Calendar.getInstance().getTime();        
+        String stamp = df.format(today);
+        return ResourceFactory.createResourceIRI("analyzer", "context", stamp);
+    }
+    
 
 }
