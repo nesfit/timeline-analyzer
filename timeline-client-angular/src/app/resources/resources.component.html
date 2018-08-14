@@ -1,60 +1,64 @@
+<div id="tools" class="container">
 
-<div class="panel panel-default">
-<div class="panel-heading">
-	<div class="form-inline">
-		<div class="form-group">
-			<label for="prefix">Prefix</label>
-			<select id="prefix" [(ngModel)]="urlPrefix" (change)="filterChanged()" class="form-control">
-				<option value="*">*</option>
-				<option *ngFor="let prefix of urlPrefixes" value="{{prefix}}">{{prefix}}</option>
-			</select>
+		<div class="card">
+			<div class="card-header">
+			<div class="form-inline">
+				<div class="form-group">
+					<label for="prefix">Prefix</label>
+					<select id="prefix" [(ngModel)]="urlPrefix" (change)="filterChanged()" class="form-control">
+						<option value="*">*</option>
+						<option *ngFor="let prefix of urlPrefixes" value="{{prefix}}">{{prefix}}</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="text" [(ngModel)]="urlFilter" (keyup)="filterChanged()" class="search-query form-control"
+						id="projects_search" placeholder="Search">
+				</div>
+				<a data-toggle="collapse" href="#searchResult" role="button" aria-expanded="false" aria-controls="searchResult">(toggle result)</a>
+			</div>
+			</div>
+			<div class="card-body collapse show" id="searchResult">
+				<table class="table table-stripped table-bordered">
+					<tbody>
+						<tr *ngFor="let url of urls">
+							<td><a [routerLink]="" (click)="showURL(url)">{{url}}</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div class="form-group">
-			<input type="text" [(ngModel)]="urlFilter" (keyup)="filterChanged()" class="search-query form-control"
-				id="projects_search" placeholder="Search">
-		</div>
+
+</div>
+
+
+<div class="card" id="report">
+	<div class="card-header">
+		Selected: <code>{{ selectedUrl }}</code>
 	</div>
-</div>
-<div class="panel-body">
-	<table class="table table-stripped table-bordered">
-		<thead>
-			<tr>
-				<th>URL</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let url of urls">
-				<td><a [routerLink]="" (click)="showURL(url)">{{url}}</a></td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-</div>
-
-<div class="panel panel-default">
-	<div class="panel-body">
-	<table class="table table-stripped table-bordered entries">
-		<thead>
-			<tr>
-				<th *ngFor="let label of timelineLabels">{{label}}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let cont of contents">
-				<td *ngFor="let label of timelineLabels; let i = index">
-					<div *ngIf="cont.col == i; else empty">
-						<time>{{cont.time}}</time>
-						<ul>
-							<li *ngFor="let c of cont.contains">
-								<span>{{c.text}} </span>
-								<a *ngIf="c.url != undefined" [routerLink]="" (click)="showURL(c.url)">{{c.url}}</a>
-							</li>
-						</ul>
-					</div>
-					<ng-template #empty>--</ng-template>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="card-body">
+		<p><a *ngIf="timelineLabels.length > 0" routerLink="/timeline" (click)="showInTimeline()">Show in timeline</a></p>
+		<table class="table table-stripped table-bordered entries">
+			<thead>
+				<tr>
+					<th *ngFor="let label of timelineLabels">{{label}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let cont of contents">
+					<td *ngFor="let label of timelineLabels; let i = index">
+						<div *ngIf="cont.col == i; else empty">
+							<time>{{cont.time}}</time>
+							<ul>
+								<li *ngFor="let c of cont.contains">
+									<span>{{c.text}} </span>
+									<a *ngIf="c.url != undefined" [routerLink]="" (click)="showURL(c.url)"><code>{{c.url}}</code></a>
+								</li>
+							</ul>
+						</div>
+						<ng-template #empty>&nbsp;</ng-template>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </div>

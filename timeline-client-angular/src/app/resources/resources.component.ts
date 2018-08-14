@@ -14,6 +14,7 @@ export class ResourcesComponent implements OnInit {
   urlFilter: string;
   urlPrefix: string;
   urls: string[];
+  selectedUrl: string;
   
   //entry display
   entries: Entry[];
@@ -27,6 +28,8 @@ export class ResourcesComponent implements OnInit {
     this.rdf.getURLPrefixes().subscribe(data => this.urlPrefixes = data);
     this.urlFilter = '';
     this.urlPrefix = '*';
+    this.timelineUris = [];
+    this.timelineLabels = [];
   }
 
   filterChanged(): void {
@@ -39,7 +42,7 @@ export class ResourcesComponent implements OnInit {
   }
   
   showURL(url: string): void {
-    console.log(url);
+    this.selectedUrl = url;
     this.rdf.getEntriesForURL(url).subscribe(data => this.showEntries(data));
   }
   
@@ -68,6 +71,10 @@ export class ResourcesComponent implements OnInit {
       this.rdf.getContentsForEntry(entries[i]).subscribe(data => cont.contains = data);
       this.contents.push(cont);
     }
+  }
+  
+  showInTimeline(): void {
+    console.log('show');
   }
   
 }
