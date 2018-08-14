@@ -9,19 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResourcesComponent implements OnInit {
 
-  //url search
+  // url search
   urlPrefixes: string[];
   urlFilter: string;
   urlPrefix: string;
   urls: string[];
   selectedUrl: string;
-  
-  //entry display
+
+  // entry display
   entries: Entry[];
   timelineUris: number[];
   timelineLabels: string[];
   contents: any[];
-  
+
   constructor(private rdf: Rdf4jService) {}
 
   ngOnInit() {
@@ -40,41 +40,41 @@ export class ResourcesComponent implements OnInit {
       this.urls = [];
     }
   }
-  
+
   showURL(url: string): void {
     this.selectedUrl = url;
     this.rdf.getEntriesForURL(url).subscribe(data => this.showEntries(data));
   }
-  
+
   showEntries(entries: Entry[]): void {
     this.entries = entries;
     console.log(entries);
-    //find different timelines
+    // find different timelines
     this.timelineUris = [];
     this.timelineLabels = [];
     let last = 0;
     for (let i = 0; i < entries.length; i++) {
       const uri = entries[i].sourceTimeline.uri;
-      if (this.timelineUris[uri] == undefined) {
+      if (this.timelineUris[uri] === undefined) {
         this.timelineLabels[last] = entries[i].sourceTimeline.label;
         this.timelineUris[uri] = last++;
       }
     }
     console.log(this.timelineUris);
     console.log(this.timelineLabels);
-    //create contents
+    // create contents
     this.contents = [];
     for (let i = 0; i < entries.length; i++) {
-      let cont = {col: 0, time: null, contains: []}
+      const cont = {col: 0, time: null, contains: []};
       cont.col = this.timelineUris[entries[i].sourceTimeline.uri];
       cont.time = entries[i].timestamp;
       this.rdf.getContentsForEntry(entries[i]).subscribe(data => cont.contains = data);
       this.contents.push(cont);
     }
   }
-  
+
   showInTimeline(): void {
     console.log('show');
   }
-  
+
 }
