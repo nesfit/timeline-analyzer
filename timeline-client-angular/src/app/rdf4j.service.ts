@@ -145,6 +145,21 @@ export class Rdf4jService {
     return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToArray(res)));
   }
 
+  getContentsForEntryById(entryId: string): Observable<any[]> {
+    const repo = this.getRepositoryUrl();
+    const q = this.getPrefixes()
+      + 'SELECT ?s ?text ?url ?type'
+      + ' WHERE {'
+      + '   ?entry ta:contains ?s'
+      + '   . ?entry ta:sourceId ?id'
+      + '   . ?entry rdf:type ?type'
+      + '   . OPTIONAL { ?s ta:text ?text }'
+      + '   . OPTIONAL { ?s ta:sourceUrl ?url }'
+      + '   FILTER( ?id = "' + entryId + '" )'
+      + ' }';
+    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToArray(res)));
+  }
+
   // =========================================================================
 
   private getRepositoryUrl(): string {
@@ -203,6 +218,7 @@ export class Rdf4jService {
     for (let i = 0; i < bindings.length; i++) {
       const item = bindings[i];
       const newitem = new Entry();
+      newitem.sourceId = item.id.value;
       newitem.uri = item.uri.value;
       newitem.timestamp = new Date(item.time.value);
       if (src) {

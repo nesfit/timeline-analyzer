@@ -27,6 +27,7 @@ export class TimelineComponent implements OnInit {
   tldata: DataSet<DataItem>;
   tlgroups: DataSet<DataGroup>;
   tloptions: any;
+  entryContents: any[];
 
   constructor(private rdf: Rdf4jService, private shared: SharedService) { }
 
@@ -41,6 +42,7 @@ export class TimelineComponent implements OnInit {
     this.rdf.getTimelines().subscribe(data => this.setTimelines(data));
     this.createTimeline();
     this.shared.timeline = this;
+    this.entryContents = [];
   }
 
   /**
@@ -63,13 +65,16 @@ export class TimelineComponent implements OnInit {
     // Configuration for the Timeline
     this.tloptions = {
       orientation: 'both',
-      type: 'box', // point, box, range
+      type: 'point', // point, box, range
       stack: false
     };
 
     // Create a Timeline
     this.tlview = new TL(container, this.tldata, this.tlgroups, this.tloptions);
-
+    const view = this;
+    this.tlview.on('select', function(properties) {
+      view.displayEntry(properties);
+    });
   }
 
   /**
@@ -96,6 +101,18 @@ export class TimelineComponent implements OnInit {
       }
     }
     this.updateSelected();
+  }
+
+  displayEntry(properties): void {
+    const id = properties.items[0];
+    console.log('showing ' + id);
+    this.rdf.getContentsForEntryById(id).subscribe(data => this.displayContents(data));
+  }
+
+  displayContents(data: any[]): void {
+    this.entryContents = data;
+    console.log('showed ');
+    console.log(data);
   }
 
   // ======================================================================================
@@ -150,8 +167,8 @@ export class TimelineComponent implements OnInit {
     console.log('adding ' + data.length + ' entries');
     for (let i = 0; i < data.length; i++) {
       const e = data[i];
-      const text = '<small>' + e.timestamp.toLocaleDateString() + '</small>';
-      this.tldata.add({id: e.sourceId, group: t.sourceId, content: text, start: e.timestamp.toISOString() });
+      const text = '<small>' + e.timestamp.toLocaleDateString() + ' ' + e.timestamp.toLocaleTimeString() + '</small>';
+      this.tldata.add({id: e.sourceId, group: t.sourceId, content: '', title: text, start: e.timestamp.toISOString() });
     }
     // this.tldata.flush();
   }
