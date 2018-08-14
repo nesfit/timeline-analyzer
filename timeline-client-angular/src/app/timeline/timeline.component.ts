@@ -1,4 +1,5 @@
 import { Rdf4jService } from '../rdf4j.service';
+import { SharedService } from '../shared.service';
 import { Entry } from './entry';
 import { Timeline } from './timeline';
 import { Component, OnInit } from '@angular/core';
@@ -27,6 +28,8 @@ export class TimelineComponent implements OnInit {
   tlgroups: DataSet<DataGroup>;
   tloptions: any;
 
+  constructor(private rdf: Rdf4jService, private shared: SharedService) { }
+
   ngOnInit() {
     const now = new Date();
     this.fromdate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
@@ -37,9 +40,8 @@ export class TimelineComponent implements OnInit {
     this.maxdate = new Date();
     this.rdf.getTimelines().subscribe(data => this.setTimelines(data));
     this.createTimeline();
+    this.shared.timeline = this;
   }
-
-  constructor(private rdf: Rdf4jService) { }
 
   /**
    * Initializes the time line.
@@ -83,6 +85,17 @@ export class TimelineComponent implements OnInit {
     for (let i = 0; i < selcnt; i++) {
       this.addTimeLine(this.timelines[i]);
     }
+  }
+
+  selectTimelinesByUris(uris: string[]): void {
+    for (const t of this.timelines) {
+      const old = t.selected;
+      t.selected = (uris.includes(t.uri));
+      if (t.selected !== old) {
+        this.updateTimeLine(t, t.selected);
+      }
+    }
+    this.updateSelected();
   }
 
   // ======================================================================================
