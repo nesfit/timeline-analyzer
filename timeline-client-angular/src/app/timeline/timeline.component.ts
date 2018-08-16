@@ -28,6 +28,8 @@ export class TimelineComponent implements OnInit {
   tlgroups: DataSet<DataGroup>;
   tloptions: any;
   entryContents: any[];
+  // filtered resource
+  filteredResources: string[];
 
   constructor(private rdf: Rdf4jService, private shared: SharedService) { }
 
@@ -43,6 +45,7 @@ export class TimelineComponent implements OnInit {
     this.createTimeline();
     this.shared.timeline = this;
     this.entryContents = [];
+    this.filteredResources = [];
   }
 
   /**
@@ -115,6 +118,14 @@ export class TimelineComponent implements OnInit {
     console.log(data);
   }
 
+  setFilteredResources(filteredResources: string[]): void {
+    this.filteredResources = filteredResources;
+  }
+
+  clearFilteredResources(): void {
+    this.filteredResources = [];
+  }
+
   // ======================================================================================
 
   /**
@@ -160,7 +171,12 @@ export class TimelineComponent implements OnInit {
     // add group
     this.tlgroups.add({id: t.sourceId, content: t.label});
     // add entries
-    this.rdf.getEntries(t, null, 500).subscribe(data => this.addEntries(t, data));
+    // TODO max 500 entries at the moment, consider end date
+    if (this.filteredResources.length === 0) {
+      this.rdf.getEntries(t, null, 500).subscribe(data => this.addEntries(t, data));
+    } else {
+      this.rdf.getEntriesForResource(t, null, 500, this.filteredResources[0]).subscribe(data => this.addEntries(t, data));
+    }
   }
 
   addEntries(t: Timeline, data: Entry[]) {

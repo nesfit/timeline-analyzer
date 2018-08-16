@@ -76,6 +76,10 @@
 				<h5 class="mb-0">
 					<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
 					Resources</button>
+					<span *ngIf="filteredResources.length > 0">
+						<code>{{filteredResources[0]}}</code>
+						<button class="btn" (click)="clearFilteredResources()">clear</button>
+					</span>
 				</h5>
 			</div>
 			<div id="collapseThree" class="collapse" aria-labelledby="headingThree"	data-parent="#accordion">

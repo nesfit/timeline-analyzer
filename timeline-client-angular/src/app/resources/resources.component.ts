@@ -82,6 +82,7 @@ export class ResourcesComponent implements OnInit {
     console.log('show');
     console.log(this.timelineIds);
     console.log(this.shared.timeline.selected);
+    this.shared.timeline.setFilteredResources([this.selectedUrl]);
     this.shared.timeline.selectTimelinesByUris(this.timelineIds);
   }
 

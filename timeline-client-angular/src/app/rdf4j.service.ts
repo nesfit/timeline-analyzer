@@ -94,6 +94,24 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));
   }
 
+  getEntriesForResource(t: Timeline, startDate: Date, limit: number, resource: string): Observable<Entry[]> {
+    const url = this.getRepositoryUrl();
+    const filter = (resource === null) ? '' : ' FILTER(?res == "' + resource + '")';
+    const q = this.getPrefixes()
+      + 'SELECT ?uri ?time ?id ?label'
+      + ' WHERE { ?uri ta:timestamp ?time . ?uri rdf:type ta:Entry . ?uri ta:sourceTimeline <' + t.uri + '>'
+      + ' . ?uri ta:sourceId ?id'
+      + ' . ?uri ta:contains ?cont'
+      + ' . ?cont ta:sourceUrl ?res'
+      + ' . OPTIONAL { ?uri rdfs:label ?label }'
+      + ' FILTER(?res = "' + resource + '")'
+      + ' }'
+      + ' ORDER BY ASC(?time)'
+      + ' LIMIT ' + limit;
+    console.log(q);
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));
+  }
+  
   getURLPrefixes(): Observable<string[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes()
