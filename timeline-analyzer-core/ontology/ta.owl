@@ -7,6 +7,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     <owl:Ontology rdf:about="http://nesfit.github.io/ontology/ta.owl#">
+        <owl:imports rdf:resource="http://checksem.u-bourgogne.fr/ord2i/1.0.0"/>
         <rdfs:comment>An ontology used for representing the social network timelines and their contents.</rdfs:comment>
         <rdfs:label>Timeline Analyzer Ontology</rdfs:label>
     </owl:Ontology>
@@ -182,6 +183,7 @@
     <!-- http://nesfit.github.io/ontology/ta.owl#Entry -->
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Entry">
+        <rdfs:subClassOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject"/>
         <rdfs:comment>An entry in the timeline</rdfs:comment>
     </owl:Class>
     
@@ -204,6 +206,14 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject -->
+
+    <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:Class>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#TextContent -->
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#TextContent">
@@ -216,6 +226,7 @@
     <!-- http://nesfit.github.io/ontology/ta.owl#Timeline -->
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Timeline">
+        <rdfs:subClassOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject"/>
         <rdfs:comment>A sequence of entries displayed in a signle time line.</rdfs:comment>
     </owl:Class>
     
