@@ -1,0 +1,1308 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://checksem.u-bourgogne.fr/ord2i#"
+     xml:base="http://checksem.u-bourgogne.fr/ord2i"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:ord2i="http://checksem.u-bourgogne.fr/ord2i#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://checksem.u-bourgogne.fr/ord2i">
+        <owl:versionIRI rdf:resource="http://checksem.u-bourgogne.fr/ord2i/1.0.0"/>
+        <owl:imports rdf:resource="http://checksem.u-bourgogne.fr/timeRL"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#actedOnBehalfOf -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#actedOnBehalfOf">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Investigator"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Investigator"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#creates -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#creates">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#interacts"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasCorrelatedEvent -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasCorrelatedEvent">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Correlation"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasDateTime -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasDateTime">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2006/time#Interval"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasInvestigator -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasInvestigator">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Affiliation"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Contribution"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Investigator"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasLocation -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasLocation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Location"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasOrganisation -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasOrganisation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Affiliation"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Organisation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasPhysicalLocation -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasPhysicalLocation">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#hasLocation"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Organisation"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasPreviousPageVisited -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasPreviousPageVisited">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#relatedTo"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Webpage"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Webpage"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasReceiver -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasReceiver">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#relatedTo"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Call"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#ChatMessage"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#FileTransfer"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#MMS"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#SMS"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasSender -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasSender">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#relatedTo"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Call"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#ChatMessage"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#FileTransfer"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#MMS"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#SMS"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#interacts -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#interacts">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isComposedOf -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isComposedOf">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#links"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isIdentifiedBy -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isIdentifiedBy">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isInvolved -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isInvolved">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#tookPartIn"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isMadeFor -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isMadeFor">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Contribution"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isPerformedWith -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isPerformedWith">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Tool"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isSupportedBy -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isSupportedBy">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#links -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#links">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#modifies -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#modifies">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#interacts"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#relatedTo -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#relatedTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Subject"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Subject"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#removes -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#removes">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#interacts"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#tookPartIn -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#tookPartIn">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Subject"/>
+        <rdfs:range rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#undergoes -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#undergoes">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#tookPartIn"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#uses -->
+
+    <owl:ObjectProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#uses">
+        <rdfs:subPropertyOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#interacts"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasAdress -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasAdress">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasAnnotation -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasAnnotation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Annotation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasAuthor -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasAuthor">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasBookmarkType -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasBookmarkType">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Bookmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasCity -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasCity">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasCmdArguments -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasCmdArguments">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Link"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasComments -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasComments">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasCountry -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasCountry">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasDescription">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Organisation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasDriveLetter -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasDriveLetter">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#LocalVirtualLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasEKBasedCorrelation -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasEKBasedCorrelation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Correlation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasEmail -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasEmail">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasEventSubtype -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasEventSubtype">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasEventType -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasEventType">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasExtension -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasExtension">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#VirtualLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasFileAttributes -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasFileAttributes">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Link"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasFilename -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasFilename">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#VirtualLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasFirstname -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasFirstname">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasFolder -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasFolder">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Bookmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasFrequency -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasFrequency">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Job"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasHTTPHeader -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasHTTPHeader">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebResource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasHostname -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasHostname">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#RemoteVirtualLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasID -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasID">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasIconLocation -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasIconLocation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Link"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasKeywords -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasKeywords">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasLastname -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasLastname">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasMachineName -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasMachineName">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasMessage -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasMessage">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#ChatMessage"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasName -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasName">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Cookie"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Organisation"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Process"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Tool"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasObjectCorrelation -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasObjectCorrelation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Correlation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasOverallCorrelation -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasOverallCorrelation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Correlation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasPageCounter -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasPageCounter">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasParameters -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasParameters">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Job"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasPath -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasPath">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#LocalVirtualLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasPhone -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasPhone">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasPosition -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasPosition">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Affiliation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasPseudo -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasPseudo">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Account"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasRelativePath -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasRelativePath">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Link"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasRevisionNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasRevisionNumber">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasRole -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasRole">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Contribution"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasSecurity -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasSecurity">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasSerial -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasSerial">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Link"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasShortDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasShortDescription">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Organisation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasSize -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasSize">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebResource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasSourceName -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasSourceName">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasSourceType -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasSourceType">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasStatus -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasStatus">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasSubjectCorrelation -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasSubjectCorrelation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Correlation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasTechniqueName -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasTechniqueName">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasTechniqueType -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasTechniqueType">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasTemplate -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasTemplate">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasTemporalCorrelation -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasTemporalCorrelation">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Correlation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasTitle">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Bookmark"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#ChatMessage"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Webpage"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasToolType -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasToolType">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Tool"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasTopic -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasTopic">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasTruthfulness -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasTruthfulness">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasURL -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasURL">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#RemoteVirtualLocation"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebResource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasURLWebpage -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasURLWebpage">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Bookmark"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasUsageCounter -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasUsageCounter">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebResource"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WinExeFile"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasVersion -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasVersion">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Process"/>
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Tool"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasWordCounter -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasWordCounter">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OLECF"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#hasZipcode -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#hasZipcode">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isHTTPOnly -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isHTTPOnly">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Cookie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#isPersistent -->
+
+    <owl:DatatypeProperty rdf:about="http://checksem.u-bourgogne.fr/ord2i#isPersistent">
+        <rdfs:domain rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Cookie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Account -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Account">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Affiliation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Affiliation"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Annotation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Annotation">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#ArchiveFile -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#ArchiveFile">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Bookmark -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Bookmark">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Call -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Call">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Communication"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#ChatMessage -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#ChatMessage">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Communication"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#ComAccount -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#ComAccount">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Account"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Communication -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Communication">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Contribution -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Contribution"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Cookie -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Cookie">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Correlation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Correlation"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#EmailMessage -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#EmailMessage">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Communication"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Entity -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Event -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Event">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#ExeFile -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#ExeFile">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#File -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#File">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#FileTransfer -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#FileTransfer">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Communication"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Form -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Form">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#FormField -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#FormField">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#ImageFile -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#ImageFile">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#InvestigativeOperation"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Investigator -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Investigator">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Job -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Job">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Link -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Link">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#LocalVirtualLocation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#LocalVirtualLocation">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#VirtualLocation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Location -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Location"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Login -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Login">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#MMS -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#MMS">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Communication"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#OLECF -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#OLECF">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#OSUserAccount -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#OSUserAccount">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Account"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Object -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Object">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Organisation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Organisation"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#PDFFile -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#PDFFile">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Permission -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Permission">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Person -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Person">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Subject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#PhysicalLocation">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Preference -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Preference">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Process -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Process">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Subject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#RegisterKey -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#RegisterKey">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#RemoteVirtualLocation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#RemoteVirtualLocation">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#VirtualLocation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#SMS -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#SMS">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Communication"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Subject -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Subject">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Entity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Tool -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Tool"/>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#UnixFile -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#UnixFile">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#UnixUserAccount -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#UnixUserAccount">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OSUserAccount"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#VirtualLocation -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#VirtualLocation">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Location"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#WebObject -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#WebObject">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#WebResource -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#WebResource">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Webpage -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Webpage">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebResource"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Website -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Website">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WebObject"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#WinExeFile -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#WinExeFile">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#WinFile"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#WinFile -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#WinFile">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#File"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#WinUserAccount -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#WinUserAccount">
+        <rdfs:subClassOf rdf:resource="http://checksem.u-bourgogne.fr/ord2i#OSUserAccount"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2006/time#Interval -->
+
+    <owl:Class rdf:about="http://www.w3.org/2006/time#Interval"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
