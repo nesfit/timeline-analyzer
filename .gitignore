@@ -3,3 +3,4 @@ target/
 catalog*.xml
 dependency-reduced-pom.xml
 .cache-*
+.vscode/
