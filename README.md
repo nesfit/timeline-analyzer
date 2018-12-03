@@ -1,5 +1,5 @@
 # Timeline Analyzer
-(c) 2017 Radek Burget (burgetr@fit.vutbr.cz)
+(c) 2017--2018 Radek Burget (burgetr@fit.vutbr.cz)
 
 Timeline Analyzer is a framework for efficient analysis of social network profiles and other related data. It focuses on the analysis of security incidents related to social networks. The goal of the framework is to put together data organized in time lines coming from different heterogeneous sources, store it in a unified central storage and provide subsequent analytical and visualization steps. The framework consists of the following elements:
 
