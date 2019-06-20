@@ -4,6 +4,7 @@ import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
+
 /**
  * Text contained in an entry..
  * <p>

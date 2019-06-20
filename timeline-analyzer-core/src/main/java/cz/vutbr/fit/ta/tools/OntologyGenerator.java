@@ -46,13 +46,13 @@ public class OntologyGenerator
     {
         try
         {
-            generateFromOWL("/home/burgetr/git/timeline-analyzer/timeline-analyzer-core/ontology/ord2i.owl",
+            generateFromOWL("/home/burgetr/git/timeline-analyzer/timeline-analyzer-core/ontology/ta.owl",
                     null, //auto 
-                    "ORD2I", 
-                    "/home/burgetr/git/timeline-analyzer/timeline-analyzer-core/src/main/java/cz/vutbr/fit/ta/ord2i/vocabulary", 
-                    "cz.vutbr.fit.ta.ord2i.vocabulary",
-                    "/home/burgetr/git/timeline-analyzer/timeline-analyzer-core/src/main/java/cz/vutbr/fit/ta/ord2i", 
-                    "cz.vutbr.fit.ta.ord2i");
+                    "TA", 
+                    "/home/burgetr/git/timeline-analyzer/timeline-analyzer-core/src/main/java/cz/vutbr/fit/ta/ontology/vocabulary", 
+                    "cz.vutbr.fit.ta.ontology.vocabulary",
+                    "/home/burgetr/git/timeline-analyzer/timeline-analyzer-core/src/main/java/cz/vutbr/fit/ta/ontology", 
+                    "cz.vutbr.fit.ta.ontology");
             
         } catch (Exception e) {
             e.printStackTrace();

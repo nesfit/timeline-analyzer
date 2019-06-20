@@ -42,6 +42,17 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#refersTo -->
+
+    <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#refersTo">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Event"/>
+        <rdfs:range rdf:resource="http://nesfit.github.io/ontology/ta.owl#Object"/>
+        <rdfs:comment>Assigns an object to an event</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#sameURL -->
 
     <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sameURL">
@@ -83,6 +94,17 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#fileName -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#fileName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#LocalFile"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>A name of a file</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#latitude -->
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#latitude">
@@ -99,6 +121,17 @@
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#GeoContent"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://nesfit.github.io/ontology/ta.owl#path -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#path">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#LocalFile"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>A file path in a local filesystem</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -153,9 +186,9 @@
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#timestamp">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Entry"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Event"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-        <rdfs:comment>Entry creation timestamp</rdfs:comment>
+        <rdfs:comment>A timestamp for an event</rdfs:comment>
     </owl:DatatypeProperty>
     
 
@@ -188,6 +221,14 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#Event -->
+
+    <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Event">
+        <rdfs:comment>An event with a subject and time assigned</rdfs:comment>
+    </owl:Class>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#GeoContent -->
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#GeoContent">
@@ -204,8 +245,23 @@
     </owl:Class>
     
 
-    <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Object">
+
+    <!-- http://nesfit.github.io/ontology/ta.owl#LocalFile -->
+
+    <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#LocalFile">
+        <rdfs:subClassOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#Object"/>
+        <rdfs:comment>A investigated file on a local filesystem</rdfs:comment>
     </owl:Class>
+    
+
+
+    <!-- http://nesfit.github.io/ontology/ta.owl#Object -->
+
+    <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Object">
+        <rdfs:comment>A generic investigated object</rdfs:comment>
+    </owl:Class>
+    
+
 
     <!-- http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject -->
 

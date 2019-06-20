@@ -6,12 +6,13 @@ import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
+
 /**
  * An entry in the timeline.
  * <p>
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#Entry>}
  */
-public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
+public class Entry extends SocialNetworkObject
 {
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#Entry");
 
@@ -39,13 +40,6 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#tags>}
 	 */
 	private String tags;
-
-	/**
-	 * Entry creation timestamp.
-	 * <p>
-	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#timestamp>}
-	 */
-	private java.util.Date timestamp;
 
 
 	public Entry(IRI iri) {
@@ -86,14 +80,6 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 		this.tags = tags;
 	}
 
-	public java.util.Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(java.util.Date timestamp) {
-		this.timestamp = timestamp;
-	}
-
 	@Override
 	public void addToModel(Model model) {
 		super.addToModel(model);
@@ -101,7 +87,6 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 		addCollectionWithData(model, TA.contains, contains);
 		addValue(model, TA.sourceId, sourceId);
 		addValue(model, TA.tags, tags);
-		addValue(model, TA.timestamp, timestamp);
 	}
 
 	@Override
@@ -131,6 +116,5 @@ public class Entry extends com.github.radkovo.rdf4j.builder.RDFEntity
 		}
 		sourceId = loadStringValue(m, TA.sourceId);
 		tags = loadStringValue(m, TA.tags);
-		timestamp = loadDateValue(m, TA.timestamp);
 	}
 }

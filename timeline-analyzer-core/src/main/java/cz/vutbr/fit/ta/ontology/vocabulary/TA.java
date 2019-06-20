@@ -57,6 +57,24 @@ public class TA {
 	public static final IRI Entry;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#Event}.
+	 * <p>
+	 * An event with a subject and time assigned
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#Event">Event</a>
+	 */
+	public static final IRI Event;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#fileName}.
+	 * <p>
+	 * A name of a file
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#fileName">fileName</a>
+	 */
+	public static final IRI fileName;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#GeoContent}.
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#GeoContent">GeoContent</a>
@@ -80,11 +98,47 @@ public class TA {
 	public static final IRI latitude;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#LocalFile}.
+	 * <p>
+	 * A investigated file on a local filesystem
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#LocalFile">LocalFile</a>
+	 */
+	public static final IRI LocalFile;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#longitude}.
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#longitude">longitude</a>
 	 */
 	public static final IRI longitude;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#Object}.
+	 * <p>
+	 * A generic investigated object
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#Object">Object</a>
+	 */
+	public static final IRI Object;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#path}.
+	 * <p>
+	 * A file path in a local filesystem
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#path">path</a>
+	 */
+	public static final IRI path;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#refersTo}.
+	 * <p>
+	 * Assigns an object to an event
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#refersTo">refersTo</a>
+	 */
+	public static final IRI refersTo;
 
 	/**
 	 * URL also published in
@@ -97,6 +151,13 @@ public class TA {
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sameURL">sameURL</a>
 	 */
 	public static final IRI sameURL;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject">SocialNetworkObject</a>
+	 */
+	public static final IRI SocialNetworkObject;
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#sourceId}.
@@ -161,7 +222,7 @@ public class TA {
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#timestamp}.
 	 * <p>
-	 * Entry creation timestamp
+	 * A timestamp for an event
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#timestamp">timestamp</a>
 	 */
@@ -193,11 +254,18 @@ public class TA {
 		Content = factory.createIRI(TA.NAMESPACE, "Content");
 		contextLink = factory.createIRI(TA.NAMESPACE, "contextLink");
 		Entry = factory.createIRI(TA.NAMESPACE, "Entry");
+		Event = factory.createIRI(TA.NAMESPACE, "Event");
+		fileName = factory.createIRI(TA.NAMESPACE, "fileName");
 		GeoContent = factory.createIRI(TA.NAMESPACE, "GeoContent");
 		Image = factory.createIRI(TA.NAMESPACE, "Image");
 		latitude = factory.createIRI(TA.NAMESPACE, "latitude");
+		LocalFile = factory.createIRI(TA.NAMESPACE, "LocalFile");
 		longitude = factory.createIRI(TA.NAMESPACE, "longitude");
+		Object = factory.createIRI(TA.NAMESPACE, "Object");
+		path = factory.createIRI(TA.NAMESPACE, "path");
+		refersTo = factory.createIRI(TA.NAMESPACE, "refersTo");
 		sameURL = factory.createIRI(TA.NAMESPACE, "sameURL");
+		SocialNetworkObject = factory.createIRI(TA.NAMESPACE, "SocialNetworkObject");
 		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");
 		sourceTimeline = factory.createIRI(TA.NAMESPACE, "sourceTimeline");
 		sourceUrl = factory.createIRI(TA.NAMESPACE, "sourceUrl");
