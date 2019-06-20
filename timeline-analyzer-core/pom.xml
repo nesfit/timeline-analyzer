@@ -34,7 +34,7 @@
         <dependency>
 		    <groupId>com.github.radkovo.rdf4j</groupId>
 		    <artifactId>class-builder-runtime</artifactId>
-		    <version>0.0.1-SNAPSHOT</version>
+		    <version>0.0.2-SNAPSHOT</version>
 	    </dependency>
 	
         <dependency>
