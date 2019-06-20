@@ -45,7 +45,6 @@
 		<module>timeline-analyzer-web</module>
 		<module>timeline-analyzer-local</module>
 		<module>timeline-analyzer-links</module>
-		<module>timeline-analyzer-spark</module>
 	</modules>
 	
 	<dependencies>
