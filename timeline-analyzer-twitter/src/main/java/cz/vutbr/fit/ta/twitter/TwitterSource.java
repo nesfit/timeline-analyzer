@@ -11,12 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.vutbr.fit.ta.core.TimelineSource;
+import cz.vutbr.fit.ta.ontology.CreationEvent;
 import cz.vutbr.fit.ta.ontology.Entry;
 import cz.vutbr.fit.ta.ontology.GeoContent;
 import cz.vutbr.fit.ta.ontology.Image;
 import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.ontology.URLContent;
+import cz.vutbr.fit.ta.ontology.WebResource;
 import cz.vutbr.fit.ta.twitter.model.TwitterEntityFactory;
 import twitter4j.GeoLocation;
 import twitter4j.MediaEntity;
@@ -73,9 +75,12 @@ public class TwitterSource extends TimelineSource
         
         for (Status status : statuses)
         {
+            CreationEvent cev = ef.createCreationEvent(status.getId());
+            cev.setTimestamp(status.getCreatedAt());
+            
             Entry entry = ef.createEntry(status.getId());
             entry.setSourceId(String.valueOf(status.getId()));
-            entry.setTimestamp(status.getCreatedAt());
+            entry.addEvent(cev);
             timeline.addEntry(entry);
             
             //text
@@ -93,8 +98,11 @@ public class TwitterSource extends TimelineSource
                 {
                     if (entity.getType().equals("photo"))
                     {
+                        WebResource wurl = ef.createWebResource(entity.getMediaURL());
+                        wurl.setSourceUrl(entity.getMediaURL());
+                        
                         Image img = ef.createImage(entity.getId());
-                        img.setSourceUrl(entity.getMediaURL());
+                        img.setLinksResource(wurl);
                         entry.getContains().add(img);
                     }
                 }
@@ -105,8 +113,11 @@ public class TwitterSource extends TimelineSource
             {
                 for (URLEntity entity : urls)
                 {
+                    WebResource wurl = ef.createWebResource(entity.getExpandedURL());
+                    wurl.setSourceUrl(entity.getExpandedURL());
+                    
                     URLContent url = ef.createURLContent(status.getId(), entity.getStart());
-                    url.setSourceUrl(entity.getExpandedURL());
+                    url.setLinksResource(wurl);
                     url.setText(entity.getDisplayURL());
                     entry.getContains().add(url);
                 }

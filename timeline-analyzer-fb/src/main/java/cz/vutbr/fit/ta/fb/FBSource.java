@@ -23,12 +23,14 @@ import com.restfb.types.Post.Attachments;
 
 import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.fb.model.FBEntityFactory;
+import cz.vutbr.fit.ta.ontology.CreationEvent;
 import cz.vutbr.fit.ta.ontology.Entry;
 import cz.vutbr.fit.ta.ontology.GeoContent;
 import cz.vutbr.fit.ta.ontology.Image;
 import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.ontology.URLContent;
+import cz.vutbr.fit.ta.ontology.WebResource;
 
 /**
  * 
@@ -90,9 +92,12 @@ public class FBSource extends TimelineSource
     
     private Entry createEntry(FBEntityFactory ef, Post post)
     {
+        CreationEvent cev = ef.createCreationEvent(post.getId());
+        cev.setTimestamp(post.getCreatedTime());
+
         Entry entry = ef.createEntry(post.getId());
         entry.setSourceId(post.getId());
-        entry.setTimestamp(post.getCreatedTime());
+        entry.addEvent(cev);
         
         //text
         if (post.getMessage() != null)
@@ -104,8 +109,11 @@ public class FBSource extends TimelineSource
         //URLs
         if (post.getLink() != null)
         {
+            WebResource wurl = ef.createWebResource(post.getLink());
+            wurl.setSourceUrl(post.getLink());
+            
             URLContent uc = ef.createURLContent(post.getId(), 0); //only one link per post(?)
-            uc.setSourceUrl(post.getLink());
+            uc.setLinksResource(wurl);
             if (post.getDescription() != null)
                 uc.setText(post.getDescription());
             else if (post.getName() != null)
@@ -163,8 +171,11 @@ public class FBSource extends TimelineSource
     
     private Image createImageFromAttachment(FBEntityFactory ef, StoryAttachment.Image img, String postId, int imgCnt)
     {
+        WebResource wurl = ef.createWebResource(img.getSrc());
+        wurl.setSourceUrl(img.getSrc());
+        
         Image ret = ef.createImage(postId + "-img-" + imgCnt);
-        ret.setSourceUrl(img.getSrc());
+        ret.setLinksResource(wurl);
         return ret;
     }
     

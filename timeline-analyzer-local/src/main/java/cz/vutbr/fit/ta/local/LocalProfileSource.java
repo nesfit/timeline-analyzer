@@ -8,13 +8,18 @@ package cz.vutbr.fit.ta.local;
 import java.util.Date;
 import java.util.List;
 
+import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.local.HistoryItem.Type;
 import cz.vutbr.fit.ta.local.model.LocalEntityFactory;
 import cz.vutbr.fit.ta.ontology.Entry;
+import cz.vutbr.fit.ta.ontology.FileDownloadEvent;
+import cz.vutbr.fit.ta.ontology.LocalFile;
 import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.ontology.URLContent;
+import cz.vutbr.fit.ta.ontology.URLVisitEvent;
+import cz.vutbr.fit.ta.ontology.WebResource;
 
 /**
  * 
@@ -51,45 +56,36 @@ public class LocalProfileSource extends TimelineSource
     {
         LocalEntityFactory factory = LocalEntityFactory.getInstance();
         Timeline timeline = factory.createTimeline(profile);
-        timeline.setSourceId(profile.getPath().toString());
+        timeline.setSourceId(profile.getPath().toString()); //TODO add task id?
         
         for (HistoryItem item : items) 
         {
-            Entry entry = factory.createEntry(item);
-            entry.setSourceId(String.valueOf(item.getSourceId()));
-            entry.setTimestamp(item.getDate());
-            timeline.addEntry(entry);
-            
-            TextContent text = factory.createTextContent(item.getSourceId());
-            String title = (item.getTitle() == null) ? "" : item.getTitle();
-            if (item.getType() == Type.VISIT)
-            {
-                entry.setTags("visit");
-                text.setText("Visited " + title);
-            }
-            else
-            {
-                entry.setTags("download");
-                text.setText("Downloaded to " + title);
-            }
-            entry.getContains().add(text);
-            
+            WebResource wurl = null;
             if (item.getUrl() != null)
             {
-                URLContent urlc = factory.createURLContent(item.getSourceId());
-                urlc.setSourceUrl(item.getUrl().toString());
-                urlc.setText(item.getUrl().toString());
-                entry.getContains().add(urlc);
-            }
-            //for download entries: add the target url
-            if (item.getType() == Type.DOWNLOAD && item.getTitle() != null)
-            {
-                URLContent urlc = factory.createURLContent(item.getSourceId() + "-target");
-                urlc.setSourceUrl(item.getTitle());
-                urlc.setText(item.getTitle());
-                entry.getContains().add(urlc);
+                wurl = factory.createWebResource(item.getUrl().toString());
+                wurl.setSourceUrl(item.getUrl().toString());
             }
             
+            if (item.getType() == Type.VISIT)
+            {
+                URLVisitEvent ev = factory.createURLVisitEvent(ResourceFactory.createResourceIRI("local", "visit", item.getSourceId()));
+                ev.setTimestamp(item.getDate());
+                if (wurl != null)
+                    wurl.addEvent(ev);
+            }
+            else if (item.getType() == Type.DOWNLOAD)
+            {
+                FileDownloadEvent ev = factory.createFileDownloadEvent(ResourceFactory.createResourceIRI("local", "download", item.getSourceId()));
+                ev.setTimestamp(item.getDate());
+                if (wurl != null)
+                    wurl.addEvent(ev);
+                if (item.getTitle() != null)
+                {
+                    LocalFile file = factory.createLocalFile(timeline.getSourceId(), item.getTitle());
+                    file.addEvent(ev);
+                }
+            }
         }
         
         return timeline;

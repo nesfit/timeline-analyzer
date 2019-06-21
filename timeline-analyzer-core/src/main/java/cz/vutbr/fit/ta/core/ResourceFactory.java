@@ -5,6 +5,9 @@
  */
 package cz.vutbr.fit.ta.core;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
@@ -23,4 +26,28 @@ public class ResourceFactory
         return vf.createIRI(RESOURCE_PREFIX, module + "-" + type + "-" + id);
     }
 
+    public static IRI createUrlIRI(String urlString)
+    {
+        try
+        {
+            final String encUri = URLEncoder.encode(urlString, "UTF-8");
+            return vf.createIRI(RESOURCE_PREFIX, "url-" + encUri);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static IRI createFileIRI(String taskId, String fullPath)
+    {
+        try
+        {
+            final String encUri = URLEncoder.encode(fullPath, "UTF-8");
+            return vf.createIRI(RESOURCE_PREFIX, "file-" + taskId + "-" + encUri);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
 }

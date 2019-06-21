@@ -11,13 +11,21 @@ import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.local.HistoryItem;
 import cz.vutbr.fit.ta.local.Profile;
 import cz.vutbr.fit.ta.ontology.Content;
+import cz.vutbr.fit.ta.ontology.CreationEvent;
 import cz.vutbr.fit.ta.ontology.Entry;
+import cz.vutbr.fit.ta.ontology.Event;
+import cz.vutbr.fit.ta.ontology.FileDownloadEvent;
 import cz.vutbr.fit.ta.ontology.GeoContent;
 import cz.vutbr.fit.ta.ontology.Image;
+import cz.vutbr.fit.ta.ontology.LocalFile;
+import cz.vutbr.fit.ta.ontology.Object;
+import cz.vutbr.fit.ta.ontology.SocialNetworkObject;
 import cz.vutbr.fit.ta.ontology.TAFactory;
 import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.ontology.URLContent;
+import cz.vutbr.fit.ta.ontology.URLVisitEvent;
+import cz.vutbr.fit.ta.ontology.WebResource;
 
 /**
  * 
@@ -68,7 +76,7 @@ public class LocalEntityFactory implements TAFactory
     @Override
     public Entry createEntry(IRI iri)
     {
-        return new LocalEntry(iri);
+        return null;
     }
 
     public Entry createEntry(HistoryItem item)
@@ -98,4 +106,62 @@ public class LocalEntityFactory implements TAFactory
         return createTimeline(ResourceFactory.createResourceIRI("local", "timeline", profile.getName()));
     }
 
+    @Override
+    public SocialNetworkObject createSocialNetworkObject(IRI iri)
+    {
+        return null; //abstract
+    }
+
+    @Override
+    public LocalFile createLocalFile(IRI iri)
+    {
+        return new LocalLocalFile(iri);
+    }
+    
+    public LocalFile createLocalFile(String taskId, String path)
+    {
+        return createLocalFile(ResourceFactory.createFileIRI(taskId, path));
+    }
+
+    @Override
+    public CreationEvent createCreationEvent(IRI iri)
+    {
+        return null; //not used
+    }
+
+    @Override
+    public Object createObject(IRI iri)
+    {
+        return null; //abstract
+    }
+
+    @Override
+    public Event createEvent(IRI iri)
+    {
+        return null; //abstract
+    }
+
+    @Override
+    public FileDownloadEvent createFileDownloadEvent(IRI iri)
+    {
+        return new LocalFileDownloadEvent(iri);
+    }
+
+    @Override
+    public URLVisitEvent createURLVisitEvent(IRI iri)
+    {
+        return new LocalURLVisitEvent(iri);
+    }
+
+    @Override
+    public WebResource createWebResource(IRI iri)
+    {
+        return new LocalWebResource(iri);
+    }
+    
+    public WebResource createWebResource(String urlString)
+    {
+        return createWebResource(ResourceFactory.createUrlIRI(urlString));
+    }
+    
 }

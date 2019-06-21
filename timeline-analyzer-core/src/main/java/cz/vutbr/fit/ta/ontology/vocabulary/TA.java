@@ -48,6 +48,17 @@ public class TA {
 	public static final IRI contextLink;
 
 	/**
+	 * created
+	 * <p>
+	 * {@code http://nesfit.github.io/ontology/ta.owl#CreationEvent}.
+	 * <p>
+	 * An event of the object creation
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#CreationEvent">CreationEvent</a>
+	 */
+	public static final IRI CreationEvent;
+
+	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#Entry}.
 	 * <p>
 	 * An entry in the timeline
@@ -64,6 +75,17 @@ public class TA {
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#Event">Event</a>
 	 */
 	public static final IRI Event;
+
+	/**
+	 * downloaded
+	 * <p>
+	 * {@code http://nesfit.github.io/ontology/ta.owl#FileDownloadEvent}.
+	 * <p>
+	 * An event of the file download from a URL
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#FileDownloadEvent">FileDownloadEvent</a>
+	 */
+	public static final IRI FileDownloadEvent;
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#fileName}.
@@ -96,6 +118,13 @@ public class TA {
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#latitude">latitude</a>
 	 */
 	public static final IRI latitude;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#linksResource}.
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#linksResource">linksResource</a>
+	 */
+	public static final IRI linksResource;
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#LocalFile}.
@@ -247,18 +276,41 @@ public class TA {
 	 */
 	public static final IRI urlMention;
 
+	/**
+	 * visited URL
+	 * <p>
+	 * {@code http://nesfit.github.io/ontology/ta.owl#URLVisitEvent}.
+	 * <p>
+	 * An event of a URL visit
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#URLVisitEvent">URLVisitEvent</a>
+	 */
+	public static final IRI URLVisitEvent;
+
+	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#WebResource}.
+	 * <p>
+	 * A web resource with a URL
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#WebResource">WebResource</a>
+	 */
+	public static final IRI WebResource;
+
 	static {
 		ValueFactory factory = SimpleValueFactory.getInstance();
 
 		contains = factory.createIRI(TA.NAMESPACE, "contains");
 		Content = factory.createIRI(TA.NAMESPACE, "Content");
 		contextLink = factory.createIRI(TA.NAMESPACE, "contextLink");
+		CreationEvent = factory.createIRI(TA.NAMESPACE, "CreationEvent");
 		Entry = factory.createIRI(TA.NAMESPACE, "Entry");
 		Event = factory.createIRI(TA.NAMESPACE, "Event");
+		FileDownloadEvent = factory.createIRI(TA.NAMESPACE, "FileDownloadEvent");
 		fileName = factory.createIRI(TA.NAMESPACE, "fileName");
 		GeoContent = factory.createIRI(TA.NAMESPACE, "GeoContent");
 		Image = factory.createIRI(TA.NAMESPACE, "Image");
 		latitude = factory.createIRI(TA.NAMESPACE, "latitude");
+		linksResource = factory.createIRI(TA.NAMESPACE, "linksResource");
 		LocalFile = factory.createIRI(TA.NAMESPACE, "LocalFile");
 		longitude = factory.createIRI(TA.NAMESPACE, "longitude");
 		Object = factory.createIRI(TA.NAMESPACE, "Object");
@@ -276,6 +328,8 @@ public class TA {
 		timestamp = factory.createIRI(TA.NAMESPACE, "timestamp");
 		URLContent = factory.createIRI(TA.NAMESPACE, "URLContent");
 		urlMention = factory.createIRI(TA.NAMESPACE, "urlMention");
+		URLVisitEvent = factory.createIRI(TA.NAMESPACE, "URLVisitEvent");
+		WebResource = factory.createIRI(TA.NAMESPACE, "WebResource");
 	}
 
 	private TA() {

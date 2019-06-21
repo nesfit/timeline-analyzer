@@ -1,6 +1,7 @@
 package cz.vutbr.fit.ta.ontology;
 
 import java.util.Set;
+import java.util.HashSet;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
@@ -20,7 +21,7 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 	 * <p>
 	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#refersTo>}
 	 */
-	private Object refersTo;
+	private Set<Object> refersTo;
 
 	/**
 	 * A timestamp for an event.
@@ -32,6 +33,7 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 
 	public Event(IRI iri) {
 		super(iri);
+		refersTo = new HashSet<Object>();
 	}
 
 	@Override
@@ -39,12 +41,8 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 		return Event.CLASS_IRI;
 	}
 
-	public Object getRefersTo() {
+	public Set<Object> getRefersTo() {
 		return refersTo;
-	}
-
-	public void setRefersTo(Object refersTo) {
-		this.refersTo = refersTo;
 	}
 
 	public java.util.Date getTimestamp() {
@@ -58,7 +56,7 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 	@Override
 	public void addToModel(Model model) {
 		super.addToModel(model);
-		addObject(model, TA.refersTo, refersTo);
+		addCollection(model, TA.refersTo, refersTo);
 		addValue(model, TA.timestamp, timestamp);
 	}
 
@@ -70,14 +68,13 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 		final TAFactory factory = (TAFactory) efactory;
 
 		final Model m = model.filter(getIRI(), null, null);
-		//load object refersTo
+		//load collection refersTo
 		final Set<IRI> refersToIRIs = getObjectIRIs(m, TA.refersTo);
-		if (!refersToIRIs.isEmpty()) {
-			final IRI iri = refersToIRIs.iterator().next();
-			refersTo = factory.createObject(iri);
-			refersTo.loadFromModel(m, factory);
-		} else {
-			refersTo = null;
+		refersTo = new HashSet<>();
+		for (IRI iri : refersToIRIs) {
+			Object item = factory.createObject(iri);
+			item.loadFromModel(m, factory);
+			refersTo.add(item);
 		}
 		timestamp = loadDateValue(m, TA.timestamp);
 	}

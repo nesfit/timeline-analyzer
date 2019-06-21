@@ -36,7 +36,7 @@ public class Object extends com.github.radkovo.rdf4j.builder.RDFEntity
 	public void addEvent(Event event) {
 		if (events == null) events = new HashSet<>();
 		events.add(event);
-		event.setRefersTo(this);
+		event.getRefersTo().add(this);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package cz.vutbr.fit.ta.ontology;
 
+import java.util.Set;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
@@ -18,11 +19,9 @@ public class URLContent extends Content
 	private String text;
 
 	/**
-	 * Source URL of the media..
-	 * <p>
-	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#sourceUrl>}
+	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#linksResource>}
 	 */
-	private String sourceUrl;
+	private WebResource linksResource;
 
 
 	public URLContent(IRI iri) {
@@ -42,26 +41,38 @@ public class URLContent extends Content
 		this.text = text;
 	}
 
-	public String getSourceUrl() {
-		return sourceUrl;
+	public WebResource getLinksResource() {
+		return linksResource;
 	}
 
-	public void setSourceUrl(String sourceUrl) {
-		this.sourceUrl = sourceUrl;
+	public void setLinksResource(WebResource linksResource) {
+		this.linksResource = linksResource;
 	}
 
 	@Override
 	public void addToModel(Model model) {
 		super.addToModel(model);
 		addValue(model, TA.text, text);
-		addValue(model, TA.sourceUrl, sourceUrl);
+		addObject(model, TA.linksResource, linksResource);
 	}
 
 	@Override
 	public void loadFromModel(Model model, EntityFactory efactory) {
 		super.loadFromModel(model, efactory);
+		if (!(efactory instanceof TAFactory))
+			throw new IllegalArgumentException("factory must be instance of TAFactory");
+		final TAFactory factory = (TAFactory) efactory;
+
 		final Model m = model.filter(getIRI(), null, null);
 		text = loadStringValue(m, TA.text);
-		sourceUrl = loadStringValue(m, TA.sourceUrl);
+		//load object linksResource
+		final Set<IRI> linksResourceIRIs = getObjectIRIs(m, TA.linksResource);
+		if (!linksResourceIRIs.isEmpty()) {
+			final IRI iri = linksResourceIRIs.iterator().next();
+			linksResource = factory.createWebResource(iri);
+			linksResource.loadFromModel(m, factory);
+		} else {
+			linksResource = null;
+		}
 	}
 }
