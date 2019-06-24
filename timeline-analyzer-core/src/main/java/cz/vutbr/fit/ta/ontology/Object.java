@@ -22,6 +22,7 @@ public class Object extends com.github.radkovo.rdf4j.builder.RDFEntity
 
 	public Object(IRI iri) {
 		super(iri);
+		events = new HashSet<>();
 	}
 
 	@Override

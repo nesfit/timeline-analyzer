@@ -83,10 +83,15 @@ public class FirefoxProfile extends Profile
                                 if (visited.after(fromDate) && visited.before(toDate)) 
                                 {
                                     Place place = getPlaces().get(placeId);
-                                    HistoryItem item = new HistoryItem(id, HistoryItem.Type.VISIT, visited, place.url);
-                                    item.setTitle(place.title);
-                                    item.setCount(place.count);
-                                    dest.add(item);
+                                    if (place != null)
+                                    {
+                                        HistoryItem item = new HistoryItem(id, HistoryItem.Type.VISIT, visited, place.url);
+                                        item.setTitle(place.title);
+                                        item.setCount(place.count);
+                                        dest.add(item);
+                                    }
+                                    else
+                                        log.error("No place for id {}", placeId);
                                 }
                                 
                             } while (cursor.next());
