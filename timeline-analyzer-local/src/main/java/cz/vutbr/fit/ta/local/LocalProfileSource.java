@@ -64,6 +64,8 @@ public class LocalProfileSource extends TimelineSource
             {
                 wurl = factory.createWebResource(item.getUrl().toString());
                 wurl.setSourceUrl(item.getUrl().toString());
+                if (item.getTitle() != null)
+                    wurl.setResourceTitle(item.getTitle());
             }
             
             if (item.getType() == Type.VISIT)

@@ -170,6 +170,15 @@ public class TA {
 	public static final IRI refersTo;
 
 	/**
+	 * {@code http://nesfit.github.io/ontology/ta.owl#resourceTitle}.
+	 * <p>
+	 * A title of a web resource (web page title, if present)
+	 *
+	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#resourceTitle">resourceTitle</a>
+	 */
+	public static final IRI resourceTitle;
+
+	/**
 	 * URL also published in
 	 * <p>
 	 * {@code http://nesfit.github.io/ontology/ta.owl#sameURL}.
@@ -318,6 +327,7 @@ public class TA {
 		Object = factory.createIRI(TA.NAMESPACE, "Object");
 		path = factory.createIRI(TA.NAMESPACE, "path");
 		refersTo = factory.createIRI(TA.NAMESPACE, "refersTo");
+		resourceTitle = factory.createIRI(TA.NAMESPACE, "resourceTitle");
 		sameURL = factory.createIRI(TA.NAMESPACE, "sameURL");
 		SocialNetworkObject = factory.createIRI(TA.NAMESPACE, "SocialNetworkObject");
 		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");

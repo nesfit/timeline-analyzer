@@ -24,6 +24,13 @@ public class WebResource extends Object
 	 */
 	private String sourceUrl;
 
+	/**
+	 * A title of a web resource (web page title, if present).
+	 * <p>
+	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#resourceTitle>}
+	 */
+	private String resourceTitle;
+
 	/** Inverse collection for Image.linksResource. */
 	private Set<Image> images;
 
@@ -46,6 +53,14 @@ public class WebResource extends Object
 		this.sourceUrl = sourceUrl;
 	}
 
+	public String getResourceTitle() {
+		return resourceTitle;
+	}
+
+	public void setResourceTitle(String resourceTitle) {
+		this.resourceTitle = resourceTitle;
+	}
+
 	public Set<Image> getImages() {
 		return images;
 	}
@@ -60,6 +75,7 @@ public class WebResource extends Object
 	public void addToModel(TargetModel target) {
 		super.addToModel(target);
 		addValue(target, TA.sourceUrl, sourceUrl);
+		addValue(target, TA.resourceTitle, resourceTitle);
 		target.addAll(images);
 	}
 
@@ -72,5 +88,6 @@ public class WebResource extends Object
 
 		final Model m = model.filter(getIRI(), null, null);
 		sourceUrl = loadStringValue(m, TA.sourceUrl);
+		resourceTitle = loadStringValue(m, TA.resourceTitle);
 	}
 }

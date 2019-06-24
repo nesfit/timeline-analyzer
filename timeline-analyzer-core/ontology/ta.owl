@@ -147,6 +147,17 @@
     
 
 
+    <!-- http://nesfit.github.io/ontology/ta.owl#resourceTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#resourceTitle">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#WebResource"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>A title of a web resource (web page title, if present)</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://nesfit.github.io/ontology/ta.owl#sourceId -->
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sourceId">
