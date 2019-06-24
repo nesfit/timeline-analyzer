@@ -17,6 +17,13 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#Event");
 
 	/**
+	 * Assigns a source timeline to an event.
+	 * <p>
+	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#sourceTimeline>}
+	 */
+	private Timeline sourceTimeline;
+
+	/**
 	 * Assigns an object to an event.
 	 * <p>
 	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#refersTo>}
@@ -41,6 +48,14 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 		return Event.CLASS_IRI;
 	}
 
+	public Timeline getSourceTimeline() {
+		return sourceTimeline;
+	}
+
+	public void setSourceTimeline(Timeline sourceTimeline) {
+		this.sourceTimeline = sourceTimeline;
+	}
+
 	public Set<Object> getRefersTo() {
 		return refersTo;
 	}
@@ -56,6 +71,7 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 	@Override
 	public void addToModel(Model model) {
 		super.addToModel(model);
+		addObject(model, TA.sourceTimeline, sourceTimeline);
 		addCollection(model, TA.refersTo, refersTo);
 		addValue(model, TA.timestamp, timestamp);
 	}
@@ -68,6 +84,15 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 		final TAFactory factory = (TAFactory) efactory;
 
 		final Model m = model.filter(getIRI(), null, null);
+		//load object sourceTimeline
+		final Set<IRI> sourceTimelineIRIs = getObjectIRIs(m, TA.sourceTimeline);
+		if (!sourceTimelineIRIs.isEmpty()) {
+			final IRI iri = sourceTimelineIRIs.iterator().next();
+			sourceTimeline = factory.createTimeline(iri);
+			sourceTimeline.loadFromModel(m, factory);
+		} else {
+			sourceTimeline = null;
+		}
 		//load collection refersTo
 		final Set<IRI> refersToIRIs = getObjectIRIs(m, TA.refersTo);
 		refersTo = new HashSet<>();

@@ -23,8 +23,8 @@ public class Timeline extends SocialNetworkObject
 	 */
 	private String sourceId;
 
-	/** Inverse collection for Entry.sourceTimeline. */
-	private Set<Entry> entries;
+	/** Inverse collection for Event.sourceTimeline. */
+	private Set<Event> events;
 
 
 	public Timeline(IRI iri) {
@@ -44,21 +44,21 @@ public class Timeline extends SocialNetworkObject
 		this.sourceId = sourceId;
 	}
 
-	public Set<Entry> getEntries() {
-		return (entries == null) ? new HashSet<>() : entries;
+	public Set<Event> getEvents() {
+		return (events == null) ? new HashSet<>() : events;
 	}
 
-	public void addEntry(Entry entry) {
-		if (entries == null) entries = new HashSet<>();
-		entries.add(entry);
-		entry.setSourceTimeline(this);
+	public void addEvent(Event event) {
+		if (events == null) events = new HashSet<>();
+		events.add(event);
+		event.setSourceTimeline(this);
 	}
 
 	@Override
 	public void addToModel(Model model) {
 		super.addToModel(model);
 		addValue(model, TA.sourceId, sourceId);
-		addCollectionData(model, entries);
+		addCollectionData(model, events);
 	}
 
 	@Override

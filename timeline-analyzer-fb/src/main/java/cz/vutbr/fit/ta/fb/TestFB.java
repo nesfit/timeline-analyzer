@@ -49,7 +49,7 @@ public class TestFB
         fb.setLimit(1000);
         Timeline timeline = fb.getTimeline();
         
-        System.out.println("Got timeline of " + fb.getProfileId() + " of " + timeline.getEntries().size() + " entries");
+        System.out.println("Got timeline of " + fb.getProfileId() + " of " + timeline.getEvents().size() + " events");
         
         Model model = new LinkedHashModel();
         timeline.addToModel(model);

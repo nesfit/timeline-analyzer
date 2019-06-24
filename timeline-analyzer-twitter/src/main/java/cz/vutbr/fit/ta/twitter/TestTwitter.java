@@ -34,7 +34,7 @@ public class TestTwitter
         twitter.setLimit(1000);
         Timeline timeline = twitter.getTimeline();
         
-        System.out.println("Got timeline of " + twitter.getUsername() + " of " + timeline.getEntries().size() + " entries");
+        System.out.println("Got timeline of " + twitter.getUsername() + " of " + timeline.getEvents().size() + " events");
         
         Model model = new LinkedHashModel();
         timeline.addToModel(model);

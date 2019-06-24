@@ -17,11 +17,6 @@ public class Entry extends SocialNetworkObject
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#Entry");
 
 	/**
-	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#sourceTimeline>}
-	 */
-	private Timeline sourceTimeline;
-
-	/**
 	 * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#contains>}
 	 */
 	private Set<Content> contains;
@@ -52,14 +47,6 @@ public class Entry extends SocialNetworkObject
 		return Entry.CLASS_IRI;
 	}
 
-	public Timeline getSourceTimeline() {
-		return sourceTimeline;
-	}
-
-	public void setSourceTimeline(Timeline sourceTimeline) {
-		this.sourceTimeline = sourceTimeline;
-	}
-
 	public Set<Content> getContains() {
 		return contains;
 	}
@@ -83,7 +70,6 @@ public class Entry extends SocialNetworkObject
 	@Override
 	public void addToModel(Model model) {
 		super.addToModel(model);
-		addObject(model, TA.sourceTimeline, sourceTimeline);
 		addCollectionWithData(model, TA.contains, contains);
 		addValue(model, TA.sourceId, sourceId);
 		addValue(model, TA.tags, tags);
@@ -97,15 +83,6 @@ public class Entry extends SocialNetworkObject
 		final TAFactory factory = (TAFactory) efactory;
 
 		final Model m = model.filter(getIRI(), null, null);
-		//load object sourceTimeline
-		final Set<IRI> sourceTimelineIRIs = getObjectIRIs(m, TA.sourceTimeline);
-		if (!sourceTimelineIRIs.isEmpty()) {
-			final IRI iri = sourceTimelineIRIs.iterator().next();
-			sourceTimeline = factory.createTimeline(iri);
-			sourceTimeline.loadFromModel(m, factory);
-		} else {
-			sourceTimeline = null;
-		}
 		//load collection contains
 		final Set<IRI> containsIRIs = getObjectIRIs(m, TA.contains);
 		contains = new HashSet<>();

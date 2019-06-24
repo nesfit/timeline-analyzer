@@ -25,6 +25,7 @@ import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.fb.model.FBEntityFactory;
 import cz.vutbr.fit.ta.ontology.CreationEvent;
 import cz.vutbr.fit.ta.ontology.Entry;
+import cz.vutbr.fit.ta.ontology.Event;
 import cz.vutbr.fit.ta.ontology.GeoContent;
 import cz.vutbr.fit.ta.ontology.Image;
 import cz.vutbr.fit.ta.ontology.TextContent;
@@ -75,9 +76,9 @@ public class FBSource extends TimelineSource
         {
             for (Post post : feedPage)
             {
-                Entry entry = createEntry(ef, post);
-                if (entry != null)
-                    timeline.addEntry(entry);
+                Event event = createEventForEntry(ef, post);
+                if (event != null)
+                    timeline.addEvent(event);
                 
                 cnt++;
                 if (cnt >= getLimit())
@@ -90,7 +91,7 @@ public class FBSource extends TimelineSource
         return timeline;
     }
     
-    private Entry createEntry(FBEntityFactory ef, Post post)
+    private Event createEventForEntry(FBEntityFactory ef, Post post)
     {
         CreationEvent cev = ef.createCreationEvent(post.getId());
         cev.setTimestamp(post.getCreatedTime());
@@ -166,7 +167,7 @@ public class FBSource extends TimelineSource
             }
         }
         
-        return entry;
+        return cev;
     }
     
     private Image createImageFromAttachment(FBEntityFactory ef, StoryAttachment.Image img, String postId, int imgCnt)

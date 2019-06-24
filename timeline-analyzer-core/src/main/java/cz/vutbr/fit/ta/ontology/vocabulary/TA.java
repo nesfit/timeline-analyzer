@@ -199,6 +199,8 @@ public class TA {
 
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#sourceTimeline}.
+	 * <p>
+	 * Assigns a source timeline to an event
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">sourceTimeline</a>
 	 */

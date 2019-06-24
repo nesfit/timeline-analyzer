@@ -12,12 +12,9 @@ import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.local.HistoryItem.Type;
 import cz.vutbr.fit.ta.local.model.LocalEntityFactory;
-import cz.vutbr.fit.ta.ontology.Entry;
 import cz.vutbr.fit.ta.ontology.FileDownloadEvent;
 import cz.vutbr.fit.ta.ontology.LocalFile;
-import cz.vutbr.fit.ta.ontology.TextContent;
 import cz.vutbr.fit.ta.ontology.Timeline;
-import cz.vutbr.fit.ta.ontology.URLContent;
 import cz.vutbr.fit.ta.ontology.URLVisitEvent;
 import cz.vutbr.fit.ta.ontology.WebResource;
 
@@ -73,6 +70,7 @@ public class LocalProfileSource extends TimelineSource
                 ev.setTimestamp(item.getDate());
                 if (wurl != null)
                     wurl.addEvent(ev);
+                timeline.addEvent(ev);
             }
             else if (item.getType() == Type.DOWNLOAD)
             {
@@ -85,6 +83,7 @@ public class LocalProfileSource extends TimelineSource
                     LocalFile file = factory.createLocalFile(timeline.getSourceId(), item.getTitle());
                     file.addEvent(ev);
                 }
+                timeline.addEvent(ev);
             }
         }
         
