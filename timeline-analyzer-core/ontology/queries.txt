@@ -1,0 +1,12 @@
+
+// All events
+PREFIX ta: <http://nesfit.github.io/ontology/ta.owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?ev ?etype ?time
+WHERE {
+  ?ev rdf:type ?etype .
+  ?etype rdfs:subClassOf ta:Event .
+  ?ev ta:timestamp ?time
+} ORDER BY ASC(?time)
+
