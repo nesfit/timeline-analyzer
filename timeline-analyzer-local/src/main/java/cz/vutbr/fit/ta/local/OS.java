@@ -54,4 +54,20 @@ public class OS
         return name.toLowerCase().contains("windows");
     }
     
+    public char pathSeparator()
+    {
+        return isWindows() ? '\\' : '/';
+    }
+    
+    public String extractFilenameFromPath(String path)
+    {
+        final int pos = path.lastIndexOf(pathSeparator());
+        if (pos == -1)
+            return path;
+        else if (pos + 1 <  path.length())
+            return path.substring(pos + 1);
+        else
+            return "";
+    }
+    
 }

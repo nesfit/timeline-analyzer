@@ -170,7 +170,8 @@ public class FirefoxProfile extends Profile
                                 {
                                     Place place = getPlaces().get(placeId);
                                     HistoryItem curItem = new HistoryItem(id, HistoryItem.Type.DOWNLOAD, visited, place.url);
-                                    curItem.setTitle(content);
+                                    curItem.setTitle(place.title);
+                                    curItem.setFilePath(content);
                                     dest.add(curItem);
                                 }
                                 

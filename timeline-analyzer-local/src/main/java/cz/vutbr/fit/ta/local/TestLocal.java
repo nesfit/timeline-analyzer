@@ -53,7 +53,7 @@ public class TestLocal
                     System.out.println(item);
                 }*/
                 
-                LocalProfileSource src = new LocalProfileSource(prof, fromDate, toDate);
+                LocalProfileSource src = new LocalProfileSource(ff, prof, fromDate, toDate);
                 Timeline timeline = src.getTimeline();
                 
                 TargetModel target = new TargetModel(new LinkedHashModel());

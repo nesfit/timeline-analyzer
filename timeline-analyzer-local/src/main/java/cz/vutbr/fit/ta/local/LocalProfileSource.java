@@ -24,12 +24,14 @@ import cz.vutbr.fit.ta.ontology.WebResource;
  */
 public class LocalProfileSource extends TimelineSource
 {
+    private Browser browser;
     private Profile profile;
     private Date dateFrom;
     private Date dateTo;
     
-    public LocalProfileSource(Profile profile, Date dateFrom, Date dateTo)
+    public LocalProfileSource(Browser browser, Profile profile, Date dateFrom, Date dateTo)
     {
+        this.browser = browser;
         this.profile = profile;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -78,9 +80,11 @@ public class LocalProfileSource extends TimelineSource
                 ev.setTimestamp(item.getDate());
                 if (wurl != null)
                     wurl.addEvent(ev);
-                if (item.getTitle() != null)
+                if (item.getFilePath() != null)
                 {
-                    LocalFile file = factory.createLocalFile(timeline.getSourceId(), item.getTitle());
+                    LocalFile file = factory.createLocalFile(timeline.getSourceId(), item.getFilePath());
+                    file.setPath(item.getFilePath());
+                    file.setFileName(browser.getOs().extractFilenameFromPath(item.getFilePath()));
                     file.addEvent(ev);
                 }
                 timeline.addEvent(ev);

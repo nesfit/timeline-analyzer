@@ -22,6 +22,8 @@ public class HistoryItem
     private URL url;
     private int count;
     private String title;
+    private String filePath;
+    
     
     public HistoryItem(int id, Type type, Date date, URL url)
     {
@@ -74,6 +76,16 @@ public class HistoryItem
     public void setCount(int count)
     {
         this.count = count;
+    }
+
+    public String getFilePath()
+    {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath)
+    {
+        this.filePath = filePath;
     }
 
     public String getTitle()
