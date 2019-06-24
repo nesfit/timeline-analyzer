@@ -14,10 +14,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 
+import com.github.radkovo.rdf4j.builder.TargetModel;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -51,11 +51,12 @@ public class TestFB
         
         System.out.println("Got timeline of " + fb.getProfileId() + " of " + timeline.getEvents().size() + " events");
         
-        Model model = new LinkedHashModel();
-        timeline.addToModel(model);
-        System.out.println(model);
+        TargetModel target = new TargetModel(new LinkedHashModel());
+        target.add(timeline);
+        //System.out.println(target.getModel());
+        System.out.println("Model created, " + target.getModel().size() + " triples");
         
-        rdfcon.add(model, context);
+        rdfcon.add(target.getModel(), context);
     }
     
     protected static Resource getContext()

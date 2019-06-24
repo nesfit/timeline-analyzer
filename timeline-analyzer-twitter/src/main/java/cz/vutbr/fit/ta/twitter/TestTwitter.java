@@ -10,9 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+
+import com.github.radkovo.rdf4j.builder.TargetModel;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.RDFConnectorSesame;
@@ -25,7 +26,7 @@ import cz.vutbr.fit.ta.ontology.Timeline;
  */
 public class TestTwitter
 {
-    public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
+    public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test2";
     private static Resource context;
     
     public static void downloadTimeline(String username, RDFConnector rdfcon)
@@ -36,11 +37,12 @@ public class TestTwitter
         
         System.out.println("Got timeline of " + twitter.getUsername() + " of " + timeline.getEvents().size() + " events");
         
-        Model model = new LinkedHashModel();
-        timeline.addToModel(model);
-        System.out.println(model);
+        TargetModel target = new TargetModel(new LinkedHashModel());
+        target.add(timeline);
+        //System.out.println(target.getModel());
+        System.out.println("Model created, " + target.getModel().size() + " triples");
         
-        rdfcon.add(model, context);
+        rdfcon.add(target.getModel(), context);
     }
     
     protected static Resource getContext()
@@ -62,7 +64,7 @@ public class TestTwitter
         downloadTimeline("iROZHLAScz", rdfcon);
         downloadTimeline("RESPEKT_CZ", rdfcon);
         downloadTimeline("DVTVcz", rdfcon);
-        downloadTimeline("veselovskyma", rdfcon);
+        /*downloadTimeline("veselovskyma", rdfcon);
         downloadTimeline("ekonom_cz", rdfcon);
         downloadTimeline("hospodarky", rdfcon);
         downloadTimeline("CT24zive", rdfcon);
@@ -71,9 +73,9 @@ public class TestTwitter
         downloadTimeline("cermak", rdfcon);
         downloadTimeline("LudekStanek", rdfcon);
         downloadTimeline("JanHrebejk", rdfcon);
-        downloadTimeline("Seznam_Zpravy", rdfcon);
+        //downloadTimeline("Seznam_Zpravy", rdfcon);
         downloadTimeline("atomsedlacek", rdfcon);
-        downloadTimeline("lidovky", rdfcon);
+        downloadTimeline("lidovky", rdfcon);*/
         
         rdfcon.close();
     }

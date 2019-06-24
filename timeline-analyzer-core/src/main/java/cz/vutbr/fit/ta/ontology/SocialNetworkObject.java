@@ -3,6 +3,7 @@ package cz.vutbr.fit.ta.ontology;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
+import com.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -23,8 +24,8 @@ public class SocialNetworkObject extends Object
 	}
 
 	@Override
-	public void addToModel(Model model) {
-		super.addToModel(model);
+	public void addToModel(TargetModel target) {
+		super.addToModel(target);
 	}
 
 	@Override

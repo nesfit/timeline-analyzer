@@ -4,6 +4,7 @@ import java.util.Set;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
+import com.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -39,9 +40,9 @@ public class Image extends Content
 	}
 
 	@Override
-	public void addToModel(Model model) {
-		super.addToModel(model);
-		addObject(model, TA.linksResource, linksResource);
+	public void addToModel(TargetModel target) {
+		super.addToModel(target);
+		addObject(target, TA.linksResource, linksResource);
 	}
 
 	@Override

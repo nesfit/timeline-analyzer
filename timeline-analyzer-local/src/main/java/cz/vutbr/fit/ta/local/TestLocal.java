@@ -10,9 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
+
+import com.github.radkovo.rdf4j.builder.TargetModel;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.RDFConnectorSesame;
@@ -55,14 +56,14 @@ public class TestLocal
                 LocalProfileSource src = new LocalProfileSource(prof, fromDate, toDate);
                 Timeline timeline = src.getTimeline();
                 
-                Model model = new LinkedHashModel();
-                timeline.addToModel(model);
+                TargetModel target = new TargetModel(new LinkedHashModel());
+                target.add(timeline);
                 //System.out.println(model);
-                System.out.println("Model created, " + model.size() + " triples");
+                System.out.println("Model created, " + target.getModel().size() + " triples");
                 
                 System.out.println("Start at " + (new Date()));
                 RDFConnector rdfcon = new RDFConnectorSesame(REPO);
-                rdfcon.add(model, getContext());
+                rdfcon.add(target.getModel(), getContext());
                 rdfcon.close();
                 System.out.println("Finished at " + (new Date()));
                 

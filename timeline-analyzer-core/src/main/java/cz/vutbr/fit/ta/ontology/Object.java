@@ -5,6 +5,7 @@ import java.util.HashSet;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
+import com.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -31,7 +32,7 @@ public class Object extends com.github.radkovo.rdf4j.builder.RDFEntity
 	}
 
 	public Set<Event> getEvents() {
-		return (events == null) ? new HashSet<>() : events;
+		return events;
 	}
 
 	public void addEvent(Event event) {
@@ -41,9 +42,9 @@ public class Object extends com.github.radkovo.rdf4j.builder.RDFEntity
 	}
 
 	@Override
-	public void addToModel(Model model) {
-		super.addToModel(model);
-		addCollectionData(model, events);
+	public void addToModel(TargetModel target) {
+		super.addToModel(target);
+		target.addAll(events);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
+import com.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -29,6 +30,7 @@ public class WebResource extends Object
 
 	public WebResource(IRI iri) {
 		super(iri);
+		images = new HashSet<>();
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class WebResource extends Object
 	}
 
 	public Set<Image> getImages() {
-		return (images == null) ? new HashSet<>() : images;
+		return images;
 	}
 
 	public void addImage(Image image) {
@@ -55,10 +57,10 @@ public class WebResource extends Object
 	}
 
 	@Override
-	public void addToModel(Model model) {
-		super.addToModel(model);
-		addValue(model, TA.sourceUrl, sourceUrl);
-		addCollectionData(model, images);
+	public void addToModel(TargetModel target) {
+		super.addToModel(target);
+		addValue(target, TA.sourceUrl, sourceUrl);
+		target.addAll(images);
 	}
 
 	@Override

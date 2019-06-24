@@ -5,6 +5,7 @@ import java.util.HashSet;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
+import com.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -69,11 +70,11 @@ public class Event extends com.github.radkovo.rdf4j.builder.RDFEntity
 	}
 
 	@Override
-	public void addToModel(Model model) {
-		super.addToModel(model);
-		addObject(model, TA.sourceTimeline, sourceTimeline);
-		addCollection(model, TA.refersTo, refersTo);
-		addValue(model, TA.timestamp, timestamp);
+	public void addToModel(TargetModel target) {
+		super.addToModel(target);
+		addObject(target, TA.sourceTimeline, sourceTimeline);
+		addCollection(target, TA.refersTo, refersTo);
+		addValue(target, TA.timestamp, timestamp);
 	}
 
 	@Override

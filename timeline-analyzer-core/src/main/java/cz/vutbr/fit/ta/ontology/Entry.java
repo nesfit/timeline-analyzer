@@ -5,6 +5,7 @@ import java.util.HashSet;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import com.github.radkovo.rdf4j.builder.EntityFactory;
+import com.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -68,11 +69,11 @@ public class Entry extends SocialNetworkObject
 	}
 
 	@Override
-	public void addToModel(Model model) {
-		super.addToModel(model);
-		addCollectionWithData(model, TA.contains, contains);
-		addValue(model, TA.sourceId, sourceId);
-		addValue(model, TA.tags, tags);
+	public void addToModel(TargetModel target) {
+		super.addToModel(target);
+		addCollection(target, TA.contains, contains);
+		addValue(target, TA.sourceId, sourceId);
+		addValue(target, TA.tags, tags);
 	}
 
 	@Override
