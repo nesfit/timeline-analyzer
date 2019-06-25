@@ -1,8 +1,9 @@
-import { Timeline } from './timeline';
+import { TAObject } from './taobject';
 
-export class Entry {
-  uri: string;
+export class Entry extends TAObject {
   sourceId: string;
-  sourceTimeline: Timeline;
-  timestamp: Date;
+
+  objType(): string {
+      return 'entry';
+  }
 }

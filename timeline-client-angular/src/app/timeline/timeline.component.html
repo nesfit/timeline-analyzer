@@ -98,9 +98,9 @@
 
 <div id="details">
 	<ul>
-		<li *ngFor="let c of entryContents">
-			<span>{{c.text}} </span>
-			<a *ngIf="c.url != undefined" [routerLink]="" (click)="showURL(c.url)"><code>{{c.url}}</code></a>
+		<li *ngFor="let c of eventObjects">
+			<span>{{c.uri}} </span>
+			<!--<a *ngIf="c.url != undefined" [routerLink]="" (click)="showURL(c.url)"><code>{{c.url}}</code></a>-->
 		</li>
 	</ul>
 </div>

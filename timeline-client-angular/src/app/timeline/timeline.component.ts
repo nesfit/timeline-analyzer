@@ -5,6 +5,7 @@ import { Timeline } from '../model/timeline';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataItem } from 'vis';
+import { TAObject } from '../model/taobject';
 
 @Component({
   selector: 'app-timeline',
@@ -27,7 +28,7 @@ export class TimelineComponent implements OnInit {
   tldata: DataSet<DataItem>;
   tlgroups: DataSet<DataGroup>;
   tloptions: any;
-  entryContents: any[];
+  eventObjects: TAObject[];
   // filtered resource
   filteredResources: string[];
 
@@ -44,7 +45,7 @@ export class TimelineComponent implements OnInit {
     this.rdf.getTimelines().subscribe(data => this.setTimelines(data));
     this.createTimeline();
     this.shared.timeline = this;
-    this.entryContents = [];
+    this.eventObjects = [];
     this.filteredResources = [];
   }
 
@@ -107,14 +108,14 @@ export class TimelineComponent implements OnInit {
   }
 
   displayEvent(properties: any): void {
-    const id = properties.items[0];
-    console.log('showing ' + id);
-    this.rdf.getContentsForEntryById(id).subscribe(data => this.displayContents(data));
+    const uri = properties.items[0];
+    console.log('showing ' + uri);
+    this.rdf.getReferredObjects(uri).subscribe(data => this.displayContents(data));
   }
 
-  displayContents(data: any[]): void {
-    this.entryContents = data;
-    console.log('showed ');
+  displayContents(data: TAObject[]): void {
+    this.eventObjects = data;
+    console.log('shown ');
     console.log(data);
   }
 

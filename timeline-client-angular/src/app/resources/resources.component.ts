@@ -1,6 +1,6 @@
 import { Rdf4jService } from '../rdf4j.service';
 import { SharedService } from '../shared.service';
-import { Entry } from '../timeline/entry';
+import { Entry } from '../model/entry';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -46,7 +46,7 @@ export class ResourcesComponent implements OnInit {
 
   showURL(url: string): void {
     this.selectedUrl = url;
-    this.rdf.getEntriesForURL(url).subscribe(data => this.showEntries(data));
+    //this.rdf.getEntriesForURL(url).subscribe(data => this.showEntries(data));
   }
 
   showEntries(entries: Entry[]): void {
@@ -58,32 +58,32 @@ export class ResourcesComponent implements OnInit {
     this.timelineLabels = [];
     let last = 0;
     for (let i = 0; i < entries.length; i++) {
-      const uri = entries[i].sourceTimeline.uri;
+      /*const uri = entries[i].sourceTimeline.uri;
       if (this.timelineUris[uri] === undefined) {
         this.timelineIds[last] = entries[i].sourceTimeline.uri;
         this.timelineLabels[last] = entries[i].sourceTimeline.label;
         this.timelineUris[uri] = last++;
-      }
+      }*/
     }
     console.log(this.timelineUris);
     console.log(this.timelineLabels);
     // create contents
     this.contents = [];
     for (let i = 0; i < entries.length; i++) {
-      const cont = {col: 0, time: null, contains: []};
+      /*const cont = {col: 0, time: null, contains: []};
       cont.col = this.timelineUris[entries[i].sourceTimeline.uri];
       cont.time = entries[i].timestamp;
       this.rdf.getContentsForEntry(entries[i]).subscribe(data => cont.contains = data);
-      this.contents.push(cont);
+      this.contents.push(cont);*/
     }
   }
 
   showInTimeline(): void {
     console.log('show');
-    console.log(this.timelineIds);
+    /*console.log(this.timelineIds);
     console.log(this.shared.timeline.selected);
     this.shared.timeline.setFilteredResources([this.selectedUrl]);
-    this.shared.timeline.selectTimelinesByUris(this.timelineIds);
+    this.shared.timeline.selectTimelinesByUris(this.timelineIds);*/
   }
 
 }

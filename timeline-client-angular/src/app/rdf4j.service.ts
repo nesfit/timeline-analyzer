@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TAObject } from './model/taobject';
+import { LocalFile } from './model/localfile';
+import { WebResource } from './model/webresource';
 
 const httpOptionsQuery = {
   headers: new HttpHeaders({
@@ -39,7 +42,7 @@ export class Rdf4jService {
   getTimelines(): Observable<Timeline[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
-      `SELECT DISTINCT ?uri ?sourceId ?label 
+      `SELECT DISTINCT ?uri ?sourceId ?label
        WHERE {
            ?uri rdf:type ta:Timeline .
            ?uri ta:sourceId ?sourceId .
@@ -105,34 +108,29 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEvents(res, t)));
   }
 
-  getEntries(t: Timeline, startDate: Date, limit: number): Observable<Entry[]> {
+  getReferredObjectUris(eventUri: string): Observable<string[]> {
     const url = this.getRepositoryUrl();
-    const q = this.getPrefixes()
-      + 'SELECT ?uri ?time ?id ?label'
-      + ' WHERE { ?uri ta:timestamp ?time . ?uri rdf:type ta:Entry . ?uri ta:sourceTimeline <' + t.uri + '>'
-      + ' . ?uri ta:sourceId ?id'
-      + ' . OPTIONAL { ?uri rdfs:label ?label } }'
-      + ' ORDER BY ASC(?time)'
-      + ' LIMIT ' + limit;
-    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));
+    const q = this.getPrefixes() +
+        `SELECT ?s
+         WHERE {
+            <${eventUri}> ta:refersTo ?s
+         }`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
   }
 
-  getEntriesForResource(t: Timeline, startDate: Date, limit: number, resource: string): Observable<Entry[]> {
+  getReferredObjects(eventUri: string): Observable<TAObject[]> {
     const url = this.getRepositoryUrl();
-    const filter = (resource === null) ? '' : ' FILTER(?res == "' + resource + '")';
-    const q = this.getPrefixes()
-      + 'SELECT ?uri ?time ?id ?label'
-      + ' WHERE { ?uri ta:timestamp ?time . ?uri rdf:type ta:Entry . ?uri ta:sourceTimeline <' + t.uri + '>'
-      + ' . ?uri ta:sourceId ?id'
-      + ' . ?uri ta:contains ?cont'
-      + ' . ?cont ta:sourceUrl ?res'
-      + ' . OPTIONAL { ?uri rdfs:label ?label }'
-      + ' FILTER(?res = "' + resource + '")'
-      + ' }'
-      + ' ORDER BY ASC(?time)'
-      + ' LIMIT ' + limit;
-    console.log(q);
-    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));
+    const q = this.getPrefixes() +
+        `SELECT ?o ?type ?sourceId ?fileName ?path ?refUrl ?refTitle
+            WHERE {
+            VALUES ?src { <${eventUri}> }
+            ?src ta:refersTo ?o .
+            ?o rdf:type ?type .
+            OPTIONAL { ?o ta:sourceId ?sourceId }
+            OPTIONAL { ?o ta:fileName ?fileName . ?o ta:path ?path }
+            OPTIONAL { ?o ta:sourceUrl ?refUrl . OPTIONAL {?o ta:resourceTitle ?refTitle} }
+         }`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToObjects(res)));
   }
 
   getURLPrefixes(): Observable<string[]> {
@@ -155,23 +153,6 @@ export class Rdf4jService {
       + ' FILTER(' + filter + ')}'
       + ' LIMIT 20';
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
-  }
-
-  getEntriesForURL(url: string): Observable<Entry[]> {
-    const repo = this.getRepositoryUrl();
-    const q = this.getPrefixes()
-      + 'SELECT DISTINCT ?uri ?time ?id ?label ?timeline ?tlid'
-      + ' WHERE { ?uri ta:timestamp ?time'
-      + ' . ?uri ta:sourceTimeline ?timeline'
-      + ' . ?timeline rdfs:label ?tlid'
-      + ' . ?uri rdf:type ta:Entry'
-      + ' . ?uri ta:sourceId ?id'
-      + ' . ?uri ta:contains ?rcont'
-      + ' . ?rcont ta:sourceUrl ?url'
-      + ' . OPTIONAL { ?uri rdfs:label ?label }'
-      + '   FILTER(?url = "' + url + '")'
-      + ' } ORDER BY ASC(?time)';
-    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, null)));
   }
 
   getContentsForEntry(entry: Entry): Observable<any[]> {
@@ -261,8 +242,8 @@ export class Rdf4jService {
       const newitem = new Event();
       newitem.uri = item.uri.value;
       newitem.timestamp = new Date(item.time.value);
-      if (item.label.value !== undefined) {
-          newitem.label = item.label.value;
+      if (item.label !== undefined) {
+        newitem.label = item.label.value;
       }
       if (src) {
         newitem.sourceTimeline = src;
@@ -277,25 +258,37 @@ export class Rdf4jService {
     return ret;
   }
 
-  private bindingsToEntries(res: any, src: Timeline): Entry[] {
+  private bindingsToObjects(res: any): TAObject[] {
     const bindings = res.results.bindings;
-    const ret = new Array<Entry>();
-    // console.log(bindings);
+    const ret = new Array<TAObject>();
     for (let i = 0; i < bindings.length; i++) {
       const item = bindings[i];
-      const newitem = new Entry();
-      newitem.sourceId = item.id.value;
-      newitem.uri = item.uri.value;
-      newitem.timestamp = new Date(item.time.value);
-      if (src) {
-        newitem.sourceTimeline = src;
-      } else {
-        const tl = new Timeline();
-        tl.uri = item.timeline.value;
-        tl.label = item.tlid.value;
-        newitem.sourceTimeline = tl;
+      const type = item.type.value;
+      const iuri = item.o.value;
+      switch (type) {
+        case 'http://nesfit.github.io/ontology/ta.owl#Entry':
+            const entry = new Entry();
+            entry.uri = iuri;
+            entry.sourceId = item.sourceId.value;
+            ret.push(entry);
+            break;
+        case 'http://nesfit.github.io/ontology/ta.owl#LocalFile':
+            const file = new LocalFile();
+            file.uri = iuri;
+            file.fileName = item.fileName.value;
+            file.path = item.path.value;
+            ret.push(file);
+            break;
+        case 'http://nesfit.github.io/ontology/ta.owl#WebResource':
+            const wres = new WebResource();
+            wres.uri = iuri;
+            wres.url = item.refUrl.value;
+            if (item.refTitle !== undefined) {
+              wres.title = item.refTitle.value;
+            }
+            ret.push(wres);
+            break;
       }
-      ret.push(newitem);
     }
     return ret;
   }
