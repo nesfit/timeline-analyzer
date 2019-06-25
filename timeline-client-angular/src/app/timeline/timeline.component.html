@@ -97,10 +97,8 @@
 <div id="visualization"></div>
 
 <div id="details">
-	<ul>
-		<li *ngFor="let c of eventObjects">
-			<span>{{c.uri}} </span>
-			<!--<a *ngIf="c.url != undefined" [routerLink]="" (click)="showURL(c.url)"><code>{{c.url}}</code></a>-->
-		</li>
-	</ul>
+  <div class="event" *ngIf="selectedEvent !== null">
+    <time>{{selectedEvent.timestamp.toLocaleString()}}</time> {{selectedEvent.label}}
+  </div>
+  <app-obj-file [uri]="c.uri" *ngFor="let c of eventObjects"></app-obj-file>
 </div>

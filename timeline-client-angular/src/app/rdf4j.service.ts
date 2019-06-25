@@ -133,6 +133,48 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToObjects(res)));
   }
 
+  getObjectData(objectUri: string): Observable<TAObject[]> {
+    const url = this.getRepositoryUrl();
+    const q = this.getPrefixes() +
+        `SELECT ?o ?type ?sourceId ?fileName ?path ?refUrl ?refTitle
+            WHERE {
+            VALUES ?o { <${objectUri}> }
+            ?o rdf:type ?type .
+            OPTIONAL { ?o ta:sourceId ?sourceId }
+            OPTIONAL { ?o ta:fileName ?fileName . ?o ta:path ?path }
+            OPTIONAL { ?o ta:sourceUrl ?refUrl . OPTIONAL {?o ta:resourceTitle ?refTitle} }
+         }`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToObjects(res)));
+  }
+
+  getContentsForEntry(entry: Entry): Observable<any[]> {
+    const repo = this.getRepositoryUrl();
+    const q = this.getPrefixes() +
+      `SELECT ?s ?type ?text ?resUri
+        WHERE {
+         <${entry.uri}> ta:contains ?s .
+           ?s rdf:type ?type .
+           OPTIONAL { ?s ta:text ?text }
+           OPTIONAL { ?s ta:linksResource ?resUri }
+       }`;
+    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToArray(res)));
+  }
+
+  getContentsForEntryById(entryId: string): Observable<any[]> {
+    const repo = this.getRepositoryUrl();
+    const q = this.getPrefixes()
+      + 'SELECT ?s ?text ?resUri ?type'
+      + ' WHERE {'
+      + '   ?entry ta:contains ?s'
+      + '   . ?entry ta:sourceId ?id'
+      + '   . ?entry rdf:type ?type'
+      + '   . OPTIONAL { ?s ta:text ?text }'
+      + '   . OPTIONAL { ?s ta:linksResource ?resUri }'
+      + '   FILTER( ?id = "' + entryId + '" )'
+      + ' }';
+    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToArray(res)));
+  }
+
   getURLPrefixes(): Observable<string[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes()
@@ -153,33 +195,6 @@ export class Rdf4jService {
       + ' FILTER(' + filter + ')}'
       + ' LIMIT 20';
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
-  }
-
-  getContentsForEntry(entry: Entry): Observable<any[]> {
-    const repo = this.getRepositoryUrl();
-    const q = this.getPrefixes()
-      + 'SELECT ?s ?text ?url'
-      + ' WHERE {'
-      + '   <' + entry.uri + '> ta:contains ?s'
-      + '     . OPTIONAL { ?s ta:text ?text }'
-      + '   . OPTIONAL { ?s ta:sourceUrl ?url }'
-      + ' }';
-    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToArray(res)));
-  }
-
-  getContentsForEntryById(entryId: string): Observable<any[]> {
-    const repo = this.getRepositoryUrl();
-    const q = this.getPrefixes()
-      + 'SELECT ?s ?text ?url ?type'
-      + ' WHERE {'
-      + '   ?entry ta:contains ?s'
-      + '   . ?entry ta:sourceId ?id'
-      + '   . ?entry rdf:type ?type'
-      + '   . OPTIONAL { ?s ta:text ?text }'
-      + '   . OPTIONAL { ?s ta:sourceUrl ?url }'
-      + '   FILTER( ?id = "' + entryId + '" )'
-      + ' }';
-    return this.http.post(repo, q, httpOptionsQuery).pipe(map(res => this.bindingsToArray(res)));
   }
 
   // =========================================================================

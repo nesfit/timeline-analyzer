@@ -1,0 +1,26 @@
+<div class="ta-obj ta-file" *ngIf="type == 'file'">
+  <h4>Local File</h4>
+  <p>Name: <strong>{{file.fileName}}</strong></p>
+  <p>Path: {{file.path}}</p>
+</div>
+<div class="ta-obj ta-web" *ngIf="type == 'web'">
+  <h3>Web Resource</h3>
+  <p *ngIf="wres.title !== undefined">Title: {{wres.title}}</p>
+  <p>URL: {{wres.url}}</p>
+</div>
+<div class="ta-obj ta-entry" *ngIf="type == 'entry'">
+  <h4>Post</h4>
+  <div class="ta-entry-contents" *ngFor="let c of entryContents">
+    <div class="ta-text" *ngIf="c.typeShort === 'TextContent'">
+       {{c.text}}
+    </div>
+    <div class="ta-url" *ngIf="c.typeShort === 'URLContent'">
+       {{c.text}}
+       <app-obj-file [uri]="c.resUri.uri"></app-obj-file>
+    </div>
+    <div class="ta-image" *ngIf="c.typeShort === 'ImageContent'">
+       {{c.text}}
+       <app-obj-file [uri]="c.resUri.uri"></app-obj-file>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { TAObject } from '../model/taobject';
 })
 export class TimelineComponent implements OnInit {
 
+  allEvents: Map<string, Event>;
   // selected dates
   fromdate: NgbDateStruct;
   todate: NgbDateStruct;
@@ -28,6 +29,7 @@ export class TimelineComponent implements OnInit {
   tldata: DataSet<DataItem>;
   tlgroups: DataSet<DataGroup>;
   tloptions: any;
+  selectedEvent: Event;
   eventObjects: TAObject[];
   // filtered resource
   filteredResources: string[];
@@ -36,6 +38,7 @@ export class TimelineComponent implements OnInit {
 
   ngOnInit() {
     const now = new Date();
+    this.allEvents = new Map();
     this.fromdate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
     this.todate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
     this.timelines = [];
@@ -45,6 +48,7 @@ export class TimelineComponent implements OnInit {
     this.rdf.getTimelines().subscribe(data => this.setTimelines(data));
     this.createTimeline();
     this.shared.timeline = this;
+    this.selectedEvent = null;
     this.eventObjects = [];
     this.filteredResources = [];
   }
@@ -110,6 +114,7 @@ export class TimelineComponent implements OnInit {
   displayEvent(properties: any): void {
     const uri = properties.items[0];
     console.log('showing ' + uri);
+    this.selectedEvent = this.allEvents.get(uri);
     this.rdf.getReferredObjects(uri).subscribe(data => this.displayContents(data));
   }
 
@@ -190,6 +195,7 @@ export class TimelineComponent implements OnInit {
       const e = data[i];
       const text = '<small>' + e.timestamp.toLocaleDateString() + ' ' + e.label + '</small>';
       this.tldata.add({id: e.uri, group: t.sourceId, content: '', title: text, start: e.timestamp.toISOString() });
+      this.allEvents.set(e.uri, e);
     }
     // this.tldata.flush();
   }
