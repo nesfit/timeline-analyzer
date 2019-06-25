@@ -1,11 +1,11 @@
-import { Entry } from './timeline/entry';
-import { Timeline } from './timeline/timeline';
+import { Entry } from './model/entry';
+import { Event } from './model/event';
+import { Timeline } from './model/timeline';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Event } from './timeline/event';
 
 const httpOptionsQuery = {
   headers: new HttpHeaders({
@@ -66,7 +66,6 @@ export class Rdf4jService {
          }
          ORDER BY ASC(?o)
          LIMIT 1`;
-    console.log(q);
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToDate(res)));
   }
 
@@ -88,7 +87,6 @@ export class Rdf4jService {
          }
          ORDER BY DESC(?o)
          LIMIT 1`;
-    console.log(q);
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToDate(res)));
   }
 

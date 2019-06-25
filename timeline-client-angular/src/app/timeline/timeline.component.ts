@@ -1,7 +1,7 @@
 import { Rdf4jService } from '../rdf4j.service';
 import { SharedService } from '../shared.service';
-import { Event } from './event';
-import { Timeline } from './timeline';
+import { Event } from '../model/event';
+import { Timeline } from '../model/timeline';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataItem } from 'vis';
@@ -76,7 +76,7 @@ export class TimelineComponent implements OnInit {
     this.tlview = new TL(container, this.tldata, this.tlgroups, this.tloptions);
     const view = this;
     this.tlview.on('select', function(properties) {
-      view.displayEntry(properties);
+      view.displayEvent(properties);
     });
   }
 
@@ -106,7 +106,7 @@ export class TimelineComponent implements OnInit {
     this.updateSelected();
   }
 
-  displayEntry(properties): void {
+  displayEvent(properties: any): void {
     const id = properties.items[0];
     console.log('showing ' + id);
     this.rdf.getContentsForEntryById(id).subscribe(data => this.displayContents(data));
@@ -187,7 +187,7 @@ export class TimelineComponent implements OnInit {
     console.log('adding ' + data.length + ' events');
     for (let i = 0; i < data.length; i++) {
       const e = data[i];
-      const text = '<small>' + e.timestamp.toLocaleDateString() + ' ' + e.timestamp.toLocaleTimeString() + '</small>';
+      const text = '<small>' + e.timestamp.toLocaleDateString() + ' ' + e.label + '</small>';
       this.tldata.add({id: e.uri, group: t.sourceId, content: '', title: text, start: e.timestamp.toISOString() });
     }
     // this.tldata.flush();
