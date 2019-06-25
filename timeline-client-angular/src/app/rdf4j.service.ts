@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Event } from './timeline/event';
 
 const httpOptionsQuery = {
   headers: new HttpHeaders({
@@ -26,7 +27,7 @@ export class Rdf4jService {
     };
 
   private endpointUrl = 'http://localhost:8080/rdf4j-server';
-  private repositoryName = 'test';
+  private repositoryName = 'test2';
 
   constructor(private http: HttpClient) { }
 
@@ -37,8 +38,13 @@ export class Rdf4jService {
 
   getTimelines(): Observable<Timeline[]> {
     const url = this.getRepositoryUrl();
-    const q = this.getPrefixes()
-      + 'SELECT DISTINCT ?uri ?sourceId ?label WHERE {?uri rdf:type ta:Timeline . ?uri ta:sourceId ?sourceId . ?uri rdfs:label ?label}';
+    const q = this.getPrefixes() +
+      `SELECT DISTINCT ?uri ?sourceId ?label 
+       WHERE {
+           ?uri rdf:type ta:Timeline .
+           ?uri ta:sourceId ?sourceId .
+           ?uri rdfs:label ?label
+        }`;
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToTimelines(res)));
   }
 
@@ -49,16 +55,18 @@ export class Rdf4jService {
       values += '<' + t[i].uri + '> ';
     }
     values += '}';
-    const q = this.getPrefixes()
-      + 'SELECT ?o'
-      + ' WHERE {'
-      + '  ' + values
-      + '  ?s ta:timestamp ?o'
-      + '  . ?s rdf:type ta:Entry'
-      + '  . ?s ta:sourceTimeline ?src'
-      + ' }'
-      + ' ORDER BY ASC(?o)'
-      + ' LIMIT 1';
+    const q = this.getPrefixes() +
+        `SELECT ?o
+         WHERE {
+             ${values}
+             ?s ta:timestamp ?o .
+             ?s ta:sourceTimeline ?src .
+             ?s rdf:type ?etype .
+             ?etype rdfs:subClassOf ta:Event .
+         }
+         ORDER BY ASC(?o)
+         LIMIT 1`;
+    console.log(q);
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToDate(res)));
   }
 
@@ -69,17 +77,34 @@ export class Rdf4jService {
       values += '<' + t[i].uri + '> ';
     }
     values += '}';
-    const q = this.getPrefixes()
-      + 'SELECT ?o'
-      + ' WHERE {'
-      + '  ' + values
-      + '  ?s ta:timestamp ?o'
-      + '  . ?s rdf:type ta:Entry'
-      + '  . ?s ta:sourceTimeline ?src'
-      + ' }'
-      + ' ORDER BY DESC(?o)'
-      + ' LIMIT 1';
+    const q = this.getPrefixes() +
+        `SELECT ?o
+         WHERE {
+             ${values}
+             ?s ta:timestamp ?o .
+             ?s ta:sourceTimeline ?src .
+             ?s rdf:type ?etype .
+             ?etype rdfs:subClassOf ta:Event .
+         }
+         ORDER BY DESC(?o)
+         LIMIT 1`;
+    console.log(q);
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToDate(res)));
+  }
+
+  getEvents(t: Timeline, startDate: Date, limit: number): Observable<Event[]> {
+    const url = this.getRepositoryUrl();
+    const q = this.getPrefixes() +
+        `SELECT ?uri ?time ?label
+          WHERE {
+                ?etype rdfs:subClassOf ta:Event .
+                ?uri ta:sourceTimeline <${t.uri}> .
+                ?uri rdf:type ?etype .
+                ?uri ta:timestamp ?time .
+                OPTIONAL {?uri rdfs:label ?label}
+          } ORDER BY ASC(?time)
+          LIMIT ${limit}`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEvents(res, t)));
   }
 
   getEntries(t: Timeline, startDate: Date, limit: number): Observable<Entry[]> {
@@ -111,7 +136,7 @@ export class Rdf4jService {
     console.log(q);
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEntries(res, t)));
   }
-  
+
   getURLPrefixes(): Observable<string[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes()
@@ -196,7 +221,7 @@ export class Rdf4jService {
 
   // =========================================================================
 
-  private bindingsToStrings(res): string[] {
+  private bindingsToStrings(res: any): string[] {
     const bindings = res.results.bindings;
     const ret = new Array<string>();
     for (let i = 0; i < bindings.length; i++) {
@@ -205,7 +230,7 @@ export class Rdf4jService {
     return ret;
   }
 
-  private bindingsToDate(res): Date {
+  private bindingsToDate(res: any): Date {
     const bindings = res.results.bindings;
     if (bindings.length > 0) {
       return new Date(bindings[0].o.value);
@@ -214,7 +239,7 @@ export class Rdf4jService {
     }
   }
 
-  private bindingsToTimelines(res): Timeline[] {
+  private bindingsToTimelines(res: any): Timeline[] {
     const bindings = res.results.bindings;
     const ret = new Array<Timeline>();
     // console.log(bindings);
@@ -229,7 +254,32 @@ export class Rdf4jService {
     return ret;
   }
 
-  private bindingsToEntries(res, src: Timeline): Entry[] {
+  private bindingsToEvents(res: any, src: Timeline): Event[] {
+    const bindings = res.results.bindings;
+    const ret = new Array<Event>();
+    // console.log(bindings);
+    for (let i = 0; i < bindings.length; i++) {
+      const item = bindings[i];
+      const newitem = new Event();
+      newitem.uri = item.uri.value;
+      newitem.timestamp = new Date(item.time.value);
+      if (item.label.value !== undefined) {
+          newitem.label = item.label.value;
+      }
+      if (src) {
+        newitem.sourceTimeline = src;
+      } else {
+        const tl = new Timeline();
+        tl.uri = item.timeline.value;
+        tl.label = item.tlid.value;
+        newitem.sourceTimeline = tl;
+      }
+      ret.push(newitem);
+    }
+    return ret;
+  }
+
+  private bindingsToEntries(res: any, src: Timeline): Entry[] {
     const bindings = res.results.bindings;
     const ret = new Array<Entry>();
     // console.log(bindings);
@@ -252,7 +302,7 @@ export class Rdf4jService {
     return ret;
   }
 
-  private bindingsToArray(res): any[] {
+  private bindingsToArray(res: any): any[] {
     const bindings = res.results.bindings;
     // console.log('RESULTS');
     // console.log(bindings);

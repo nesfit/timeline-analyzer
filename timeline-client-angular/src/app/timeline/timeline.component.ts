@@ -1,6 +1,6 @@
 import { Rdf4jService } from '../rdf4j.service';
 import { SharedService } from '../shared.service';
-import { Entry } from './entry';
+import { Event } from './event';
 import { Timeline } from './timeline';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -85,7 +85,7 @@ export class TimelineComponent implements OnInit {
    */
   setTimelines(data: Timeline[]) {
     this.timelines = data;
-    const selcnt = 5;
+    const selcnt = 4;
     for (let i = 0; i < selcnt; i++) {
       this.timelines[i].selected = true;
     }
@@ -124,6 +124,10 @@ export class TimelineComponent implements OnInit {
 
   clearFilteredResources(): void {
     this.filteredResources = [];
+  }
+
+  showURL(url: string): void {
+    console.log('show ' + url);
   }
 
   // ======================================================================================
@@ -173,18 +177,18 @@ export class TimelineComponent implements OnInit {
     // add entries
     // TODO max 500 entries at the moment, consider end date
     if (this.filteredResources.length === 0) {
-      this.rdf.getEntries(t, null, 500).subscribe(data => this.addEntries(t, data));
+      this.rdf.getEvents(t, null, 500).subscribe(data => this.addEvents(t, data));
     } else {
-      this.rdf.getEntriesForResource(t, null, 500, this.filteredResources[0]).subscribe(data => this.addEntries(t, data));
+      // this.rdf.getEntriesForResource(t, null, 500, this.filteredResources[0]).subscribe(data => this.addEntries(t, data));
     }
   }
 
-  addEntries(t: Timeline, data: Entry[]) {
-    console.log('adding ' + data.length + ' entries');
+  addEvents(t: Timeline, data: Event[]) {
+    console.log('adding ' + data.length + ' events');
     for (let i = 0; i < data.length; i++) {
       const e = data[i];
       const text = '<small>' + e.timestamp.toLocaleDateString() + ' ' + e.timestamp.toLocaleTimeString() + '</small>';
-      this.tldata.add({id: e.sourceId, group: t.sourceId, content: '', title: text, start: e.timestamp.toISOString() });
+      this.tldata.add({id: e.uri, group: t.sourceId, content: '', title: text, start: e.timestamp.toISOString() });
     }
     // this.tldata.flush();
   }
