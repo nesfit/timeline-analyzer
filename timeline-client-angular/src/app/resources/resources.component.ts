@@ -46,7 +46,11 @@ export class ResourcesComponent implements OnInit {
 
   showURL(url: string): void {
     this.selectedUrl = url;
-    //this.rdf.getEntriesForURL(url).subscribe(data => this.showEntries(data));
+    this.rdf.getResourcesForURL(url).subscribe(data => this.showResources(data));
+  }
+
+  showResources(uris: string[]): void {
+    console.log(uris);
   }
 
   showEntries(entries: Entry[]): void {

@@ -177,9 +177,12 @@ export class Rdf4jService {
 
   getURLPrefixes(): Observable<string[]> {
     const url = this.getRepositoryUrl();
-    const q = this.getPrefixes()
-      + 'SELECT DISTINCT (STRBEFORE(?url,":") as ?s)'
-      + ' WHERE { ?u rdf:type ta:URLContent . ?u ta:sourceUrl ?url }';
+    const q = this.getPrefixes() +
+      `SELECT DISTINCT (STRBEFORE(?u,":") as ?s)
+        WHERE {
+            ?r rdf:type ta:WebResource .
+            ?r ta:sourceUrl ?u
+        }`;
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
   }
 
@@ -189,11 +192,27 @@ export class Rdf4jService {
     if (prefix !== '*') {
       filter += ' && strStarts(?s, "' + prefix + '")';
     }
-    const q = this.getPrefixes()
-      + 'SELECT DISTINCT ?s'
-      + ' WHERE { ?u rdf:type ta:URLContent . ?u ta:sourceUrl ?s'
-      + ' FILTER(' + filter + ')}'
-      + ' LIMIT 20';
+    const q = this.getPrefixes() +
+      `SELECT DISTINCT ?s
+        WHERE {
+          ?u rdf:type ta:WebResource .
+          ?u ta:sourceUrl ?s
+          FILTER(${filter})
+        }
+        LIMIT 20`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
+  }
+
+  getResourcesForURL(urlstring: string): Observable<string[]> {
+    const url = this.getRepositoryUrl();
+    const q = this.getPrefixes() +
+      `SELECT ?s
+        WHERE {
+          ?s rdf:type ta:WebResource .
+          ?s ta:sourceUrl ?url
+          FILTER(?url='${urlstring}')
+        }
+        LIMIT 20`;
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
   }
 
