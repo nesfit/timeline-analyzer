@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../model/event';
 import { TAObject } from '../model/taobject';
+import { Rdf4jService } from '../rdf4j.service';
 
 @Component({
   selector: 'app-event',
@@ -10,11 +11,14 @@ import { TAObject } from '../model/taobject';
 export class EventComponent implements OnInit {
 
   @Input() event: Event;
-  @Input() eventObjects: TAObject[];
+  @Input() eventObjects: TAObject[] = null;
 
-  constructor() { }
+  constructor(private rdf: Rdf4jService) { }
 
   ngOnInit() {
+    if (this.eventObjects === null) {
+      this.rdf.getReferredObjects(this.event.uri).subscribe(data => this.eventObjects = data);
+    }
   }
 
 }

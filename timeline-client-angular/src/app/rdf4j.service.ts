@@ -108,6 +108,20 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEvents(res, t)));
   }
 
+  getEventsForObject(objectUri: string): Observable<Event[]> {
+    const url = this.getRepositoryUrl();
+    const q = this.getPrefixes() +
+        `SELECT ?uri ?time ?label
+          WHERE {
+                ?etype rdfs:subClassOf ta:Event .
+                ?uri ta:refersTo <${objectUri}> .
+                ?uri rdf:type ?etype .
+                ?uri ta:timestamp ?time .
+                OPTIONAL {?uri rdfs:label ?label}
+          } ORDER BY ASC(?time)`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEvents(res, null)));
+  }
+
   getReferredObjectUris(eventUri: string): Observable<string[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
@@ -281,12 +295,12 @@ export class Rdf4jService {
       }
       if (src) {
         newitem.sourceTimeline = src;
-      } else {
+      } /*else {
         const tl = new Timeline();
         tl.uri = item.timeline.value;
         tl.label = item.tlid.value;
         newitem.sourceTimeline = tl;
-      }
+      }*/
       ret.push(newitem);
     }
     return ret;

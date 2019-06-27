@@ -34,8 +34,14 @@
 <div class="card" id="report">
 	<div class="card-header">
 		Selected: <code>{{ selectedUrl }}</code>
-	</div>
-	<div class="card-body">
+  </div>
+  
+  <div class="card-body event-list">
+    <app-event [event]="e" *ngFor="let e of events"></app-event>
+  </div>
+
+
+	<!--<div class="card-body">
 		<p><a *ngIf="timelineLabels.length > 0" routerLink="/timeline" (click)="showInTimeline()">Show in timeline</a></p>
 		<table class="table table-stripped table-bordered entries">
 			<thead>
@@ -60,5 +66,5 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+	</div>-->
 </div>

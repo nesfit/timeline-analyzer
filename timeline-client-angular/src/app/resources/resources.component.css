@@ -3,6 +3,10 @@
 	margin-top: 2em;
 }
 
+#report .event-list :nth-child(2n+1) {
+  background-color: lightgrey;
+}
+
 table.entries time {
 	font-size: 80%;
 	font-weight: bold;

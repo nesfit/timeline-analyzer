@@ -14,6 +14,7 @@
 .event .descr time {
   font-size: 80%;
   font-style: italic;
+  margin-right: 1em;
 }
 
 .event .descr span {

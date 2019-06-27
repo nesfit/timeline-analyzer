@@ -1,6 +1,7 @@
 import { Rdf4jService } from '../rdf4j.service';
 import { SharedService } from '../shared.service';
 import { Entry } from '../model/entry';
+import { Event } from '../model/event';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -17,6 +18,9 @@ export class ResourcesComponent implements OnInit {
   urls: string[];
   selectedUrl: string;
 
+  // event display
+  events: Event[];
+
   // entry display
   entries: Entry[];
   timelineUris: number[]; // indices by uris
@@ -28,6 +32,7 @@ export class ResourcesComponent implements OnInit {
 
   ngOnInit() {
     this.rdf.getURLPrefixes().subscribe(data => this.urlPrefixes = data);
+    this.events = [];
     this.urlFilter = '';
     this.urlPrefix = '*';
     this.timelineUris = [];
@@ -46,11 +51,21 @@ export class ResourcesComponent implements OnInit {
 
   showURL(url: string): void {
     this.selectedUrl = url;
+    this.events = [];
     this.rdf.getResourcesForURL(url).subscribe(data => this.showResources(data));
   }
 
   showResources(uris: string[]): void {
     console.log(uris);
+    for (let i = 0; i < uris.length; i++) {
+      this.rdf.getEventsForObject(uris[i]).subscribe(data => this.addEvents(data));
+    }
+  }
+
+  addEvents(data: Event[]): void {
+    for (let j = 0; j < data.length; j++) {
+          this.events.push(data[j]);
+    }
   }
 
   showEntries(entries: Entry[]): void {
