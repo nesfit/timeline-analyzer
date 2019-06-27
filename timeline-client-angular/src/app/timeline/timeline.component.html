@@ -100,5 +100,5 @@
   <div class="event" *ngIf="selectedEvent !== null">
     <time>{{selectedEvent.timestamp.toLocaleString()}}</time> {{selectedEvent.label}}
   </div>
-  <app-obj-file [uri]="c.uri" *ngFor="let c of eventObjects"></app-obj-file>
+  <app-obj [uri]="c.uri" *ngFor="let c of eventObjects"></app-obj>
 </div>

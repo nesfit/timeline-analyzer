@@ -6,11 +6,11 @@ import { WebResource } from '../model/webresource';
 import { Entry } from '../model/entry';
 
 @Component({
-  selector: 'app-obj-file',
-  templateUrl: './obj-file.component.html',
-  styleUrls: ['./obj-file.component.css']
+  selector: 'app-obj',
+  templateUrl: './obj.component.html',
+  styleUrls: ['./obj.component.css']
 })
-export class ObjFileComponent implements OnInit {
+export class ObjComponent implements OnInit {
 
   @Input() uri: string;
   type: string;

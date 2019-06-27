@@ -16,11 +16,11 @@
     </div>
     <div class="ta-url" *ngIf="c.typeShort === 'URLContent'">
        {{c.text}}
-       <app-obj-file [uri]="c.resUri.uri"></app-obj-file>
+       <app-obj [uri]="c.resUri.uri"></app-obj>
     </div>
     <div class="ta-image" *ngIf="c.typeShort === 'ImageContent'">
        {{c.text}}
-       <app-obj-file [uri]="c.resUri.uri"></app-obj-file>
+       <app-obj [uri]="c.resUri.uri"></app-obj>
     </div>
   </div>
 </div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ObjFileComponent } from './obj-file.component';
+import { ObjComponent } from './obj.component';
 
-describe('ObjFileComponent', () => {
-  let component: ObjFileComponent;
-  let fixture: ComponentFixture<ObjFileComponent>;
+describe('ObjComponent', () => {
+  let component: ObjComponent;
+  let fixture: ComponentFixture<ObjComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ObjFileComponent ]
+      declarations: [ ObjComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObjFileComponent);
+    fixture = TestBed.createComponent(ObjComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
