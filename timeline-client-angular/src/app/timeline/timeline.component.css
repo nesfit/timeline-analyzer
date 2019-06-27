@@ -3,13 +3,3 @@
 	padding: 1em;
 	background-color: #eee;
 }
-
-#details .event {
-  margin: 1em 0;
-  font-size: 120%;
-}
-
-#details .event time {
-  font-size: 80%;
-  font-style: italic;
-}

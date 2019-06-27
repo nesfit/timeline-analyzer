@@ -97,8 +97,11 @@
 <div id="visualization"></div>
 
 <div id="details">
-  <div class="event" *ngIf="selectedEvent !== null">
+  <!--<div class="event" *ngIf="selectedEvent !== null">
     <time>{{selectedEvent.timestamp.toLocaleString()}}</time> {{selectedEvent.label}}
   </div>
-  <app-obj [uri]="c.uri" *ngFor="let c of eventObjects"></app-obj>
+  <app-obj [uri]="c.uri" *ngFor="let c of eventObjects"></app-obj>-->
+
+  <app-event [event]="selectedEvent" [eventObjects]="eventObjects" *ngIf="selectedEvent !== null"></app-event>
+
 </div>

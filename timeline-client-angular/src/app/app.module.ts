@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ResourcesComponent } from './resources/resources.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { ObjComponent } from './obj/obj.component';
+import { EventComponent } from './event/event.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ObjComponent } from './obj/obj.component';
     AppComponent,
     TimelineComponent,
     ResourcesComponent,
-    ObjComponent
+    ObjComponent,
+    EventComponent
   ],
   imports: [
     NgbModule.forRoot(),

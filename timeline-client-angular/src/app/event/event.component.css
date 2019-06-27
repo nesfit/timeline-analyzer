@@ -1,0 +1,21 @@
+.event {
+  margin: 1em 0;
+  font-size: 120%;
+}
+
+.event h4 {
+  margin-bottom: 0.1em;
+}
+
+.event .descr {
+  margin-bottom: 1em;
+}
+
+.event .descr time {
+  font-size: 80%;
+  font-style: italic;
+}
+
+.event .descr span {
+  font-weight: bold;
+}
