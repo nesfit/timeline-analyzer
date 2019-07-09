@@ -111,12 +111,14 @@ export class Rdf4jService {
   getEventsForObject(objectUri: string): Observable<Event[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
-        `SELECT ?uri ?time ?label
+        `SELECT ?uri ?time ?label ?timeline ?tlid
           WHERE {
                 ?etype rdfs:subClassOf ta:Event .
                 ?uri ta:refersTo <${objectUri}> .
                 ?uri rdf:type ?etype .
                 ?uri ta:timestamp ?time .
+                ?uri ta:sourceTimeline ?timeline .
+                ?timeline rdfs:label ?tlid .
                 OPTIONAL {?uri rdfs:label ?label}
           } ORDER BY ASC(?time)`;
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEvents(res, null)));
@@ -332,12 +334,12 @@ export class Rdf4jService {
       }
       if (src) {
         newitem.sourceTimeline = src;
-      } /*else {
+      } else {
         const tl = new Timeline();
         tl.uri = item.timeline.value;
         tl.label = item.tlid.value;
         newitem.sourceTimeline = tl;
-      }*/
+      }
       ret.push(newitem);
     }
     return ret;
