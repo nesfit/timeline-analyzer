@@ -1,22 +1,21 @@
-import { Rdf4jService } from '../rdf4j.service';
-import { SharedService } from '../shared.service';
+import { Component, OnInit } from '@angular/core';
 import { Entry } from '../model/entry';
 import { Event } from '../model/event';
-import { Component, OnInit } from '@angular/core';
+import { Rdf4jService } from '../rdf4j.service';
+import { SharedService } from '../shared.service';
 
 @Component({
-  selector: 'app-resources',
-  templateUrl: './resources.component.html',
-  styleUrls: ['./resources.component.css']
+  selector: 'app-files',
+  templateUrl: './files.component.html',
+  styleUrls: ['./files.component.css']
 })
-export class ResourcesComponent implements OnInit {
+export class FilesComponent implements OnInit {
 
-  // url search
-  urlPrefixes: string[];
-  urlFilter: string;
-  urlPrefix: string;
-  urls: string[];
-  selectedUrl: string;
+  // file search
+  nameFilter: string;
+  pathPrefix: string;
+  paths: string[];
+  selectedPath: string;
 
   // event display
   events: Event[];
@@ -31,29 +30,28 @@ export class ResourcesComponent implements OnInit {
   constructor(private rdf: Rdf4jService, private shared: SharedService) {}
 
   ngOnInit() {
-    this.rdf.getURLPrefixes().subscribe(data => this.urlPrefixes = data);
-    this.shared.resources = this;
+    this.shared.files = this;
     this.events = [];
-    this.urlFilter = '';
-    this.urlPrefix = '*';
+    this.nameFilter = '';
+    this.pathPrefix = '';
     this.timelineUris = [];
     this.timelineIds = [];
     this.timelineLabels = [];
   }
 
   filterChanged(): void {
-    if (this.urlFilter.length >= 1) {
+    if (this.pathPrefix.length >= 1 || this.nameFilter.length >= 1) {
       console.log('try');
-      this.rdf.getURLsFiltered(this.urlPrefix, this.urlFilter).subscribe(data => this.urls = data);
+      this.rdf.getPathsFiltered(this.pathPrefix, this.nameFilter).subscribe(data => this.paths = data);
     } else {
-      this.urls = [];
+      this.paths = [];
     }
   }
 
-  showURL(url: string): void {
-    this.selectedUrl = url;
+  showFile(path: string): void {
+    this.selectedPath = path;
     this.events = [];
-    this.rdf.getResourcesForURL(url).subscribe(data => this.showResources(data));
+    this.rdf.getResourcesForPath(path).subscribe(data => this.showResources(data));
   }
 
   showResources(uris: string[]): void {

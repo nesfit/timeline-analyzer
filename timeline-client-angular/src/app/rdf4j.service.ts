@@ -230,6 +230,43 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
   }
 
+  getPathsFiltered(pathPrefix: string, name: string): Observable<string[]> {
+    const url = this.getRepositoryUrl();
+    let filter = '';
+    if (name !== '') {
+      filter = 'contains(?name, "' + name + '")';
+    }
+    if (pathPrefix !== '') {
+      if (filter !== '') {
+        filter += ' && ';
+      }
+      filter += 'strStarts(?s, "' + pathPrefix + '")';
+    }
+    const q = this.getPrefixes() +
+      `SELECT DISTINCT ?s
+        WHERE {
+          ?u rdf:type ta:LocalFile .
+          ?u ta:path ?s .
+          ?u ta:fileName ?name
+          FILTER(${filter})
+        }
+        LIMIT 20`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
+  }
+
+  getResourcesForPath(path: string): Observable<string[]> {
+    const url = this.getRepositoryUrl();
+    const q = this.getPrefixes() +
+      `SELECT ?s
+        WHERE {
+          ?s rdf:type ta:LocalFile .
+          ?s ta:path ?path
+          FILTER(?path='${path}')
+        }
+        LIMIT 20`;
+    return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToStrings(res)));
+  }
+
   // =========================================================================
 
   private getRepositoryUrl(): string {

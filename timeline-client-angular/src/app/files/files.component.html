@@ -1,0 +1,42 @@
+<div id="tools" class="container">
+
+		<div class="card">
+			<div class="card-header">
+			<div class="form-inline">
+				<div class="form-group">
+					<label for="path_search">Path</label>
+					<input type="text" [(ngModel)]="pathPrefix" (keyup)="filterChanged()" class="search-query form-control"
+						id="path_search" placeholder="Path">
+				</div>
+				<div class="form-group">
+					<label for="name_search">Name</label>
+					<input type="text" [(ngModel)]="nameFilter" (keyup)="filterChanged()" class="search-query form-control"
+						id="name_search" placeholder="Name">
+				</div>
+				<a data-toggle="collapse" href="#searchResult" role="button" aria-expanded="false" aria-controls="searchResult">(toggle result)</a>
+			</div>
+			</div>
+			<div class="card-body collapse show" id="searchResult">
+				<table class="table table-stripped table-bordered">
+					<tbody>
+						<tr *ngFor="let path of paths">
+							<td><a [routerLink]="" (click)="showFile(path)">{{path}}</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+</div>
+
+
+<div class="card" id="report">
+	<div class="card-header">
+		Selected: <code>{{ selectedPath }}</code>
+  </div>
+  
+  <div class="card-body event-list">
+    <app-event [event]="e" *ngFor="let e of events"></app-event>
+  </div>
+
+</div>

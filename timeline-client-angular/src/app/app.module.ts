@@ -14,6 +14,7 @@ import { ResourcesComponent } from './resources/resources.component';
 import { RouteReuseStrategy } from '@angular/router';
 import { ObjComponent } from './obj/obj.component';
 import { EventComponent } from './event/event.component';
+import { FilesComponent } from './files/files.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { EventComponent } from './event/event.component';
     TimelineComponent,
     ResourcesComponent,
     ObjComponent,
-    EventComponent
+    EventComponent,
+    FilesComponent
   ],
   imports: [
     NgbModule.forRoot(),
