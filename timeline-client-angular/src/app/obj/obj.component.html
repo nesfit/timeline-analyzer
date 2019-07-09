@@ -1,12 +1,12 @@
 <div class="ta-obj ta-file" *ngIf="type == 'file'">
   <h4>Local File</h4>
   <p>Name: <strong>{{file.fileName}}</strong></p>
-  <p>Path: {{file.path}}</p>
+  <p>Path: <a routerLink="/files" (click)="showFile(file.path)">{{file.path}}</a></p>
 </div>
 <div class="ta-obj ta-web" *ngIf="type == 'web'">
   <h3>Web Resource</h3>
   <p *ngIf="wres.title !== undefined">Title: {{wres.title}}</p>
-  <p>URL: {{wres.url}}</p>
+  <p>URL: <a routerLink="/resources" (click)="showURL(wres.url)">{{wres.url}}</a></p>
 </div>
 <div class="ta-obj ta-entry" *ngIf="type == 'entry'">
   <h4>Post</h4>

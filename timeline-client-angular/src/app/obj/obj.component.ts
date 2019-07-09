@@ -4,6 +4,7 @@ import { TAObject } from '../model/taobject';
 import { LocalFile } from '../model/localfile';
 import { WebResource } from '../model/webresource';
 import { Entry } from '../model/entry';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-obj',
@@ -19,7 +20,7 @@ export class ObjComponent implements OnInit {
   entry: Entry;
   entryContents: any[];
 
-  constructor(private rdf: Rdf4jService) {
+  constructor(private rdf: Rdf4jService, private shared: SharedService) {
     this.type = 'none';
     this.entryContents = [];
   }
@@ -64,6 +65,14 @@ export class ObjComponent implements OnInit {
     const t = String(uri);
     const pos = t.lastIndexOf('#');
     return (pos !== -1) ? t.substring(pos + 1).toString() : '';
+  }
+
+  showFile(path: string): void {
+    this.shared.files.showFile(path);
+  }
+
+  showURL(url: string): void {
+    this.shared.resources.showURL(url);
   }
 
 }
