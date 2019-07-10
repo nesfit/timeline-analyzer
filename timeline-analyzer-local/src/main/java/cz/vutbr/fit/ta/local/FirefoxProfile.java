@@ -168,10 +168,16 @@ public class FirefoxProfile extends Profile
                                 
                                 if (visited.after(fromDate) && visited.before(toDate) && type == dnlattr) 
                                 {
+                                    String pathString = new String(content); //the path without the leading file://
+                                    if (pathString.startsWith("file:"))
+                                        pathString = pathString.substring(5);
+                                    while (pathString.startsWith("//"))
+                                        pathString = pathString.substring(1);
+                                    
                                     Place place = getPlaces().get(placeId);
                                     HistoryItem curItem = new HistoryItem(id, HistoryItem.Type.DOWNLOAD, visited, place.url);
                                     curItem.setTitle(place.title);
-                                    curItem.setFilePath(content);
+                                    curItem.setFilePath(pathString);
                                     dest.add(curItem);
                                 }
                                 
