@@ -93,7 +93,7 @@ export class Rdf4jService {
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToDate(res)));
   }
 
-  getEvents(t: Timeline, startDate: Date, limit: number): Observable<Event[]> {
+  getEvents(t: Timeline, startDate: Date, endDate: Date, limit: number): Observable<Event[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
         `SELECT ?uri ?time ?label
@@ -103,6 +103,7 @@ export class Rdf4jService {
                 ?uri rdf:type ?etype .
                 ?uri ta:timestamp ?time .
                 OPTIONAL {?uri rdfs:label ?label}
+                FILTER (?time >= "${startDate.toISOString()}"^^xsd:dateTime && ?time <= "${endDate.toISOString()}"^^xsd:dateTime)
           } ORDER BY ASC(?time)
           LIMIT ${limit}`;
     return this.http.post(url, q, httpOptionsQuery).pipe(map(res => this.bindingsToEvents(res, t)));

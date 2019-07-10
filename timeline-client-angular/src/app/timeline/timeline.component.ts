@@ -14,8 +14,12 @@ import { TAObject } from '../model/taobject';
 })
 export class TimelineComponent implements OnInit {
 
+  // all events based on the selection (uri => event)
   allEvents: Map<string, Event>;
-  // selected dates
+  // loaded dates
+  loadfromdate: NgbDateStruct;
+  loadtodate: NgbDateStruct;
+  // shown dates
   fromdate: NgbDateStruct;
   todate: NgbDateStruct;
   // used time lines
@@ -24,6 +28,7 @@ export class TimelineComponent implements OnInit {
   selected: Timeline[];
   mindate: Date;
   maxdate: Date;
+  dateInitialized = false;
   // displated time line and its data
   tlview: TL;
   tldata: DataSet<DataItem>;
@@ -38,8 +43,12 @@ export class TimelineComponent implements OnInit {
 
   ngOnInit() {
     const now = new Date();
+    const before = new Date();
+    before.setDate(before.getDate() - 7); // 7 days before
     this.allEvents = new Map();
-    this.fromdate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
+    this.loadfromdate = { day: before.getUTCDate(), month: before.getUTCMonth() + 1, year: before.getUTCFullYear()};
+    this.loadtodate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
+    this.fromdate = { day: before.getUTCDate(), month: before.getUTCMonth() + 1, year: before.getUTCFullYear()};
     this.todate = { day: now.getUTCDate(), month: now.getUTCMonth() + 1, year: now.getUTCFullYear()};
     this.timelines = [];
     this.selected = [];
@@ -58,6 +67,9 @@ export class TimelineComponent implements OnInit {
    */
   createTimeline() {
     const container = document.getElementById('visualization');
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
 
     // Create a DataSet (allows two way data-binding)
     this.tldata = new DataSet([
@@ -157,8 +169,15 @@ export class TimelineComponent implements OnInit {
         this.selected.push(t);
       }
     }
+    const parent = this;
     this.rdf.getMinDate(this.selected).subscribe(date => this.mindate = date);
-    this.rdf.getMaxDate(this.selected).subscribe(date => this.maxdate = date);
+    this.rdf.getMaxDate(this.selected).subscribe(function(date) {
+      parent.maxdate = date;
+      if (!parent.dateInitialized) {
+        parent.dateInitialized = true;
+        parent.initSpans();
+      }
+    });
     return this.selected;
   }
 
@@ -181,12 +200,17 @@ export class TimelineComponent implements OnInit {
     // add group
     this.tlgroups.add({id: t.sourceId, content: t.label});
     // add entries
-    // TODO max 500 entries at the moment, consider end date
-    if (this.filteredResources.length === 0) {
-      this.rdf.getEvents(t, null, 500).subscribe(data => this.addEvents(t, data));
-    } else {
-      // this.rdf.getEntriesForResource(t, null, 500, this.filteredResources[0]).subscribe(data => this.addEntries(t, data));
+    if (this.dateInitialized) {
+      if (this.filteredResources.length === 0) {
+        this.reloadTimeline(t);
+      } else {
+        // this.rdf.getEntriesForResource(t, null, 500, this.filteredResources[0]).subscribe(data => this.addEntries(t, data));
+      }
     }
+  }
+
+  reloadTimeline(t: Timeline) {
+    this.rdf.getEvents(t, this.toDate(this.loadfromdate), this.toDate(this.loadtodate), 1000).subscribe(data => this.addEvents(t, data));
   }
 
   addEvents(t: Timeline, data: Event[]) {
@@ -204,6 +228,14 @@ export class TimelineComponent implements OnInit {
     this.tlgroups.remove(t.sourceId);
   }
 
+  reloadData(): void {
+    this.allEvents = new Map();
+    this.createTimeline();
+    for (const t of this.selected) {
+      this.addTimeLine(t);
+    }
+  }
+
   // ======================================================================================
 
   useMinDate() {
@@ -216,6 +248,30 @@ export class TimelineComponent implements OnInit {
     this.updateSpan();
   }
 
+  /**
+   * Initialize the spans based on the maxdate and mindate -- used after the first load
+   */
+  initSpans() {
+    console.log('init spans');
+    const dto = new Date(this.maxdate);
+    const dfrom = new Date(dto);
+    dfrom.setDate(dfrom.getDate() - 7);
+    this.loadfromdate = this.fromDate(dfrom);
+    this.loadtodate = this.fromDate(dto);
+    this.fromdate = this.fromDate(dfrom);
+    this.todate = this.fromDate(dto);
+    this.loadSpan();
+  }
+
+  loadSpan() {
+    console.log('load span');
+    this.reloadData();
+    this.updateSpan();
+    /*this.tloptions.start = this.toDate(this.fromdate);
+    this.tloptions.end = this.toDate(this.todate);
+    this.tlview.setOptions(this.tloptions);*/
+  }
+
   updateSpan() {
     console.log('update span');
     this.tloptions.start = this.toDate(this.fromdate);
@@ -223,7 +279,7 @@ export class TimelineComponent implements OnInit {
     this.tlview.setOptions(this.tloptions);
   }
 
-  toDate(date: NgbDateStruct) {
+  toDate(date: NgbDateStruct): Date {
     return new Date(date.year, date.month - 1, date.day);
   }
 

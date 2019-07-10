@@ -19,10 +19,40 @@
 							<a [routerLink]="" (click)="useMaxDate()">{{maxdate | date:'yyyy-MM-dd'}}</a>
 						</p>
 				      </div>
-				    </form>
+            </form>
+            
 					<form class="form-inline">
 					  <div class="form-group">
-					    <label for="fromdate">From:</label>
+					    <label for="lfromdate">Load from:</label>
+					    <div class="input-group">
+					      <input id="lfromdate" class="form-control" placeholder="yyyy-mm-dd"
+					             name="lfromdate" [(ngModel)]="loadfromdate" ngbDatepicker #ldf="ngbDatepicker"
+					             (ngModelChange)="loadSpan()">
+					      <div class="input-group-append">
+					        <button class="btn btn-outline-secondary" (click)="ldf.toggle()" type="button">
+					          <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+					        </button>
+					      </div>
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label for="ltodate">To:</label>
+					    <div class="input-group">
+					      <input id="ltodate" class="form-control" placeholder="yyyy-mm-dd"
+					             name="ltodate" [(ngModel)]="loadtodate" ngbDatepicker #ldt="ngbDatepicker"
+					             (ngModelChange)="updateSpan()">
+					      <div class="input-group-append">
+					        <button class="btn btn-outline-secondary" (click)="ldt.toggle()" type="button">
+					          <img src="assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+					        </button>
+					      </div>
+					    </div>
+					  </div>
+          </form>
+
+					<form class="form-inline">
+					  <div class="form-group">
+					    <label for="fromdate">Show from:</label>
 					    <div class="input-group">
 					      <input id="fromdate" class="form-control" placeholder="yyyy-mm-dd"
 					             name="fromdate" [(ngModel)]="fromdate" ngbDatepicker #df="ngbDatepicker"
@@ -47,7 +77,8 @@
 					      </div>
 					    </div>
 					  </div>
-					</form>
+          </form>
+          
 				</div>
 			</div>
 		</div>
