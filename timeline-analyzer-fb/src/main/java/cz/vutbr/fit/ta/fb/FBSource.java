@@ -124,6 +124,7 @@ public class FBSource extends TimelineSource
             else
                 uc.setText("???");
             entry.getContains().add(uc);
+            cev.getRefersTo().add(wurl);
         }
         //Images
         Attachments atts = post.getAttachments();
@@ -136,7 +137,11 @@ public class FBSource extends TimelineSource
                 {
                     StoryAttachment.Image img = att.getMedia().getImage();
                     if (img != null)
-                        entry.getContains().add(createImageFromAttachment(ef, img, post.getId(), icnt++));
+                    {
+                        Image imgObject = createImageFromAttachment(ef, img, post.getId(), icnt++);
+                        entry.getContains().add(imgObject);
+                        cev.getRefersTo().add(imgObject.getLinksResource());
+                    }
                 }
                 //subattachments
                 StoryAttachment.Attachments satts = att.getSubAttachments();
@@ -148,7 +153,11 @@ public class FBSource extends TimelineSource
                         {
                             StoryAttachment.Image img = satt.getMedia().getImage();
                             if (img != null)
-                                entry.getContains().add(createImageFromAttachment(ef, img, post.getId(), icnt++));
+                            {
+                                Image imgObject = createImageFromAttachment(ef, img, post.getId(), icnt++);
+                                entry.getContains().add(imgObject);
+                                cev.getRefersTo().add(imgObject.getLinksResource());
+                            }
                         }
                     }
                 }

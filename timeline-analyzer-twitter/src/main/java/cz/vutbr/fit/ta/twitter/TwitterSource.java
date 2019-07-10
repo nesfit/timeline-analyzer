@@ -105,6 +105,7 @@ public class TwitterSource extends TimelineSource
                         Image img = ef.createImage(entity.getId());
                         img.setLinksResource(wurl);
                         entry.getContains().add(img);
+                        cev.getRefersTo().add(wurl);
                     }
                 }
             }
@@ -121,6 +122,7 @@ public class TwitterSource extends TimelineSource
                     url.setLinksResource(wurl);
                     url.setText(entity.getDisplayURL());
                     entry.getContains().add(url);
+                    cev.getRefersTo().add(wurl);
                 }
             }
             //GEO entries
