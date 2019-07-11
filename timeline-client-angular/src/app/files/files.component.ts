@@ -37,6 +37,9 @@ export class FilesComponent implements OnInit {
     this.timelineUris = [];
     this.timelineIds = [];
     this.timelineLabels = [];
+    if (this.shared.pathToShow !== null) {
+      this.showFile(this.shared.pathToShow);
+    }
   }
 
   filterChanged(): void {
@@ -52,6 +55,7 @@ export class FilesComponent implements OnInit {
     this.selectedPath = path;
     this.events = [];
     this.rdf.getResourcesForPath(path).subscribe(data => this.showResources(data));
+    this.shared.pathToShow = null;
   }
 
   showResources(uris: string[]): void {

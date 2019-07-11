@@ -39,6 +39,9 @@ export class ResourcesComponent implements OnInit {
     this.timelineUris = [];
     this.timelineIds = [];
     this.timelineLabels = [];
+    if (this.shared.urlToShow !== null) {
+      this.showURL(this.shared.urlToShow);
+    }
   }
 
   filterChanged(): void {
@@ -54,6 +57,7 @@ export class ResourcesComponent implements OnInit {
     this.selectedUrl = url;
     this.events = [];
     this.rdf.getResourcesForURL(url).subscribe(data => this.showResources(data));
+    this.shared.urlToShow = null; // reset the shared parameter (if used)
   }
 
   showResources(uris: string[]): void {

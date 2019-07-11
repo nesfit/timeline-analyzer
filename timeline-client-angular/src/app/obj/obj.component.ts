@@ -68,11 +68,11 @@ export class ObjComponent implements OnInit {
   }
 
   showFile(path: string): void {
-    this.shared.files.showFile(path);
+    this.shared.showFile(path);
   }
 
   showURL(url: string): void {
-    this.shared.resources.showURL(url);
+    this.shared.showURL(url);
   }
 
 }
