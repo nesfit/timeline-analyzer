@@ -45,6 +45,7 @@
 		<module>timeline-analyzer-web</module>
 		<module>timeline-analyzer-local</module>
 		<module>timeline-analyzer-links</module>
+		<module>timeline-storage-halyard</module>
 	</modules>
 	
 	<dependencies>

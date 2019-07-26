@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>cz.vutbr.fit.tarzan</groupId>
+    <artifactId>timeline-analyzer</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>timeline-storage-halyard</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Timeline Analyzer - Halyard storage connector</name>
+  <url>https://github.com/nesfit/timeline-analyzer</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <hbase.version>1.2.6</hbase.version>
+    <halyard.version>1.3</halyard.version>
+  </properties>
+
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+  </build>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.eclipse.rdf4j</groupId>
+			<artifactId>rdf4j-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-common</artifactId>
+			<version>${hbase.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>${hbase.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.msd.gin.halyard.common</groupId>
+			<artifactId>halyard-common</artifactId>
+			<version>${halyard-version}</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/halyard-common-1.3.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>cz.vutbr.fit.tarzan</groupId>
+			<artifactId>timeline-analyzer-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+	</dependencies>
+</project>
