@@ -5,6 +5,7 @@
  */
 package cz.vutbr.fit.ta.twitter;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,7 +17,7 @@ import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import com.github.radkovo.rdf4j.builder.TargetModel;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
-import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.core.RDFConnectorRDF4J;
 import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Timeline;
 
@@ -29,7 +30,7 @@ public class TestTwitter
     public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test2";
     private static Resource context;
     
-    public static void downloadTimeline(String username, RDFConnector rdfcon)
+    public static void downloadTimeline(String username, RDFConnector rdfcon) throws IOException
     {
         TwitterSource twitter = new TwitterSource(username);
         twitter.setLimit(1000);
@@ -58,26 +59,31 @@ public class TestTwitter
      */
     public static void main(String[] args)
     {
-        RDFConnector rdfcon = new RDFConnectorSesame(REPO);
-        context = getContext();
-        
-        downloadTimeline("iROZHLAScz", rdfcon);
-        downloadTimeline("RESPEKT_CZ", rdfcon);
-        downloadTimeline("DVTVcz", rdfcon);
-        /*downloadTimeline("veselovskyma", rdfcon);
-        downloadTimeline("ekonom_cz", rdfcon);
-        downloadTimeline("hospodarky", rdfcon);
-        downloadTimeline("CT24zive", rdfcon);
-        downloadTimeline("CzechTV", rdfcon);
-        downloadTimeline("Aktualnecz", rdfcon);
-        downloadTimeline("cermak", rdfcon);
-        downloadTimeline("LudekStanek", rdfcon);
-        downloadTimeline("JanHrebejk", rdfcon);
-        //downloadTimeline("Seznam_Zpravy", rdfcon);
-        downloadTimeline("atomsedlacek", rdfcon);
-        downloadTimeline("lidovky", rdfcon);*/
-        
-        rdfcon.close();
+        try
+        {
+            RDFConnector rdfcon = new RDFConnectorRDF4J(REPO);
+            context = getContext();
+            
+            downloadTimeline("iROZHLAScz", rdfcon);
+            downloadTimeline("RESPEKT_CZ", rdfcon);
+            downloadTimeline("DVTVcz", rdfcon);
+            /*downloadTimeline("veselovskyma", rdfcon);
+            downloadTimeline("ekonom_cz", rdfcon);
+            downloadTimeline("hospodarky", rdfcon);
+            downloadTimeline("CT24zive", rdfcon);
+            downloadTimeline("CzechTV", rdfcon);
+            downloadTimeline("Aktualnecz", rdfcon);
+            downloadTimeline("cermak", rdfcon);
+            downloadTimeline("LudekStanek", rdfcon);
+            downloadTimeline("JanHrebejk", rdfcon);
+            //downloadTimeline("Seznam_Zpravy", rdfcon);
+            downloadTimeline("atomsedlacek", rdfcon);
+            downloadTimeline("lidovky", rdfcon);*/
+            
+            rdfcon.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

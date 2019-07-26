@@ -1,5 +1,5 @@
 /**
- * RDFConnectorSesame.java
+ * RDFConnectorRDF4J.java
  *
  * Created on 9. 1. 2016, 13:17:59 by burgetr
  */
@@ -12,10 +12,10 @@ import org.eclipse.rdf4j.repository.http.HTTPRepository;
  * A RDF connector optimized for the Sesame remote server.
  * @author burgetr
  */
-public class RDFConnectorSesame extends RDFConnector
+public class RDFConnectorRDF4J extends RDFConnectorRemote
 {
 
-    public RDFConnectorSesame(String endpoint) throws RepositoryException
+    public RDFConnectorRDF4J(String endpoint) throws RepositoryException
     {
         super(endpoint);
     }

@@ -27,7 +27,7 @@ import com.restfb.types.Post;
 import com.restfb.types.Post.Attachments;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
-import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.core.RDFConnectorRDF4J;
 import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Timeline;
 
@@ -43,7 +43,7 @@ public class TestFB
     public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test";
     private static Resource context;
     
-    public static void downloadTimeline(String username, RDFConnector rdfcon)
+    public static void downloadTimeline(String username, RDFConnector rdfcon) throws IOException
     {
         FBSource fb = new FBSource(username);
         fb.setLimit(1000);
@@ -72,22 +72,28 @@ public class TestFB
      */
     public static void main(String[] args)
     {
-        RDFConnector rdfcon = new RDFConnectorSesame(REPO);
-        context = getContext();
+        try
+        {
+            RDFConnector rdfcon = new RDFConnectorRDF4J(REPO);
+            context = getContext();
 
-        downloadTimeline("iROZHLAS.cz", rdfcon);
-        downloadTimeline("tydenikrespekt", rdfcon);
-        downloadTimeline("DVTV.cz", rdfcon);
-        downloadTimeline("ekonom.cz", rdfcon);
-        downloadTimeline("ihned.cz", rdfcon);
-        downloadTimeline("CT24.cz", rdfcon);
-        downloadTimeline("ceskatelevize", rdfcon);
-        downloadTimeline("Aktualne.cz", rdfcon);
-        downloadTimeline("SeznamZpravy", rdfcon);
-        downloadTimeline("sedlacekt", rdfcon);
-        downloadTimeline("lidovky.cz", rdfcon);
-        
-        rdfcon.close();
+            downloadTimeline("iROZHLAS.cz", rdfcon);
+            downloadTimeline("tydenikrespekt", rdfcon);
+            downloadTimeline("DVTV.cz", rdfcon);
+            downloadTimeline("ekonom.cz", rdfcon);
+            downloadTimeline("ihned.cz", rdfcon);
+            downloadTimeline("CT24.cz", rdfcon);
+            downloadTimeline("ceskatelevize", rdfcon);
+            downloadTimeline("Aktualne.cz", rdfcon);
+            downloadTimeline("SeznamZpravy", rdfcon);
+            downloadTimeline("sedlacekt", rdfcon);
+            downloadTimeline("lidovky.cz", rdfcon);
+            
+            rdfcon.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         
         
         //testWithApp();

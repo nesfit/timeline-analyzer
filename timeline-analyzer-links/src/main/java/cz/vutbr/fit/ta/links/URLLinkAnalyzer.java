@@ -5,6 +5,8 @@
  */
 package cz.vutbr.fit.ta.links;
 
+import java.io.IOException;
+
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Literal;
 import org.eclipse.rdf4j.model.Model;
@@ -21,7 +23,7 @@ import org.eclipse.rdf4j.repository.RepositoryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.vutbr.fit.ta.core.RDFConnector;
+import cz.vutbr.fit.ta.core.RDFConnectorRemote;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -33,17 +35,17 @@ public class URLLinkAnalyzer
 {
     private static Logger log = LoggerFactory.getLogger(URLLinkAnalyzer.class);
     
-    private RDFConnector repo;
+    private RDFConnectorRemote repo;
     private Model model;
 
     
-    public URLLinkAnalyzer(RDFConnector repo)
+    public URLLinkAnalyzer(RDFConnectorRemote repo)
     {
         this.repo = repo;
         model = new LinkedHashModel();
     }
 
-    public RDFConnector getRepo()
+    public RDFConnectorRemote getRepo()
     {
         return repo;
     }
@@ -53,7 +55,7 @@ public class URLLinkAnalyzer
         return model;
     }
     
-    public void saveModel(Resource context)
+    public void saveModel(Resource context) throws IOException
     {
         repo.add(model, context);
     }
@@ -128,7 +130,7 @@ public class URLLinkAnalyzer
         return ret;
     }
     
-    public void normalizeURLs()
+    public void normalizeURLs() throws IOException
     {
         ValueFactory vf = SimpleValueFactory.getInstance();
         

@@ -1,224 +1,54 @@
+/**
+ * RDFConnector.java
+ *
+ * Created on 26. 7. 2019, 11:02:12 by burgetr
+ */
 package cz.vutbr.fit.ta.core;
 
 import java.io.Closeable;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
-import org.eclipse.rdf4j.model.Statement;
 import org.eclipse.rdf4j.model.Value;
-import org.eclipse.rdf4j.model.ValueFactory;
-import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
-import org.eclipse.rdf4j.query.GraphQuery;
-import org.eclipse.rdf4j.query.GraphQueryResult;
-import org.eclipse.rdf4j.query.MalformedQueryException;
-import org.eclipse.rdf4j.query.QueryEvaluationException;
-import org.eclipse.rdf4j.query.QueryLanguage;
-import org.eclipse.rdf4j.query.TupleQuery;
-import org.eclipse.rdf4j.query.TupleQueryResult;
-import org.eclipse.rdf4j.repository.Repository;
-import org.eclipse.rdf4j.repository.RepositoryConnection;
-import org.eclipse.rdf4j.repository.RepositoryException;
-import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 
 /**
- * 
+ * The basic interface of each RDF connector
  * 
  * @author burgetr
  */
-public class RDFConnector implements Closeable
+public interface RDFConnector extends Closeable
 {
-	protected String endpointUrl;
-	protected RepositoryConnection connection;
-	protected Repository repo;
-	protected ValueFactory vf;
-	protected Map<String, String> prefixes;
-
-	/**
-	 * Establishes a connection to the SPARQL endpoint.
-	 * @param endpoint the SPARQL endpoint URL
-	 * @throws RepositoryException
-	 */
-	public RDFConnector(String endpoint) throws RepositoryException 
-	{
-		endpointUrl = endpoint;
-		connection = null;
-		vf = SimpleValueFactory.getInstance();
-		initPrefixes();
-		initRepository();
-	}
-	
-    /**
-     * Obtains current connection to the repository or opens a new one when no connection
-     * has been opened.
-     * @return the connection object
-     * @throws RepositoryException 
-     */
-    public RepositoryConnection getConnection() throws RepositoryException 
-    {
-        if (connection == null)
-            connection = repo.getConnection();
-        return connection;
-    }
 
     /**
-     * Closes the current connection.
-     * @throws RepositoryException
+     * Adds single tripple to the repository.
+     * @param s
+     * @param p
+     * @param o
      */
-    @Override
-    public void close() throws RepositoryException
-    {
-        if (connection != null)
-            connection.close();
-        connection = null;
-    }
-    
-    protected void initPrefixes()
-    {
-        prefixes = new HashMap<>();
-        prefixes.put("ta", "http://nesfit.github.io/ontology/ta.owl#");
-        prefixes.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-        prefixes.put("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-        prefixes.put("tares", "http://nesfit.github.io/resource/ta#");
-    }
-    
-    public String getPrefixString()
-    {
-        String ret = "";
-        for (Map.Entry<String, String> entry : prefixes.entrySet())
-        {
-            ret += "PREFIX " + entry.getKey() + ": <" + entry.getValue() + "> ";
-        }
-        return ret;
-    }
+    public void add(Resource s, IRI p, Value o) throws IOException;
+
+    /**
+     * Adds single tripple to the repository.
+     * @param s
+     * @param p
+     * @param o
+     * @param context
+     */
+    public void add(Resource s, IRI p, Value o, Resource context) throws IOException; 
+
+    /**
+     * Adds the whole model to the repository.
+     * @param m
+     */
+    public void add(Model m) throws IOException;
     
     /**
-     * Creates a new connection.
-     * @throws RepositoryException
-     * @throws RepositoryConfigException 
+     * Adds the whole model to the repository.
+     * @param m
+     * @param context
      */
-    protected void initRepository() throws RepositoryException
-    {
-        repo = new SPARQLRepository(endpointUrl);
-        repo.initialize();
-    }
-    
-	/**
-	 * Adds single tripple to the repository.
-	 * @param s
-	 * @param p
-	 * @param o
-	 * @throws RepositoryException
-	 */
-	public void add(Resource s, IRI p, Value o) 
-	{
-		try {
-			Statement stmt = vf.createStatement(s, p, o);
-			this.connection.add(stmt);
-			this.connection.commit();
-		} catch (RepositoryException e) {
-			e.printStackTrace();
-		}
-	}
+    public void add(Model m, Resource context) throws IOException;
 
-    public void add(Resource s, IRI p, Value o, Resource context) 
-    {
-        try {
-            Statement stmt = vf.createStatement(s, p, o);
-            this.connection.add(stmt, context);
-            this.connection.commit();
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-    }
-
-	public void add(Model m)
-	{
-        try {
-            this.connection.begin();
-    	    this.connection.add(m);
-    	    this.connection.commit();
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-	}
-	
-    public void add(Model m, Resource context)
-    {
-        try {
-            this.connection.begin();
-            this.connection.add(m, context);
-            this.connection.commit();
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void add(GraphQueryResult m, Resource context)
-    {
-        try {
-            this.connection.begin();
-            this.connection.add(m, context);
-            this.connection.commit();
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void remove(GraphQueryResult statements)
-    {
-        try {
-            this.connection.begin();
-            this.connection.remove(statements);
-            this.connection.commit();
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void remove(Model statements)
-    {
-        try {
-            this.connection.begin();
-            this.connection.remove(statements);
-            this.connection.commit();
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-    }
-    
-	/**
-	 * Executes a SPARQL SELECT query and returns the result.
-	 * @param queryString
-	 * @return
-	 * @throws RepositoryException
-	 * @throws MalformedQueryException
-	 * @throws QueryEvaluationException 
-	 */
-	public TupleQueryResult executeQuery(String queryString) throws RepositoryException, MalformedQueryException, QueryEvaluationException 
-	{
-	    String qs = getPrefixString() + queryString;
-		TupleQuery query = this.connection.prepareTupleQuery(QueryLanguage.SPARQL, qs);
-		TupleQueryResult tqr = query.evaluate();
-    	return tqr;
-	}
-	
-    /**
-     * Executes a SPARQL CONSTRUCT query and returns the graph result.
-     * @param queryString
-     * @return
-     * @throws RepositoryException
-     * @throws MalformedQueryException
-     * @throws QueryEvaluationException 
-     */
-    public GraphQueryResult executeConstructQuery(String queryString) throws RepositoryException, MalformedQueryException, QueryEvaluationException 
-    {
-        String qs = getPrefixString() + queryString;
-        GraphQuery query = this.connection.prepareGraphQuery(QueryLanguage.SPARQL, qs);
-        GraphQueryResult tqr = query.evaluate();
-        return tqr;
-    }
-    
 }

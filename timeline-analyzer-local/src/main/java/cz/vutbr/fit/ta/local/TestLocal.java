@@ -16,7 +16,7 @@ import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import com.github.radkovo.rdf4j.builder.TargetModel;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
-import cz.vutbr.fit.ta.core.RDFConnectorSesame;
+import cz.vutbr.fit.ta.core.RDFConnectorRDF4J;
 import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Timeline;
 
@@ -62,7 +62,7 @@ public class TestLocal
                 System.out.println("Model created, " + target.getModel().size() + " triples");
                 
                 System.out.println("Start at " + (new Date()));
-                RDFConnector rdfcon = new RDFConnectorSesame(REPO);
+                RDFConnector rdfcon = new RDFConnectorRDF4J(REPO);
                 rdfcon.add(target.getModel(), getContext());
                 rdfcon.close();
                 System.out.println("Finished at " + (new Date()));
