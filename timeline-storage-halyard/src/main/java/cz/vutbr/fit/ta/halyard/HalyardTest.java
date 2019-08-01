@@ -17,7 +17,7 @@ public class HalyardTest
     private static final int DEFAULT_SPLIT_BITS = 3;
 
     
-    public static void main( String[] args )
+    public static int countRows()
     {
         String tableName = "test";
         
@@ -29,10 +29,17 @@ public class HalyardTest
             for (Result rs = scanner.next(); rs != null; rs = scanner.next()) {
                 number++;
             }
-            System.out.println("Count: " + number);
+            return number;
             
         } catch (IOException e) {
             e.printStackTrace();
+            return -1;
         }
+    }
+    
+    public static void main( String[] args )
+    {
+        int count = countRows();
+        System.out.println("Count: " + count);
     }
 }
