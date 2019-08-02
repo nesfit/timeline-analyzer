@@ -50,12 +50,11 @@
 			<version>${hbase.version}</version>
 		</dependency>
 
+		<!-- This must be locally installed, see timeline-analyzer/misc/install.sh -->
 		<dependency>
 			<groupId>com.msd.gin.halyard.common</groupId>
 			<artifactId>halyard-common</artifactId>
-			<version>${halyard-version}</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/halyard-common-1.3.jar</systemPath>
+			<version>${halyard.version}</version>
 		</dependency>
 
 		<dependency>
