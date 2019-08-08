@@ -8,6 +8,7 @@ package cz.vutbr.fit.ta.halyard;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.HTable;
@@ -29,6 +30,9 @@ import cz.vutbr.fit.ta.core.RDFConnector;
  */
 public class RDFConnectorHalyard implements RDFConnector
 {
+    private static final String HBASE_CONFIGURATION_ZOOKEEPER_QUORUM = "hbase.zookeeper.quorum";
+    private static final String HBASE_CONFIGURATION_ZOOKEEPER_CLIENTPORT = "hbase.zookeeper.property.clientPort";
+    
     private static final int DEFAULT_SPLIT_BITS = 3;
     
     private String tableName;
@@ -36,10 +40,40 @@ public class RDFConnectorHalyard implements RDFConnector
     private HTable hTable;        
     
 
+    /**
+     * Connects HBase with the default connection parametres.
+     * @param tableName the name of table to use for storing the data
+     * @throws IOException
+     */
     public RDFConnectorHalyard(String tableName) throws IOException
     {
         this.tableName = tableName;
         connectHbase();
+    }
+
+    /**
+     * Connects HBase with the specified zookeeper parametres
+     * @param hbaseZookeeperQuorum the zookeeper quorum (e.g. "server1,server2")
+     * @param hbaseZookeeperClientPort the zookeeper port, e.g. 2181
+     * @param tableName the name of table to use for storing the data
+     * @throws IOException
+     */
+    public RDFConnectorHalyard(String hbaseZookeeperQuorum, int hbaseZookeeperClientPort, String tableName) throws IOException
+    {
+        this.tableName = tableName;
+        connectHbase(hbaseZookeeperQuorum, hbaseZookeeperClientPort);
+    }
+
+    /**
+     * Connects HBase using the hbase-site.xml config gile
+     * @param configPath path to hbase-site.xml
+     * @param tableName the name of table to use for storing the data
+     * @throws IOException
+     */
+    public RDFConnectorHalyard(String configPath, String tableName) throws IOException
+    {
+        this.tableName = tableName;
+        connectHbase(configPath);
     }
 
     public String getTableName()
@@ -95,6 +129,21 @@ public class RDFConnectorHalyard implements RDFConnector
     private void connectHbase() throws IOException
     {
         hConf = HBaseConfiguration.create();
+        hTable = HalyardTableUtils.getTable(hConf, tableName, false, DEFAULT_SPLIT_BITS);        
+    }
+    
+    private void connectHbase(String hbaseZookeeperQuorum, int hbaseZookeeperClientPort) throws IOException
+    {
+        hConf = HBaseConfiguration.create();
+        hConf.set(HBASE_CONFIGURATION_ZOOKEEPER_QUORUM, hbaseZookeeperQuorum);
+        hConf.setInt(HBASE_CONFIGURATION_ZOOKEEPER_CLIENTPORT, hbaseZookeeperClientPort);
+        hTable = HalyardTableUtils.getTable(hConf, tableName, false, DEFAULT_SPLIT_BITS);        
+    }
+    
+    private void connectHbase(String configFilePath) throws IOException
+    {
+        hConf = HBaseConfiguration.create();
+        hConf.addResource(new Path(configFilePath));
         hTable = HalyardTableUtils.getTable(hConf, tableName, false, DEFAULT_SPLIT_BITS);        
     }
     
