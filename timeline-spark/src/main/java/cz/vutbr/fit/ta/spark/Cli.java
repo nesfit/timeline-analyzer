@@ -56,7 +56,15 @@ public class Cli
                 return;
             }
             
-            InputStream is = new FileInputStream("/home/burgetr/tmp/plaso/burgetr/output.txt");
+            InputStream is;
+            String[] cliArgs = cli.getArgs();
+            if (cliArgs.length == 0)
+                is = System.in;
+            else if (cliArgs.length == 1)
+                is = new FileInputStream(cliArgs[0]);
+            else
+                throw new ParseException("Too many arguments");
+                
             PlasoParser p = new PlasoParser();
             List<PlasoEntry> entries = p.parseInputStream(is);
             is.close();
@@ -132,7 +140,7 @@ public class Cli
         hf.printWrapped(w, 80, 12,
                 "usage: Main [options...] [<input-file>]");
         hf.printWrapped(w, 80, 42,
-                "  <input-file>                            the input file to read from, stdin if omitted");
+                "  <input-file>                  the input file to read from, stdin if omitted");
         hf.printOptions(w, 80, getCliOpts(), 2, 2);
         w.flush();
         w.close();
