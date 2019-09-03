@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataItem } from 'vis';
 import { TAObject } from '../model/taobject';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-timeline',
@@ -146,6 +147,16 @@ export class TimelineComponent implements OnInit {
 
   showURL(url: string): void {
     console.log('show ' + url);
+  }
+
+  selectEvent(e: Event): void {
+    console.log('Select ' + e.uri);
+    console.log(this.tlview);
+    const found = this.tldata.get([e.uri]);
+    console.log(found);
+    if (found !== null) {
+      this.tlview.setSelection(e.uri, {focus: true, animation: {}});
+    }
   }
 
   // ======================================================================================

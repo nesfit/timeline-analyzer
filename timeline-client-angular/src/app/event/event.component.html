@@ -1,5 +1,9 @@
 <div class="event">
   <h4>{{event.sourceTimeline.label}}</h4>
-  <div class="descr"><time>{{event.timestamp.toLocaleString()}}</time> <span>{{event.label}}</span></div>
+  <div class="descr">
+    <time>{{event.timestamp.toLocaleString()}}</time>
+    <span>{{event.label}}</span>
+    <small>(<a routerLink="/timeline" (click)="selectEvent()">show in timeline</a>)</small>
+  </div>
   <app-obj [uri]="c.uri" *ngFor="let c of eventObjects"></app-obj>
 </div>

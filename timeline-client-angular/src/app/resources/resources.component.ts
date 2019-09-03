@@ -80,7 +80,7 @@ export class ResourcesComponent implements OnInit {
     this.timelineUris = [];
     this.timelineIds = [];
     this.timelineLabels = [];
-    let last = 0;
+    // let last = 0;
     for (let i = 0; i < entries.length; i++) {
       /*const uri = entries[i].sourceTimeline.uri;
       if (this.timelineUris[uri] === undefined) {
