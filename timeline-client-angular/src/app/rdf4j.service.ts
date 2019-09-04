@@ -3,12 +3,13 @@ import { Event } from './model/event';
 import { Timeline } from './model/timeline';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TAObject } from './model/taobject';
 import { LocalFile } from './model/localfile';
 import { WebResource } from './model/webresource';
+
 
 const httpOptionsQuery = {
   headers: new HttpHeaders({
@@ -29,10 +30,19 @@ export class Rdf4jService {
       tares: 'http://nesfit.github.io/resource/ta#'
     };
 
-  private endpointUrl = 'http://localhost:8080/rdf4j-server';
-  private repositoryName = 'test2';
+  private endpointUrl: string;
+  private repositoryName: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    if (isDevMode()) {
+      this.endpointUrl = 'http://localhost:8080/rdf4j-server';
+      this.repositoryName = 'test2';
+    } else {
+      this.endpointUrl = window.location.protocol + '//' + window.location.host + '/rdf4j-server';
+      this.repositoryName = 'test';
+    }
+    console.log('Endpoint URL: ' + this.endpointUrl);
+  }
 
   query(query: string): Observable<any[]> {
     const url = this.getRepositoryUrl();
