@@ -103,7 +103,10 @@ export class TimelineComponent implements OnInit {
    */
   setTimelines(data: Timeline[]) {
     this.timelines = data;
-    const selcnt = 4;
+    let selcnt = this.timelines.length;
+    if (selcnt > 4) {
+      selcnt = 4; // start with at most 4 timelines
+    }
     for (let i = 0; i < selcnt; i++) {
       this.timelines[i].selected = true;
     }
