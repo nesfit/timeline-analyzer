@@ -60,6 +60,11 @@
       <artifactId>timeline-storage-halyard</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>cz.vutbr.fit.tarzan</groupId>
+      <artifactId>timeline-spark</artifactId>
+      <version>${project.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>com.github.radkovo.rdf4j</groupId>

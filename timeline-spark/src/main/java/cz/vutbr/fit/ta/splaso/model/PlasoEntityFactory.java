@@ -65,7 +65,7 @@ public class PlasoEntityFactory implements TAFactory
     @Override
     public LocalFile createLocalFile(IRI iri)
     {
-        return null;
+        return new PlasoLocalFile(iri);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class PlasoEntityFactory implements TAFactory
     @Override
     public FileDownloadEvent createFileDownloadEvent(IRI iri)
     {
-        return null;
+        return new PlasoFileDownloadEvent(iri);
     }
 
     @Override

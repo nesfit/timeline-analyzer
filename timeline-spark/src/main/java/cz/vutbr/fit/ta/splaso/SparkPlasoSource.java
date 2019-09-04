@@ -5,12 +5,16 @@
  */
 package cz.vutbr.fit.ta.splaso;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
 import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.core.TimelineSource;
 import cz.vutbr.fit.ta.ontology.Event;
+import cz.vutbr.fit.ta.ontology.FileDownloadEvent;
+import cz.vutbr.fit.ta.ontology.LocalFile;
 import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.ontology.URLVisitEvent;
 import cz.vutbr.fit.ta.ontology.WebResource;
@@ -25,6 +29,7 @@ public class SparkPlasoSource extends TimelineSource
     private static final String DATA_TYPE_KEY = "data_type";
     private static final String TIMESTAMP_KEY = "timestamp";
     private static final String URL_KEY = "url";
+    private static final String FILE_PATH_KEY = "full_path";
     private static final String TITLE_KEY = "title";
     
     private int idCnt = 0;
@@ -65,7 +70,10 @@ public class SparkPlasoSource extends TimelineSource
             switch (entry.getEventData().get(DATA_TYPE_KEY))
             {
                 case "firefox:places:page_visited":
+                case "chrome:history:page_visited":
                     return createPageVisit(entry);
+                case "chrome:history:file_downloaded":
+                    return createFileDownload(entry);
                 default:
                     return null;
             }
@@ -78,7 +86,7 @@ public class SparkPlasoSource extends TimelineSource
     {
         final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
         
-        URLVisitEvent ev = factory.createURLVisitEvent(ResourceFactory.createResourceIRI("local", "visit", String.valueOf(idCnt++)));
+        URLVisitEvent ev = factory.createURLVisitEvent(ResourceFactory.createResourceIRI("plaso", "visit", String.valueOf(idCnt++)));
         
         if (entry.getEvent().containsKey(TIMESTAMP_KEY))
         {
@@ -89,6 +97,29 @@ public class SparkPlasoSource extends TimelineSource
         WebResource wres = createWebResource(entry);
         if (wres != null)
             wres.addEvent(ev);
+        return ev;
+    }
+    
+    private Event createFileDownload(PlasoEntry entry)
+    {
+        final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
+
+        FileDownloadEvent ev = factory.createFileDownloadEvent(ResourceFactory.createResourceIRI("plaso", "download", String.valueOf(idCnt++)));
+        
+        if (entry.getEvent().containsKey(TIMESTAMP_KEY))
+        {
+            final Date ts = decodeTimestamp(entry);
+            ev.setTimestamp(ts);
+        }
+        
+        WebResource wres = createWebResource(entry);
+        if (wres != null)
+            wres.addEvent(ev);
+        
+        LocalFile file = createLocalFile(entry);
+        if (file != null)
+            file.addEvent(ev);
+        
         return ev;
     }
 
@@ -108,6 +139,21 @@ public class SparkPlasoSource extends TimelineSource
             return null;
     }
     
+    private LocalFile createLocalFile(PlasoEntry entry)
+    {
+        final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
+        final String pathString = entry.getEventData().get(FILE_PATH_KEY);
+        if (pathString != null)
+        {
+            LocalFile ret = factory.createLocalFile(ResourceFactory.createFileIRI(profileId, pathString));
+            ret.setPath(pathString);
+            ret.setFileName(extractFileName(pathString));
+            return ret;
+        }
+        else
+            return null;
+    }
+    
     private Date decodeTimestamp(PlasoEntry entry)
     {
         final String microts = entry.getEvent().get(TIMESTAMP_KEY); //plaso timestamp is in microseconds
@@ -118,6 +164,12 @@ public class SparkPlasoSource extends TimelineSource
         }
         else
             return null;
+    }
+    
+    private String extractFileName(String path)
+    {
+        final Path p = Paths.get(path);
+        return p.getFileName().toString();
     }
     
 }

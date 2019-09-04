@@ -1,0 +1,42 @@
+/**
+ * PlasoFileDownloadEvent.java
+ *
+ * Created on 4. 9. 2019, 14:48:35 by burgetr
+ */
+package cz.vutbr.fit.ta.splaso.model;
+
+import org.eclipse.rdf4j.model.IRI;
+
+import cz.vutbr.fit.ta.ontology.FileDownloadEvent;
+import cz.vutbr.fit.ta.ontology.LocalFile;
+import cz.vutbr.fit.ta.ontology.Object;
+
+/**
+ * 
+ * @author burgetr
+ */
+public class PlasoFileDownloadEvent extends FileDownloadEvent
+{
+
+    public PlasoFileDownloadEvent(IRI iri)
+    {
+        super(iri);
+    }
+    
+    @Override
+    public String getLabel()
+    {
+        String name = "???";
+        for (Object obj : getRefersTo())
+        {
+            if (obj instanceof LocalFile)
+            {
+                name = ((LocalFile) obj).getFileName();
+                if (name.length() == 0)
+                    name = ((LocalFile) obj).getPath();
+            }
+        }
+        return "Downloaded file " + name; 
+    }
+
+}
