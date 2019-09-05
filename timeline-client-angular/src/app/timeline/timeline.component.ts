@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Network, DataSet, Node, Edge, IdType, Timeline as TL, DataGroup, DataItem } from 'vis';
 import { TAObject } from '../model/taobject';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-timeline',
@@ -224,7 +223,8 @@ export class TimelineComponent implements OnInit {
   }
 
   reloadTimeline(t: Timeline) {
-    this.rdf.getEvents(t, this.toDate(this.loadfromdate), this.toDate(this.loadtodate), 1000).subscribe(data => this.addEvents(t, data));
+    this.rdf.getEvents(t,
+      this.toDate(this.loadfromdate, false), this.toDate(this.loadtodate, true), 1000).subscribe(data => this.addEvents(t, data));
   }
 
   addEvents(t: Timeline, data: Event[]) {
@@ -268,6 +268,7 @@ export class TimelineComponent implements OnInit {
   initSpans() {
     console.log('init spans');
     const dto = new Date(this.maxdate);
+    console.log(dto);
     const dfrom = new Date(dto);
     dfrom.setDate(dfrom.getDate() - 7);
     this.loadfromdate = this.fromDate(dfrom);
@@ -288,13 +289,17 @@ export class TimelineComponent implements OnInit {
 
   updateSpan() {
     console.log('update span');
-    this.tloptions.start = this.toDate(this.fromdate);
-    this.tloptions.end = this.toDate(this.todate);
+    this.tloptions.start = this.toDate(this.fromdate, false);
+    this.tloptions.end = this.toDate(this.todate, true);
     this.tlview.setOptions(this.tloptions);
   }
 
-  toDate(date: NgbDateStruct): Date {
-    return new Date(date.year, date.month - 1, date.day);
+  toDate(date: NgbDateStruct, end: boolean): Date {
+    if (!end) {
+      return new Date(date.year, date.month - 1, date.day);
+    } else {
+      return new Date(date.year, date.month - 1, date.day, 23, 59, 59);
+    }
   }
 
   fromDate(now: Date) {
