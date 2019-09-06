@@ -142,7 +142,10 @@ public class SparkPlasoSource extends TimelineSource
     private LocalFile createLocalFile(PlasoEntry entry)
     {
         final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
-        final String pathString = entry.getEventData().get(FILE_PATH_KEY);
+        String pathString = entry.getEventData().get(FILE_PATH_KEY);
+        //normalize the paths to use a standard slash instead of backslash
+        pathString = pathString.replace('\\', '/');
+        pathString = pathString.replace("//", "/");
         if (pathString != null)
         {
             LocalFile ret = factory.createLocalFile(ResourceFactory.createFileIRI(profileId, pathString));
