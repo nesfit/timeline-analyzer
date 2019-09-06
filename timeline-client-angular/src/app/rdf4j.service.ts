@@ -36,7 +36,7 @@ export class Rdf4jService {
   constructor(private http: HttpClient) {
     if (isDevMode()) {
       this.endpointUrl = 'http://localhost:8080/rdf4j-server';
-      this.repositoryName = 'test2';
+      this.repositoryName = 'testplaso';
     } else {
       this.endpointUrl = window.location.protocol + '//' + window.location.host + '/rdf4j-server';
       this.repositoryName = 'test';
@@ -148,7 +148,7 @@ export class Rdf4jService {
   getReferredObjects(eventUri: string): Observable<TAObject[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
-        `SELECT ?o ?type ?sourceId ?fileName ?path ?refUrl ?refTitle
+        `SELECT DISTINCT ?o ?type ?sourceId ?fileName ?path ?refUrl ?refTitle
             WHERE {
             VALUES ?src { <${eventUri}> }
             ?src ta:refersTo ?o .
@@ -163,7 +163,7 @@ export class Rdf4jService {
   getObjectData(objectUri: string): Observable<TAObject[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
-        `SELECT ?o ?type ?sourceId ?fileName ?path ?refUrl ?refTitle
+        `SELECT DISTINCT ?o ?type ?sourceId ?fileName ?path ?refUrl ?refTitle
             WHERE {
             VALUES ?o { <${objectUri}> }
             ?o rdf:type ?type .
@@ -233,7 +233,7 @@ export class Rdf4jService {
   getResourcesForURL(urlstring: string): Observable<string[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
-      `SELECT ?s
+      `SELECT DISTINCT ?s
         WHERE {
           ?s rdf:type ta:WebResource .
           ?s ta:sourceUrl ?url
@@ -270,7 +270,7 @@ export class Rdf4jService {
   getResourcesForPath(path: string): Observable<string[]> {
     const url = this.getRepositoryUrl();
     const q = this.getPrefixes() +
-      `SELECT ?s
+      `SELECT DISTINCT ?s
         WHERE {
           ?s rdf:type ta:LocalFile .
           ?s ta:path ?path
