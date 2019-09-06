@@ -27,7 +27,7 @@ import cz.vutbr.fit.ta.ontology.Timeline;
  */
 public class TestTwitter
 {
-    public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/test2";
+    public static final String REPO = "http://localhost:8080/rdf4j-server/repositories/testplaso";
     private static Resource context;
     
     public static void downloadTimeline(String username, RDFConnector rdfcon) throws IOException
@@ -65,8 +65,9 @@ public class TestTwitter
             context = getContext();
             
             downloadTimeline("iROZHLAScz", rdfcon);
-            downloadTimeline("RESPEKT_CZ", rdfcon);
+            //downloadTimeline("RESPEKT_CZ", rdfcon);
             downloadTimeline("DVTVcz", rdfcon);
+            downloadTimeline("BurgetRadek", rdfcon);
             /*downloadTimeline("veselovskyma", rdfcon);
             downloadTimeline("ekonom_cz", rdfcon);
             downloadTimeline("hospodarky", rdfcon);
