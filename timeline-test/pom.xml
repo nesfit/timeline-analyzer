@@ -71,6 +71,11 @@
       <artifactId>class-builder-core</artifactId>
       <version>0.0.2-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.github.radkovo.rdf4j</groupId>
+      <artifactId>vocab-builder-python</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
 
   </dependencies>
 </project>
