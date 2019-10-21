@@ -16,5 +16,10 @@ mvn install:install-file \
    -DgeneratePom=true
 
 # sqljet (required by timeline-analyzer-local)
-cd ../../sqljet
-mvn install -DskipTests
+mvn install:install-file \
+   -Dfile=../timeline-analyzer-local/lib/sqljet-1.2.2.4-TARZAN-1.jar \
+   -DgroupId=eu.printingin3d.sqljet \
+   -DartifactId=sqljet \
+   -Dversion=1.2.2.4-TARZAN-1 \
+   -Dpackaging=jar \
+   -DgeneratePom=true
