@@ -2,8 +2,8 @@ package cz.vutbr.fit.ta.ontology;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
-import com.github.radkovo.rdf4j.builder.EntityFactory;
-import com.github.radkovo.rdf4j.builder.TargetModel;
+import io.github.radkovo.rdf4j.builder.EntityFactory;
+import io.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
@@ -11,7 +11,7 @@ import cz.vutbr.fit.ta.ontology.vocabulary.TA;
  * <p>
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#Content>}
  */
-public class Content extends com.github.radkovo.rdf4j.builder.RDFEntity
+public class Content extends io.github.radkovo.rdf4j.builder.RDFEntity
 {
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#Content");
 

@@ -5,8 +5,8 @@
 # Run this directly from the misc directory: ./clone.sh
 #
 
-REPOS="sqljet rdf4j-vocab-builder rdf4j-class-builder"
-GHROOT="git@github.com:radkovo"
+REPOS="sqljet"
+GHROOT="https://github.com/radkovo"
 
 cd ../..
 for I in $REPOS; do

@@ -31,27 +31,19 @@
 	</build>
 
 	<dependencies>
-        <dependency>
+		<dependency>
 			<groupId>cz.vutbr.fit.tarzan</groupId>
 			<artifactId>timeline-analyzer-core</artifactId>
 			<version>${project.version}</version>
-        </dependency>
-        
-        <!-- <dependency>
-		    <groupId>com.github.radkovo.rdf4j</groupId>
-		    <artifactId>class-builder-runtime</artifactId>
-		    <version>0.0.1-SNAPSHOT</version>
-	    </dependency> -->
-	
-        <dependency>
-            <groupId>org.eclipse.rdf4j</groupId>
-            <artifactId>rdf4j-model</artifactId>
-        </dependency> 
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.rdf4j</groupId>
+			<artifactId>rdf4j-model</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.restfb</groupId>
 			<artifactId>restfb</artifactId>
 			<version>2.2.0</version>
-		</dependency>        
-        
+		</dependency>
 	</dependencies>
 </project>

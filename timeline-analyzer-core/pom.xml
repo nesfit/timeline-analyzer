@@ -32,9 +32,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.github.radkovo.rdf4j</groupId>
+			<groupId>io.github.radkovo</groupId>
 			<artifactId>class-builder-runtime</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
+			<version>1.0</version>
 		</dependency>
 
 		<dependency>

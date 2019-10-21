@@ -1,7 +1,7 @@
 package cz.vutbr.fit.ta.ontology;
 
 import org.eclipse.rdf4j.model.IRI;
-import com.github.radkovo.rdf4j.builder.EntityFactory;
+import io.github.radkovo.rdf4j.builder.EntityFactory;
 
 public interface TAFactory extends EntityFactory{
 	public GeoContent createGeoContent(IRI iri);

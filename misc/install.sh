@@ -15,14 +15,6 @@ mvn install:install-file \
    -Dpackaging=jar \
    -DgeneratePom=true
 
-# rdf4j-vocab-builder
-cd ../../rdf4j-vocab-builder
-mvn install -DskipTests
-
-# rdf4j-class-builder
-cd ../rdf4j-class-builder
-mvn install -DskipTests
-
-# sqljet (required by timeline-analyzer-local
-cd ../sqljet
+# sqljet (required by timeline-analyzer-local)
+cd ../../sqljet
 mvn install -DskipTests

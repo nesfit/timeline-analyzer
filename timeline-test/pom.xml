@@ -67,14 +67,14 @@
     </dependency>
 
     <dependency>
-      <groupId>com.github.radkovo.rdf4j</groupId>
+      <groupId>io.github.radkovo</groupId>
       <artifactId>class-builder-core</artifactId>
-      <version>0.0.2-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
     <dependency>
-      <groupId>com.github.radkovo.rdf4j</groupId>
+      <groupId>io.github.radkovo</groupId>
       <artifactId>vocab-builder-python</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.2</version>
     </dependency>
 
   </dependencies>

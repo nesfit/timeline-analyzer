@@ -17,7 +17,7 @@ import java.util.Properties;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 
-import com.github.radkovo.rdf4j.builder.TargetModel;
+import io.github.radkovo.rdf4j.builder.TargetModel;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;

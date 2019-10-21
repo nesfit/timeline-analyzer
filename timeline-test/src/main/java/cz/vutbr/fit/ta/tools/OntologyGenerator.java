@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 
 import org.eclipse.rdf4j.rio.RDFFormat;
 
-import com.github.radkovo.rdf4j.builder.ClassBuilder;
-import com.github.radkovo.rdf4j.vocab.GenerationException;
-import com.github.radkovo.rdf4j.vocab.VocabBuilder;
+import io.github.radkovo.rdf4j.builder.ClassBuilder;
+import io.github.radkovo.rdf4j.vocab.GenerationException;
+import io.github.radkovo.rdf4j.vocab.VocabBuilder;
 
 /**
  * 

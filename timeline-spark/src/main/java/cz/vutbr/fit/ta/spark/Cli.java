@@ -27,7 +27,7 @@ import org.apache.commons.cli.PosixParser;
 import org.eclipse.rdf4j.model.Resource;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 
-import com.github.radkovo.rdf4j.builder.TargetModel;
+import io.github.radkovo.rdf4j.builder.TargetModel;
 
 import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.ResourceFactory;

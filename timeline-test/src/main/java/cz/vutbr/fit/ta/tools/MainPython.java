@@ -9,8 +9,8 @@ import java.nio.file.Paths;
 
 import org.eclipse.rdf4j.rio.RDFFormat;
 
-import com.github.radkovo.rdf4j.python.VocabBuilderPython;
-import com.github.radkovo.rdf4j.vocab.VocabBuilder;
+import io.github.radkovo.rdf4j.python.VocabBuilderPython;
+import io.github.radkovo.rdf4j.vocab.VocabBuilder;
 
 /**
  * 
