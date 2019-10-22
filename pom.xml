@@ -46,7 +46,6 @@
 		<module>timeline-analyzer-local</module>
 		<module>timeline-analyzer-links</module>
 		<module>timeline-storage-halyard</module>
-    <module>timeline-test</module>
     <module>timeline-spark</module>
 	</modules>
 	
