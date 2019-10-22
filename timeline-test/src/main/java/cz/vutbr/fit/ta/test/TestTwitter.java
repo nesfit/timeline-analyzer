@@ -3,7 +3,7 @@
  *
  * Created on 31. 7. 2017, 14:05:14 by burgetr
  */
-package cz.vutbr.fit.ta.twitter;
+package cz.vutbr.fit.ta.test;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -20,6 +20,7 @@ import cz.vutbr.fit.ta.core.RDFConnector;
 import cz.vutbr.fit.ta.core.RDFConnectorRDF4J;
 import cz.vutbr.fit.ta.core.ResourceFactory;
 import cz.vutbr.fit.ta.ontology.Timeline;
+import cz.vutbr.fit.ta.twitter.TwitterSource;
 
 /**
  * 
