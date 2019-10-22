@@ -45,7 +45,7 @@ public class DownloadTwitter extends DownloadTool
     public void downloadTimeline(String username) throws IOException
     {
         TwitterSource twitter = new TwitterSource(username);
-        twitter.setLimit(1000);
+        twitter.setLimit(getLimit());
         Timeline timeline = twitter.getTimeline();
         
         log.debug("Got timeline of {} of {} events", twitter.getUsername(), timeline.getEvents().size());
