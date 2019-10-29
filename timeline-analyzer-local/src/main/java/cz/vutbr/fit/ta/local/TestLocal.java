@@ -61,11 +61,11 @@ public class TestLocal
                 //System.out.println(model);
                 System.out.println("Model created, " + target.getModel().size() + " triples");
                 
-                System.out.println("Start at " + (new Date()));
+                /*System.out.println("Start at " + (new Date()));
                 RDFConnector rdfcon = new RDFConnectorRDF4J(REPO);
                 rdfcon.add(target.getModel(), getContext());
                 rdfcon.close();
-                System.out.println("Finished at " + (new Date()));
+                System.out.println("Finished at " + (new Date()));*/
                 
             }
         } catch (Exception e) {

@@ -22,11 +22,23 @@ public class FirefoxBrowser extends Browser
     
     private String profilePath;
     private List<Profile> profiles;
+    private String userHome;
     
 
     public FirefoxBrowser(OS os)
     {
         super(os);
+        userHome = System.getProperty("user.home");
+        log.info("Using {} as user home", userHome);
+        profilePath = findProfilePath();
+        profiles = findProfiles();
+    }
+    
+    public FirefoxBrowser(OS os, String userHome)
+    {
+        super(os);
+        this.userHome = userHome;
+        log.info("Using {} as user home", userHome);
         profilePath = findProfilePath();
         profiles = findProfiles();
     }
@@ -50,20 +62,20 @@ public class FirefoxBrowser extends Browser
         String profilePath;
         if (getOs().isLinux())
         {
-            profilePath = System.getProperty("user.home") + File.separator + ".mozilla" + File.separator + "firefox";
+            profilePath = userHome + File.separator + ".mozilla" + File.separator + "firefox";
         }
         else if (getOs().isWindows())
         {
             // Pre Win 7
-            profilePath = System.getProperty("user.home") + File.separator + "Application Data" + File.separator + "Mozilla" + File.separator + "Firefox" + File.separator + "Profiles";
+            profilePath = userHome + File.separator + "Application Data" + File.separator + "Mozilla" + File.separator + "Firefox" + File.separator + "Profiles";
             // Win 7+
             if (!(new File(profilePath)).exists())
-                profilePath = System.getProperty("user.home") + File.separator + "AppData" + File.separator + "Roaming" + File.separator + "Mozilla" + File.separator + "Firefox" + File.separator + "Profiles";
+                profilePath = userHome + File.separator + "AppData" + File.separator + "Roaming" + File.separator + "Mozilla" + File.separator + "Firefox" + File.separator + "Profiles";
         }
         else
         {
             log.error("Unsupported OS {}", getOs().toString());
-            profilePath = System.getProperty("user.home");
+            profilePath = userHome;
         }
         return profilePath;
     }
