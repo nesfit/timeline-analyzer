@@ -45,6 +45,7 @@
 		<module>timeline-analyzer-local</module>
 		<module>timeline-storage-halyard</module>
     <module>timeline-spark</module>
+    <module>timeline-client-angular</module>
 	</modules>
 	
 	<dependencies>
