@@ -164,7 +164,7 @@ public class FirefoxProfile extends Profile
                                 int type = (int) cursor.getInteger(2);
                                 Date visited = new Date();
                                 visited.setTime(cursor.getInteger(8) / 1000);
-                                System.out.println(type + " " + visited + " " + placeId + " " + content);
+                                //System.out.println(type + " " + visited + " " + placeId + " " + content);
                                 
                                 if (visited.after(fromDate) && visited.before(toDate) && type == dnlattr) 
                                 {

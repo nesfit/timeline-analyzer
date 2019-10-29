@@ -53,7 +53,7 @@ public class DownloadTwitter extends DownloadTool
         TargetModel target = new TargetModel(new LinkedHashModel());
         target.add(timeline);
         //System.out.println(target.getModel());
-        System.out.println("Model created, " + target.getModel().size() + " triples");
+        log.info("Model created, {} triples", target.getModel().size());
         
         rdfcon.add(target.getModel(), context);
     }
