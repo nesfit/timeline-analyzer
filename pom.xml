@@ -42,9 +42,7 @@
 		<module>timeline-analyzer-core</module>
 		<module>timeline-analyzer-twitter</module>
 		<module>timeline-analyzer-fb</module>
-		<module>timeline-analyzer-web</module>
 		<module>timeline-analyzer-local</module>
-		<module>timeline-analyzer-links</module>
 		<module>timeline-storage-halyard</module>
     <module>timeline-spark</module>
 	</modules>
