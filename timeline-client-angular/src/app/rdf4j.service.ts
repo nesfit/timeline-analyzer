@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import { TAObject } from './model/taobject';
 import { LocalFile } from './model/localfile';
 import { WebResource } from './model/webresource';
+import { Config } from './config/config';
 
 
 const httpOptionsQuery = {
@@ -35,11 +36,11 @@ export class Rdf4jService {
 
   constructor(private http: HttpClient) {
     if (isDevMode()) {
-      this.endpointUrl = 'http://localhost:8080/rdf4j-server';
-      this.repositoryName = 'testplaso';
+      this.endpointUrl = Config.devel.endpoint;
+      this.repositoryName = Config.devel.repository;
     } else {
-      this.endpointUrl = window.location.protocol + '//' + window.location.host + '/rdf4j-server';
-      this.repositoryName = 'test';
+      this.endpointUrl = Config.production.endpoint;
+      this.repositoryName = Config.production.repository;
     }
     console.log('Endpoint URL: ' + this.endpointUrl);
   }
