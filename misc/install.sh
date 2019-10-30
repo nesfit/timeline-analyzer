@@ -1,7 +1,6 @@
 #! /bin/bash
 #
 # Installs the dependencies necessary for building TimelineAnalyzer.
-# Use clone.sh to download the repositories from GitHub when necessary.
 #
 # Run this directly from the misc directory: ./install.sh
 #

@@ -49,11 +49,7 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>ng</executable>
-							<arguments>
-								<argument>build</argument>
-								<argument>--prod</argument>
-							</arguments>
+							<executable>${basedir}/misc/build_client.sh</executable>
 						</configuration>
 					</execution>
 				</executions>
