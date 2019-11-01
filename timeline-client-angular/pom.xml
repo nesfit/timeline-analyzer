@@ -2,6 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+  <!--
+      For building the angular app: mvn package -P webapp
+   -->
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -17,7 +21,6 @@
 	<url>https://github.com/nesfit/timeline-analyzer</url>
 
 	<build>
-		<finalName>ta</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -26,34 +29,57 @@
 				<configuration>
 					<warSourceDirectory>dist</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<path>/${project.build.finalName}</path>
-					<update>true</update>
-					<url>http://localhost:8080/manager/text</url>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>exec-maven-plugin</artifactId>
-				<groupId>org.codehaus.mojo</groupId>
-				<executions>
-					<execution>
-						<id>Angular Application Build</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>${basedir}/misc/build_client.sh</executable>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>webapp</id>
+			<build>
+				<finalName>ta</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>3.2.3</version>
+						<configuration>
+							<warSourceDirectory>dist</warSourceDirectory>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+              <packagingExcludes>WEB-INF/lib/*.jar</packagingExcludes>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<path>/${project.build.finalName}</path>
+							<update>true</update>
+							<url>http://localhost:8080/manager/text</url>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>exec-maven-plugin</artifactId>
+						<groupId>org.codehaus.mojo</groupId>
+						<executions>
+							<execution>
+								<id>Angular Application Build</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>${basedir}/../misc/build_client.sh</executable>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
