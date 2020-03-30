@@ -17,6 +17,7 @@ public class PlasoEntry
 {
     private Map<String, String> event;
     private Map<String, String> eventData;
+    private String source; // source file from which the event was extracted
 
     
     public PlasoEntry()
@@ -24,11 +25,18 @@ public class PlasoEntry
         event = new HashMap<>();
         eventData = new HashMap<>();
     }
-
+    
     public PlasoEntry(Map<String, String> event, Map<String, String> eventData)
     {
         this.event = event;
         this.eventData = eventData;
+    }
+
+    public PlasoEntry(Map<String, String> event, Map<String, String> eventData, String src)
+    {
+        this.event = event;
+        this.eventData = eventData;
+        this.source = src;
     }
 
     public Map<String, String> getEvent()
@@ -39,6 +47,16 @@ public class PlasoEntry
     public Map<String, String> getEventData()
     {
         return eventData;
+    }
+
+    public String getSource()
+    {
+        return source;
+    }
+
+    public void setSource(String source)
+    {
+        this.source = source;
     }
     
 }

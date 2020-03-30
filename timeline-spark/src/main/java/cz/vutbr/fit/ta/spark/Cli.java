@@ -35,6 +35,7 @@ import cz.vutbr.fit.ta.halyard.RDFConnectorHalyard;
 import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.splaso.PlasoEntry;
 import cz.vutbr.fit.ta.splaso.PlasoParser;
+import cz.vutbr.fit.ta.splaso.PlasoTextParser;
 import cz.vutbr.fit.ta.splaso.SparkPlasoSource;
 
 /**
@@ -65,7 +66,7 @@ public class Cli
             else
                 throw new ParseException("Too many arguments");
                 
-            PlasoParser p = new PlasoParser();
+            PlasoParser p = new PlasoTextParser();
             List<PlasoEntry> entries = p.parseInputStream(is);
             is.close();
             
