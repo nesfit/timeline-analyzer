@@ -7,7 +7,7 @@
 
 # Halyard JAR
 mvn install:install-file \
-   -Dfile=../timeline-storage-halyard/lib/halyard-common-1.3.jar \
+   -Dfile=../timeline-storage-halyard/lib/halyard-common-3.2.jar \
    -DgroupId=com.msd.gin.halyard.common \
    -DartifactId=halyard-common \
    -Dversion=1.3 \

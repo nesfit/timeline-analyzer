@@ -11,8 +11,10 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.KeyValue;
-import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.client.Table;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.Resource;
@@ -37,7 +39,8 @@ public class RDFConnectorHalyard implements RDFConnector
     
     private String tableName;
     private Configuration hConf;
-    private HTable hTable;        
+    private Connection hConn;
+    private Table hTable;        
     
 
     /**
@@ -129,7 +132,8 @@ public class RDFConnectorHalyard implements RDFConnector
     private void connectHbase() throws IOException
     {
         hConf = HBaseConfiguration.create();
-        hTable = HalyardTableUtils.getTable(hConf, tableName, false, DEFAULT_SPLIT_BITS);        
+        hConn = ConnectionFactory.createConnection(hConf);
+        hTable = HalyardTableUtils.getTable(hConn, tableName, false, DEFAULT_SPLIT_BITS);        
     }
     
     private void connectHbase(String hbaseZookeeperQuorum, int hbaseZookeeperClientPort) throws IOException
@@ -137,14 +141,16 @@ public class RDFConnectorHalyard implements RDFConnector
         hConf = HBaseConfiguration.create();
         hConf.set(HBASE_CONFIGURATION_ZOOKEEPER_QUORUM, hbaseZookeeperQuorum);
         hConf.setInt(HBASE_CONFIGURATION_ZOOKEEPER_CLIENTPORT, hbaseZookeeperClientPort);
-        hTable = HalyardTableUtils.getTable(hConf, tableName, false, DEFAULT_SPLIT_BITS);        
+        hConn = ConnectionFactory.createConnection(hConf);
+        hTable = HalyardTableUtils.getTable(hConn, tableName, false, DEFAULT_SPLIT_BITS);        
     }
     
     private void connectHbase(String configFilePath) throws IOException
     {
         hConf = HBaseConfiguration.create();
         hConf.addResource(new Path(configFilePath));
-        hTable = HalyardTableUtils.getTable(hConf, tableName, false, DEFAULT_SPLIT_BITS);        
+        hConn = ConnectionFactory.createConnection(hConf);
+        hTable = HalyardTableUtils.getTable(hConn, tableName, false, DEFAULT_SPLIT_BITS);        
     }
     
 }
