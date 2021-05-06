@@ -10,6 +10,8 @@ import org.eclipse.rdf4j.model.IRI;
 import cz.vutbr.fit.ta.ontology.Object;
 import cz.vutbr.fit.ta.ontology.URLVisitEvent;
 import cz.vutbr.fit.ta.ontology.WebResource;
+import cz.vutbr.fit.ta.splaso.PlasoEntry;
+import io.github.radkovo.rdf4j.builder.TargetModel;
 
 /**
  * 
@@ -17,10 +19,12 @@ import cz.vutbr.fit.ta.ontology.WebResource;
  */
 public class PlasoURLVisitEvent extends URLVisitEvent
 {
+    private PlasoEntry entry;
 
-    public PlasoURLVisitEvent(IRI iri)
+    public PlasoURLVisitEvent(IRI iri, PlasoEntry entry)
     {
         super(iri);
+        this.entry = entry;
     }
 
     @Override
@@ -37,6 +41,13 @@ public class PlasoURLVisitEvent extends URLVisitEvent
             }
         }
         return "Visited " + name; 
+    }
+
+    @Override
+    public void addToModel(TargetModel target)
+    {
+        super.addToModel(target);
+        entry.addToModel(this, target);
     }
 
 }

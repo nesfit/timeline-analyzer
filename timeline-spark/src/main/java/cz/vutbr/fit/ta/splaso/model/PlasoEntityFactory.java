@@ -24,6 +24,7 @@ import cz.vutbr.fit.ta.ontology.Timeline;
 import cz.vutbr.fit.ta.ontology.URLContent;
 import cz.vutbr.fit.ta.ontology.URLVisitEvent;
 import cz.vutbr.fit.ta.ontology.WebResource;
+import cz.vutbr.fit.ta.splaso.PlasoEntry;
 
 /**
  * 
@@ -82,7 +83,12 @@ public class PlasoEntityFactory implements TAFactory
     @Override
     public FileDownloadEvent createFileDownloadEvent(IRI iri)
     {
-        return new PlasoFileDownloadEvent(iri);
+        return new PlasoFileDownloadEvent(iri, null);
+    }
+
+    public FileDownloadEvent createFileDownloadEvent(IRI iri, PlasoEntry entry)
+    {
+        return new PlasoFileDownloadEvent(iri, entry);
     }
 
     @Override
@@ -103,10 +109,20 @@ public class PlasoEntityFactory implements TAFactory
         return new PlasoWebResource(iri);
     }
 
+    public PlasoGenericEvent createGenericEvent(IRI iri, PlasoEntry entry)
+    {
+        return new PlasoGenericEvent(iri, entry);
+    }
+
     @Override
     public URLVisitEvent createURLVisitEvent(IRI iri)
     {
-        return new PlasoURLVisitEvent(iri);
+        return new PlasoURLVisitEvent(iri, null);
+    }
+
+    public URLVisitEvent createURLVisitEvent(IRI iri, PlasoEntry entry)
+    {
+        return new PlasoURLVisitEvent(iri, entry);
     }
 
     @Override

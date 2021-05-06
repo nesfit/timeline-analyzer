@@ -26,11 +26,12 @@ import cz.vutbr.fit.ta.splaso.model.PlasoEntityFactory;
  */
 public class SparkPlasoSource extends TimelineSource
 {
-    private static final String DATA_TYPE_KEY = "data_type";
-    private static final String TIMESTAMP_KEY = "timestamp";
-    private static final String URL_KEY = "url";
-    private static final String FILE_PATH_KEY = "full_path";
-    private static final String TITLE_KEY = "title";
+    public static final String DATA_TYPE_KEY = "data_type";
+    public static final String TIMESTAMP_KEY = "timestamp";
+    public static final String IDENTIFIER_KEY = "_identifier";
+    public static final String URL_KEY = "url";
+    public static final String FILE_PATH_KEY = "full_path";
+    public static final String TITLE_KEY = "title";
     
     private int idCnt = 0;
     
@@ -75,18 +76,35 @@ public class SparkPlasoSource extends TimelineSource
                 case "chrome:history:file_downloaded":
                     return createFileDownload(entry);
                 default:
-                    return null;
+                    return createGenericEvent(entry);
             }
         }
         else
             return null;
     }
     
+    private Event createGenericEvent(PlasoEntry entry)
+    {
+        final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
+        
+        Event ev = factory.createGenericEvent(
+                ResourceFactory.createResourceIRI("plaso", profileId + "-event", String.valueOf(idCnt++)), entry);
+        
+        if (entry.getEvent().containsKey(TIMESTAMP_KEY))
+        {
+            final Date ts = decodeTimestamp(entry);
+            ev.setTimestamp(ts);
+        }
+        
+        return ev;
+    }
+    
     private Event createPageVisit(PlasoEntry entry)
     {
         final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
         
-        URLVisitEvent ev = factory.createURLVisitEvent(ResourceFactory.createResourceIRI("plaso", "visit", String.valueOf(idCnt++)));
+        URLVisitEvent ev = factory.createURLVisitEvent(
+                ResourceFactory.createResourceIRI("plaso", profileId + "-visit", String.valueOf(idCnt++)), entry);
         
         if (entry.getEvent().containsKey(TIMESTAMP_KEY))
         {
@@ -104,7 +122,8 @@ public class SparkPlasoSource extends TimelineSource
     {
         final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
 
-        FileDownloadEvent ev = factory.createFileDownloadEvent(ResourceFactory.createResourceIRI("plaso", "download", String.valueOf(idCnt++)));
+        FileDownloadEvent ev = factory.createFileDownloadEvent(
+                ResourceFactory.createResourceIRI("plaso", profileId + "-download", String.valueOf(idCnt++)), entry);
         
         if (entry.getEvent().containsKey(TIMESTAMP_KEY))
         {
