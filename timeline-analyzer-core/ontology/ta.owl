@@ -38,8 +38,14 @@
 
     <owl:ObjectProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#linksResource">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Image"/>
-        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#URLContent"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://nesfit.github.io/ontology/ta.owl#Image"/>
+                    <rdf:Description rdf:about="http://nesfit.github.io/ontology/ta.owl#URLContent"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
         <rdfs:range rdf:resource="http://nesfit.github.io/ontology/ta.owl#WebResource"/>
     </owl:ObjectProperty>
     
@@ -134,8 +140,14 @@
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#sourceId">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Entry"/>
-        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#Timeline"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://nesfit.github.io/ontology/ta.owl#Entry"/>
+                    <rdf:Description rdf:about="http://nesfit.github.io/ontology/ta.owl#Timeline"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
         <rdfs:comment>An identifier of the entry in the source timeline (e.g. Twitter id)</rdfs:comment>
     </owl:DatatypeProperty>
@@ -168,8 +180,14 @@
 
     <owl:DatatypeProperty rdf:about="http://nesfit.github.io/ontology/ta.owl#text">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#TextContent"/>
-        <rdfs:domain rdf:resource="http://nesfit.github.io/ontology/ta.owl#URLContent"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://nesfit.github.io/ontology/ta.owl#TextContent"/>
+                    <rdf:Description rdf:about="http://nesfit.github.io/ontology/ta.owl#URLContent"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     </owl:DatatypeProperty>
     
@@ -194,6 +212,22 @@
     ///////////////////////////////////////////////////////////////////////////////////////
      -->
 
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Event -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Event">
+        <owl:equivalentClass rdf:resource="http://nesfit.github.io/ontology/ta.owl#Event"/>
+    </owl:Class>
+    
+
+
+    <!-- http://checksem.u-bourgogne.fr/ord2i#Object -->
+
+    <owl:Class rdf:about="http://checksem.u-bourgogne.fr/ord2i#Object">
+        <owl:equivalentClass rdf:resource="http://nesfit.github.io/ontology/ta.owl#Object"/>
+    </owl:Class>
     
 
 
@@ -228,7 +262,6 @@
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Event">
         <rdfs:comment>An event with a subject and time assigned</rdfs:comment>
-        <owl:equivalentClass rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Event"/>
     </owl:Class>
     
 
@@ -273,7 +306,6 @@
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Object">
         <rdfs:comment>A generic investigated object</rdfs:comment>
-        <owl:equivalentClass rdf:resource="http://checksem.u-bourgogne.fr/ord2i#Object"/>
     </owl:Class>
     
 
