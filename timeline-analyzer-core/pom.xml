@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>io.github.radkovo</groupId>
 			<artifactId>class-builder-runtime</artifactId>
-			<version>1.0</version>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
