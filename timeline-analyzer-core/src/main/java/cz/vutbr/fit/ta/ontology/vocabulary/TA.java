@@ -38,16 +38,6 @@ public class TA {
 	public static final IRI Content;
 
 	/**
-	 * {@code http://nesfit.github.io/ontology/ta.owl#contextLink}.
-	 * <p>
-	 * A generic link between two profile entities (e.g. profiles, entries,
-	 * contents).
-	 *
-	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#contextLink">contextLink</a>
-	 */
-	public static final IRI contextLink;
-
-	/**
 	 * created
 	 * <p>
 	 * {@code http://nesfit.github.io/ontology/ta.owl#CreationEvent}.
@@ -61,7 +51,7 @@ public class TA {
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#Entry}.
 	 * <p>
-	 * An entry in the timeline
+	 * An entry in a social network profile
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#Entry">Entry</a>
 	 */
@@ -179,18 +169,6 @@ public class TA {
 	public static final IRI resourceTitle;
 
 	/**
-	 * URL also published in
-	 * <p>
-	 * {@code http://nesfit.github.io/ontology/ta.owl#sameURL}.
-	 * <p>
-	 * Indicates that the URL has been also published in an entry in another
-	 * profile
-	 *
-	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#sameURL">sameURL</a>
-	 */
-	public static final IRI sameURL;
-
-	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject}.
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject">SocialNetworkObject</a>
@@ -253,7 +231,7 @@ public class TA {
 	/**
 	 * {@code http://nesfit.github.io/ontology/ta.owl#Timeline}.
 	 * <p>
-	 * A sequence of entries displayed in a signle time line.
+	 * A sequence of events displayed in a signle time line.
 	 *
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#Timeline">Timeline</a>
 	 */
@@ -274,18 +252,6 @@ public class TA {
 	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#URLContent">URLContent</a>
 	 */
 	public static final IRI URLContent;
-
-	/**
-	 * Source URL mentioned in
-	 * <p>
-	 * {@code http://nesfit.github.io/ontology/ta.owl#urlMention}.
-	 * <p>
-	 * Indicates that the URL of a content (image, other URL, etc.) is
-	 * mentioned in another entry.
-	 *
-	 * @see <a href="http://nesfit.github.io/ontology/ta.owl#urlMention">urlMention</a>
-	 */
-	public static final IRI urlMention;
 
 	/**
 	 * visited URL
@@ -312,7 +278,6 @@ public class TA {
 
 		contains = factory.createIRI(TA.NAMESPACE, "contains");
 		Content = factory.createIRI(TA.NAMESPACE, "Content");
-		contextLink = factory.createIRI(TA.NAMESPACE, "contextLink");
 		CreationEvent = factory.createIRI(TA.NAMESPACE, "CreationEvent");
 		Entry = factory.createIRI(TA.NAMESPACE, "Entry");
 		Event = factory.createIRI(TA.NAMESPACE, "Event");
@@ -328,7 +293,6 @@ public class TA {
 		path = factory.createIRI(TA.NAMESPACE, "path");
 		refersTo = factory.createIRI(TA.NAMESPACE, "refersTo");
 		resourceTitle = factory.createIRI(TA.NAMESPACE, "resourceTitle");
-		sameURL = factory.createIRI(TA.NAMESPACE, "sameURL");
 		SocialNetworkObject = factory.createIRI(TA.NAMESPACE, "SocialNetworkObject");
 		sourceId = factory.createIRI(TA.NAMESPACE, "sourceId");
 		sourceTimeline = factory.createIRI(TA.NAMESPACE, "sourceTimeline");
@@ -339,7 +303,6 @@ public class TA {
 		Timeline = factory.createIRI(TA.NAMESPACE, "Timeline");
 		timestamp = factory.createIRI(TA.NAMESPACE, "timestamp");
 		URLContent = factory.createIRI(TA.NAMESPACE, "URLContent");
-		urlMention = factory.createIRI(TA.NAMESPACE, "urlMention");
 		URLVisitEvent = factory.createIRI(TA.NAMESPACE, "URLVisitEvent");
 		WebResource = factory.createIRI(TA.NAMESPACE, "WebResource");
 	}

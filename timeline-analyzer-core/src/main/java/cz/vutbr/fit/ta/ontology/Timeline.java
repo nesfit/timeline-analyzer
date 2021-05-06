@@ -9,11 +9,11 @@ import io.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
- * A sequence of entries displayed in a signle time line..
+ * A sequence of events displayed in a signle time line..
  * <p>
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#Timeline>}
  */
-public class Timeline extends SocialNetworkObject
+public class Timeline extends io.github.radkovo.rdf4j.builder.RDFEntity
 {
 	public static final IRI CLASS_IRI = vf.createIRI("http://nesfit.github.io/ontology/ta.owl#Timeline");
 

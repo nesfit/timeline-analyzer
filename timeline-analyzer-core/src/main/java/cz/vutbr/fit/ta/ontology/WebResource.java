@@ -31,13 +31,9 @@ public class WebResource extends Object
 	 */
 	private String resourceTitle;
 
-	/** Inverse collection for Image.linksResource. */
-	private Set<Image> images;
-
 
 	public WebResource(IRI iri) {
 		super(iri);
-		images = new HashSet<>();
 	}
 
 	@Override
@@ -61,22 +57,12 @@ public class WebResource extends Object
 		this.resourceTitle = resourceTitle;
 	}
 
-	public Set<Image> getImages() {
-		return images;
-	}
-
-	public void addImage(Image image) {
-		if (images == null) images = new HashSet<>();
-		images.add(image);
-		image.setLinksResource(this);
-	}
 
 	@Override
 	public void addToModel(TargetModel target) {
 		super.addToModel(target);
 		addValue(target, TA.sourceUrl, sourceUrl);
 		addValue(target, TA.resourceTitle, resourceTitle);
-		target.addAll(images);
 	}
 
 	@Override

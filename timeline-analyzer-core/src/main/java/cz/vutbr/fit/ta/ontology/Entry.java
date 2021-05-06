@@ -9,7 +9,7 @@ import io.github.radkovo.rdf4j.builder.TargetModel;
 import cz.vutbr.fit.ta.ontology.vocabulary.TA;
 
 /**
- * An entry in the timeline.
+ * An entry in a social network profile.
  * <p>
  * IRI: {@code <http://nesfit.github.io/ontology/ta.owl#Entry>}
  */
