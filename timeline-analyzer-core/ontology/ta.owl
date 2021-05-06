@@ -253,7 +253,7 @@
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Entry">
         <rdfs:subClassOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject"/>
-        <rdfs:comment>An entry in the timeline</rdfs:comment>
+        <rdfs:comment>An entry in a social network profile</rdfs:comment>
     </owl:Class>
     
 
@@ -330,8 +330,7 @@
     <!-- http://nesfit.github.io/ontology/ta.owl#Timeline -->
 
     <owl:Class rdf:about="http://nesfit.github.io/ontology/ta.owl#Timeline">
-        <rdfs:subClassOf rdf:resource="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject"/>
-        <rdfs:comment>A sequence of entries displayed in a signle time line.</rdfs:comment>
+        <rdfs:comment>A sequence of events displayed in a signle time line.</rdfs:comment>
     </owl:Class>
     
 
