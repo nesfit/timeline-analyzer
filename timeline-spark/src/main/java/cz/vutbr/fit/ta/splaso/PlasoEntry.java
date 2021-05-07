@@ -23,8 +23,8 @@ import io.github.radkovo.rdf4j.builder.TargetModel;
  */
 public class PlasoEntry
 {
-    private Map<String, String> event;
-    private Map<String, String> eventData;
+    private Map<String, Object> event;
+    private Map<String, Object> eventData;
     private String source; // source file from which the event was extracted
 
     /** Special event data keys that are not dumped to RDF */
@@ -45,25 +45,25 @@ public class PlasoEntry
         eventData = new HashMap<>();
     }
     
-    public PlasoEntry(Map<String, String> event, Map<String, String> eventData)
+    public PlasoEntry(Map<String, Object> event, Map<String, Object> eventData)
     {
         this.event = event;
         this.eventData = eventData;
     }
 
-    public PlasoEntry(Map<String, String> event, Map<String, String> eventData, String src)
+    public PlasoEntry(Map<String, Object> event, Map<String, Object> eventData, String src)
     {
         this.event = event;
         this.eventData = eventData;
         this.source = src;
     }
 
-    public Map<String, String> getEvent()
+    public Map<String, Object> getEvent()
     {
         return event;
     }
 
-    public Map<String, String> getEventData()
+    public Map<String, Object> getEventData()
     {
         return eventData;
     }
@@ -89,15 +89,34 @@ public class PlasoEntry
         {
             if (!specialKeys.contains(key))
             {
-                subject.addValue(target, createKeyIRI(key), event.get(key));
+                addValue(target, subject, createKeyIRI(key), event.get(key));
             }
         }
         for (String key : eventData.keySet())
         {
             if (!specialKeys.contains(key))
             {
-                subject.addValue(target, createKeyIRI(key), eventData.get(key));
+                addValue(target, subject, createKeyIRI(key), eventData.get(key));
             }
+        }
+    }
+    
+    private void addValue(TargetModel target, RDFEntity subject, IRI predicate, Object value)
+    {
+        if (value != null)
+        {
+            if (value instanceof Integer)
+                subject.addValue(target, predicate, (Integer) value);
+            else if (value instanceof Long)
+                subject.addValue(target, predicate, (Long) value);
+            else if (value instanceof Float)
+                subject.addValue(target, predicate, (Float) value);
+            else if (value instanceof Double)
+                subject.addValue(target, predicate, (Double) value);
+            else if (value instanceof Boolean)
+                subject.addValue(target, predicate, (Boolean) value);
+            else
+                subject.addValue(target, predicate, value.toString());
         }
     }
     

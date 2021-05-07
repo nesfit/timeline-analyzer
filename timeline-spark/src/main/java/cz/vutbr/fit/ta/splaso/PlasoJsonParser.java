@@ -23,6 +23,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
 
 /**
  *
@@ -69,9 +70,9 @@ public class PlasoJsonParser extends PlasoParser
                 if (jdata.size() == 2)
                 {
                     JsonObject jEvent = jdata.get(0).getAsJsonObject();
-                    Map<String, String> event = objectToMap(jEvent);
+                    Map<String, Object> event = objectToMap(jEvent);
                     JsonObject jEventData = jdata.get(1).getAsJsonObject();
-                    Map<String, String> eventData = objectToMap(jEventData);
+                    Map<String, Object> eventData = objectToMap(jEventData);
                     
                     return new PlasoEntry(event, eventData, source);
                 }
@@ -80,16 +81,50 @@ public class PlasoJsonParser extends PlasoParser
             return new PlasoEntry();
         }
         
-        private Map<String, String> objectToMap(JsonObject obj)
+        private Map<String, Object> objectToMap(JsonObject obj)
         {
-            Map<String, String> ret = new HashMap<>();
+            Map<String, Object> ret = new HashMap<>();
             for (Map.Entry<String,JsonElement> entry : obj.entrySet())
             {
                 if (entry.getValue().isJsonPrimitive())
-                    ret.put(entry.getKey(), entry.getValue().getAsJsonPrimitive().getAsString());
+                {
+                    JsonPrimitive val = entry.getValue().getAsJsonPrimitive();
+                    if (val.isBoolean())
+                    {
+                        ret.put(entry.getKey(), entry.getValue().getAsJsonPrimitive().getAsBoolean());
+                    }
+                    else if (val.isNumber())
+                    {
+                        String s = entry.getValue().getAsJsonPrimitive().getAsString();
+                        Object num = null;
+                        // try long
+                        try {
+                            num = Long.parseLong(s);
+                        } catch (NumberFormatException e) {
+                        }
+                        // try double
+                        if (num == null)
+                        {
+                            try {
+                                num = Double.parseDouble(s);
+                            } catch (NumberFormatException e) {
+                            }
+                        }
+                        // all failed, use the string
+                        if (num == null)
+                            num = s;
+                        ret.put(entry.getKey(), num);
+                    }
+                    else
+                    {
+                        ret.put(entry.getKey(), entry.getValue().getAsJsonPrimitive().getAsString());
+                    }
+                }
             }
             return ret;
         }
+        
+        
         
     }
     

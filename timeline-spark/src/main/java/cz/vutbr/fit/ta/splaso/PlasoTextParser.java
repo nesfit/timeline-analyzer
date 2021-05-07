@@ -38,7 +38,7 @@ public class PlasoTextParser extends PlasoParser
         
         String line;
         PlasoEntry curEntry = null;
-        Map<String, String> curMap = null;
+        Map<String, Object> curMap = null;
         while ((line = in.readLine()) != null)
         {
             line = line.trim();

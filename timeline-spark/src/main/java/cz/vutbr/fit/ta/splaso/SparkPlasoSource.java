@@ -68,7 +68,7 @@ public class SparkPlasoSource extends TimelineSource
     {
         if (entry.getEventData().get(DATA_TYPE_KEY) != null)
         {
-            switch (entry.getEventData().get(DATA_TYPE_KEY))
+            switch (entry.getEventData().get(DATA_TYPE_KEY).toString())
             {
                 case "firefox:places:page_visited":
                 case "chrome:history:page_visited":
@@ -145,13 +145,13 @@ public class SparkPlasoSource extends TimelineSource
     private WebResource createWebResource(PlasoEntry entry)
     {
         final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
-        final String urlString = entry.getEventData().get(URL_KEY);
+        final String urlString = entry.getEventData().get(URL_KEY).toString();
         if (urlString != null)
         {
             WebResource ret = factory.createWebResource(ResourceFactory.createUrlIRI(urlString));
             ret.setSourceUrl(urlString);
             if (entry.getEventData().get(TITLE_KEY) != null)
-                ret.setResourceTitle(entry.getEventData().get(TITLE_KEY));
+                ret.setResourceTitle(entry.getEventData().get(TITLE_KEY).toString());
             return ret;
         }
         else
@@ -161,7 +161,7 @@ public class SparkPlasoSource extends TimelineSource
     private LocalFile createLocalFile(PlasoEntry entry)
     {
         final PlasoEntityFactory factory = PlasoEntityFactory.getInstance();
-        String pathString = entry.getEventData().get(FILE_PATH_KEY);
+        String pathString = entry.getEventData().get(FILE_PATH_KEY).toString();
         //normalize the paths to use a standard slash instead of backslash
         pathString = pathString.replace('\\', '/');
         pathString = pathString.replace("//", "/");
@@ -178,10 +178,10 @@ public class SparkPlasoSource extends TimelineSource
     
     private Date decodeTimestamp(PlasoEntry entry)
     {
-        final String microts = entry.getEvent().get(TIMESTAMP_KEY); //plaso timestamp is in microseconds
-        if (microts != null)
+        final Object microts = entry.getEvent().get(TIMESTAMP_KEY); //plaso timestamp is in microseconds
+        if (microts != null && (microts instanceof Long || microts instanceof Integer))
         {
-            final long micros = Long.valueOf(microts);
+            final long micros = (long) microts;
             return new Date(micros / 1000);
         }
         else
