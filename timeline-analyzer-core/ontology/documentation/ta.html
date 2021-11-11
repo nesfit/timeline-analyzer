@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Timeline Analyzer Ontology</title>
+	<style type="text/css">
+		html {
+			font-family: sans-serif;
+		}
+		body {
+			padding: 1em 2em;
+		}
+		:link { color: #00c; }
+		:visited { color: #00c; }
+		a:active { color: #c00; }
+		a.known { color: #07c; }
+		a.known:visited { color: #07c; }
+		h1, h2, h3 { 
+			color: #005A9C;
+			font-weight: normal;
+			text-align: left;
+		}
+		h1 { font-size: 170%; }
+		h2 { font-size: 140%; margin-top: 2em; }
+		h3 { font-size: 120%  }
+		p { margin: 1em 0 }
+		dt { 
+			font-weight: bold;
+			margin-top: 5px; 
+		}
+		dd {
+			padding: 3px 0;
+		}
+		code { color: darkred; }
+		.logic {
+			font-weight: bold;
+			color: purple;
+		}
+		.res {
+			position: relative;
+			display: inline-block;
+			margin-right: 0;
+		}
+		.res::after {
+			font-size: smaller;
+			margin-left: 3px;
+			text-decoration: none !important;
+			position: absolute;
+			top: -0.5em;
+			right: -2em;
+			text-align: left;
+			width: 2em;
+		}
+		.res::after:hover {
+			background-color: lightblue;
+		}
+		.res.Class {
+			margin-right: 0.5em;
+		}
+		.res.ObjectProperty, .res.DatatypeProperty {
+			margin-right: 1em;
+		}
+		.res.Class::after {
+			content: "c";
+			color: orange;
+		}
+		.res.ObjectProperty::after {
+			content: "op";
+			color: navy;
+		}
+		.res.DatatypeProperty::after {
+			content: "dp";
+			color: green;
+		}
+		.res.other {
+			border-bottom: 1px dotted black;
+		}
+		.subtoc, .entity {
+			border: 1px solid navy;
+			padding: 0.5em;
+			margin: 0.5em 0;
+		}
+		.subtoc {
+			background: #f4ffff;
+		}
+		.subtoc li {
+			display: inline;
+			margin-right: 0.75em;
+			padding: 3px 0;
+		}
+		.entity .rel li {
+			display: inline;
+			margin-right: 0.3em;
+			padding: 3px 0;
+		}
+		.entity header {
+			border-bottom: 1px solid navy;
+			padding-bottom: 5px;
+		}
+		.entity h3 {
+			display: inline-block;
+			margin: 3px 1em 0 0;
+			padding: 0;
+		}
+		.entity .IRI {
+			display: inline-block;
+			margin: 0;
+		}
+		footer {
+			text-align: center;
+			font-size: small;
+			font-style: italic;
+			margin-top: 2em;
+		}
+	</style>
+</head>
+<body>
+
+<header>
+	<h1>Timeline Analyzer Ontology</h1>
+</header>
+
+<section class="metadata">
+	<dl>
+		<dt>IRI</dt>
+		<dd class="iri"><code>http://nesfit.github.io/ontology/ta.owl#</code></dd>
+		<dt>Version</dt>
+		<dd>1.0.0</dd>
+		<dt>Creator(s)</dt>
+		<dd>Radek Burget</dd>
+	</dl>
+</section>
+
+<section id="description">
+	<h2>Description</h2>
+	<p>An ontology for representing event series (timelines) extracted from the web, local filesystems and social networks.</p>
+</section>
+
+<section id="toc">
+	<h2>Table of Contents</h2>
+	<ol>
+		<li><a href="#classes">Classes</a></li>
+		<li><a href="#object-properties">Object properties</a></li>
+		<li><a href="#datatype-properties">Datatype properties</a></li>
+	</ol>
+</section>
+
+<section id="classes">
+	<h2>Classes</h2>
+	<ul class="subtoc">
+	<li><a class="res Class" href="#Content" title="http://nesfit.github.io/ontology/ta.owl#Content">Content</a></li>
+	<li><a class="res Class" href="#CreationEvent" title="http://nesfit.github.io/ontology/ta.owl#CreationEvent">CreationEvent</a></li>
+	<li><a class="res Class" href="#Entry" title="http://nesfit.github.io/ontology/ta.owl#Entry">Entry</a></li>
+	<li><a class="res Class" href="#Event" title="http://nesfit.github.io/ontology/ta.owl#Event">Event</a></li>
+	<li><a class="res Class" href="#FileDownloadEvent" title="http://nesfit.github.io/ontology/ta.owl#FileDownloadEvent">FileDownloadEvent</a></li>
+	<li><a class="res Class" href="#GeoContent" title="http://nesfit.github.io/ontology/ta.owl#GeoContent">GeoContent</a></li>
+	<li><a class="res Class" href="#Image" title="http://nesfit.github.io/ontology/ta.owl#Image">Image</a></li>
+	<li><a class="res Class" href="#LocalFile" title="http://nesfit.github.io/ontology/ta.owl#LocalFile">LocalFile</a></li>
+	<li><a class="res Class" href="#Object" title="http://nesfit.github.io/ontology/ta.owl#Object">Object</a></li>
+	<li><a class="res Class" href="#SocialNetworkObject" title="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject">SocialNetworkObject</a></li>
+	<li><a class="res Class" href="#TextContent" title="http://nesfit.github.io/ontology/ta.owl#TextContent">TextContent</a></li>
+	<li><a class="res Class" href="#Timeline" title="http://nesfit.github.io/ontology/ta.owl#Timeline">Timeline</a></li>
+	<li><a class="res Class" href="#URLContent" title="http://nesfit.github.io/ontology/ta.owl#URLContent">URLContent</a></li>
+	<li><a class="res Class" href="#URLVisitEvent" title="http://nesfit.github.io/ontology/ta.owl#URLVisitEvent">URLVisitEvent</a></li>
+	<li><a class="res Class" href="#WebResource" title="http://nesfit.github.io/ontology/ta.owl#WebResource">WebResource</a></li>
+</ul>
+
+
+		<div class="entity" id="Content">
+	<header>
+		<h3 class="res Class">Content</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#Content">http://nesfit.github.io/ontology/ta.owl#Content</code></p>
+	</header>
+	<p class="comment">A content of a social network entry.</p>
+	<dl>
+		<dt>has subclasses</dt> 
+		<dd><ul class="rel sub">
+	<li><a class="res Class" href="#GeoContent" title="http://nesfit.github.io/ontology/ta.owl#GeoContent">GeoContent</a></li>
+	<li><a class="res Class" href="#Image" title="http://nesfit.github.io/ontology/ta.owl#Image">Image</a></li>
+	<li><a class="res Class" href="#TextContent" title="http://nesfit.github.io/ontology/ta.owl#TextContent">TextContent</a></li>
+	<li><a class="res Class" href="#URLContent" title="http://nesfit.github.io/ontology/ta.owl#URLContent">URLContent</a></li>
+</ul>
+</dd>
+		<dt>is in range of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res ObjectProperty InverseFunctionalProperty" href="#contains" title="http://nesfit.github.io/ontology/ta.owl#contains">contains</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="CreationEvent">
+	<header>
+		<h3 class="res Class">CreationEvent</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#CreationEvent">http://nesfit.github.io/ontology/ta.owl#CreationEvent</code></p>
+	</header>
+	<p class="comment">An event of an object creation.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Event" title="http://nesfit.github.io/ontology/ta.owl#Event">Event</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="Entry">
+	<header>
+		<h3 class="res Class">Entry</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#Entry">http://nesfit.github.io/ontology/ta.owl#Entry</code></p>
+	</header>
+	<p class="comment">An entry in a social network profile (e.g. a post).</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#SocialNetworkObject" title="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject">SocialNetworkObject</a></li>
+</ul>
+</dd>
+		<dt>is in domain of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res ObjectProperty InverseFunctionalProperty" href="#contains" title="http://nesfit.github.io/ontology/ta.owl#contains">contains</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#tags" title="http://nesfit.github.io/ontology/ta.owl#tags">tags</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="Event">
+	<header>
+		<h3 class="res Class">Event</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#Event">http://nesfit.github.io/ontology/ta.owl#Event</code></p>
+	</header>
+	<p class="comment">An event with a subject and timestamp assigned</p>
+	<dl>
+		<dt>equivalent classes</dt> 
+		<dd><ul class="rel eq">
+	<li><span class="res other" title="http://checksem.u-bourgogne.fr/ord2i#Event">http://checksem.u-bourgogne.fr/ord2i#Event</span></li>
+</ul>
+</dd>
+		<dt>has subclasses</dt> 
+		<dd><ul class="rel sub">
+	<li><a class="res Class" href="#CreationEvent" title="http://nesfit.github.io/ontology/ta.owl#CreationEvent">CreationEvent</a></li>
+	<li><a class="res Class" href="#FileDownloadEvent" title="http://nesfit.github.io/ontology/ta.owl#FileDownloadEvent">FileDownloadEvent</a></li>
+	<li><a class="res Class" href="#URLVisitEvent" title="http://nesfit.github.io/ontology/ta.owl#URLVisitEvent">URLVisitEvent</a></li>
+</ul>
+</dd>
+		<dt>is in domain of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res ObjectProperty" href="#refersTo" title="http://nesfit.github.io/ontology/ta.owl#refersTo">refersTo</a></li>
+	<li><a class="res ObjectProperty FunctionalProperty" href="#sourceTimeline" title="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">sourceTimeline</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#timestamp" title="http://nesfit.github.io/ontology/ta.owl#timestamp">timestamp</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="FileDownloadEvent">
+	<header>
+		<h3 class="res Class">FileDownloadEvent</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#FileDownloadEvent">http://nesfit.github.io/ontology/ta.owl#FileDownloadEvent</code></p>
+	</header>
+	<p class="comment">An event of the file download from a URL.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Event" title="http://nesfit.github.io/ontology/ta.owl#Event">Event</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="GeoContent">
+	<header>
+		<h3 class="res Class">GeoContent</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#GeoContent">http://nesfit.github.io/ontology/ta.owl#GeoContent</code></p>
+	</header>
+	<p class="comment">Geographical coordinates contained in an entry.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Content" title="http://nesfit.github.io/ontology/ta.owl#Content">Content</a></li>
+</ul>
+</dd>
+		<dt>is in domain of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#latitude" title="http://nesfit.github.io/ontology/ta.owl#latitude">latitude</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#longitude" title="http://nesfit.github.io/ontology/ta.owl#longitude">longitude</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="Image">
+	<header>
+		<h3 class="res Class">Image</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#Image">http://nesfit.github.io/ontology/ta.owl#Image</code></p>
+	</header>
+	<p class="comment">An image contained in an entry.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Content" title="http://nesfit.github.io/ontology/ta.owl#Content">Content</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="LocalFile">
+	<header>
+		<h3 class="res Class">LocalFile</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#LocalFile">http://nesfit.github.io/ontology/ta.owl#LocalFile</code></p>
+	</header>
+	<p class="comment">An investigated file on a local filesystem.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Object" title="http://nesfit.github.io/ontology/ta.owl#Object">Object</a></li>
+</ul>
+</dd>
+		<dt>is in domain of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#fileName" title="http://nesfit.github.io/ontology/ta.owl#fileName">fileName</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#path" title="http://nesfit.github.io/ontology/ta.owl#path">path</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="Object">
+	<header>
+		<h3 class="res Class">Object</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#Object">http://nesfit.github.io/ontology/ta.owl#Object</code></p>
+	</header>
+	<p class="comment">A generic investigated object</p>
+	<dl>
+		<dt>equivalent classes</dt> 
+		<dd><ul class="rel eq">
+	<li><span class="res other" title="http://checksem.u-bourgogne.fr/ord2i#Object">http://checksem.u-bourgogne.fr/ord2i#Object</span></li>
+</ul>
+</dd>
+		<dt>has subclasses</dt> 
+		<dd><ul class="rel sub">
+	<li><a class="res Class" href="#LocalFile" title="http://nesfit.github.io/ontology/ta.owl#LocalFile">LocalFile</a></li>
+	<li><a class="res Class" href="#SocialNetworkObject" title="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject">SocialNetworkObject</a></li>
+	<li><a class="res Class" href="#WebResource" title="http://nesfit.github.io/ontology/ta.owl#WebResource">WebResource</a></li>
+</ul>
+</dd>
+		<dt>is in range of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res ObjectProperty" href="#refersTo" title="http://nesfit.github.io/ontology/ta.owl#refersTo">refersTo</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="SocialNetworkObject">
+	<header>
+		<h3 class="res Class">SocialNetworkObject</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject">http://nesfit.github.io/ontology/ta.owl#SocialNetworkObject</code></p>
+	</header>
+	<p class="comment">A generic object related to a social netwok.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Object" title="http://nesfit.github.io/ontology/ta.owl#Object">Object</a></li>
+</ul>
+</dd>
+		<dt>has subclasses</dt> 
+		<dd><ul class="rel sub">
+	<li><a class="res Class" href="#Entry" title="http://nesfit.github.io/ontology/ta.owl#Entry">Entry</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="TextContent">
+	<header>
+		<h3 class="res Class">TextContent</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#TextContent">http://nesfit.github.io/ontology/ta.owl#TextContent</code></p>
+	</header>
+	<p class="comment">Text contained in an entry.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Content" title="http://nesfit.github.io/ontology/ta.owl#Content">Content</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="Timeline">
+	<header>
+		<h3 class="res Class">Timeline</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#Timeline">http://nesfit.github.io/ontology/ta.owl#Timeline</code></p>
+	</header>
+	<p class="comment">A sequence of events displayed in a signle time line.</p>
+	<dl>
+		<dt>is in range of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res ObjectProperty FunctionalProperty" href="#sourceTimeline" title="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">sourceTimeline</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="URLContent">
+	<header>
+		<h3 class="res Class">URLContent</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#URLContent">http://nesfit.github.io/ontology/ta.owl#URLContent</code></p>
+	</header>
+	<p class="comment">URL contained in an entry.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Content" title="http://nesfit.github.io/ontology/ta.owl#Content">Content</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="URLVisitEvent">
+	<header>
+		<h3 class="res Class">URLVisitEvent</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#URLVisitEvent">http://nesfit.github.io/ontology/ta.owl#URLVisitEvent</code></p>
+	</header>
+	<p class="comment">An event of a URL visit.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Event" title="http://nesfit.github.io/ontology/ta.owl#Event">Event</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+		<div class="entity" id="WebResource">
+	<header>
+		<h3 class="res Class">WebResource</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#WebResource">http://nesfit.github.io/ontology/ta.owl#WebResource</code></p>
+	</header>
+	<p class="comment">A web resource with a URL.</p>
+	<dl>
+		<dt>has super-classes</dt> 
+		<dd><ul class="rel super">
+	<li><a class="res Class" href="#Object" title="http://nesfit.github.io/ontology/ta.owl#Object">Object</a></li>
+</ul>
+</dd>
+		<dt>is in domain of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#resourceTitle" title="http://nesfit.github.io/ontology/ta.owl#resourceTitle">resourceTitle</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#sourceUrl" title="http://nesfit.github.io/ontology/ta.owl#sourceUrl">sourceUrl</a></li>
+</ul>
+</dd>
+		<dt>is in range of</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res ObjectProperty FunctionalProperty" href="#linksResource" title="http://nesfit.github.io/ontology/ta.owl#linksResource">linksResource</a></li>
+</ul>
+</dd>
+	</dl>
+</div>
+
+
+</section>
+
+<section id="object-properties">
+	<h2>Object Properties</h2>
+	<ul class="subtoc">
+	<li><a class="res ObjectProperty InverseFunctionalProperty" href="#contains" title="http://nesfit.github.io/ontology/ta.owl#contains">contains</a></li>
+	<li><a class="res ObjectProperty FunctionalProperty" href="#linksResource" title="http://nesfit.github.io/ontology/ta.owl#linksResource">linksResource</a></li>
+	<li><a class="res ObjectProperty" href="#refersTo" title="http://nesfit.github.io/ontology/ta.owl#refersTo">refersTo</a></li>
+	<li><a class="res ObjectProperty FunctionalProperty" href="#sourceTimeline" title="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">sourceTimeline</a></li>
+</ul>
+
+
+		<div class="entity" id="contains">
+	<header>
+		<h3 class="res ObjectProperty InverseFunctionalProperty">contains</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#contains">http://nesfit.github.io/ontology/ta.owl#contains</code></p>
+	</header>
+	<p class="comment">Assigns a content to a social network entry.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Entry" title="http://nesfit.github.io/ontology/ta.owl#Entry">Entry</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Content" title="http://nesfit.github.io/ontology/ta.owl#Content">Content</a></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="linksResource">
+	<header>
+		<h3 class="res ObjectProperty FunctionalProperty">linksResource</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#linksResource">http://nesfit.github.io/ontology/ta.owl#linksResource</code></p>
+	</header>
+	<p class="comment">Assigns a referenced web resource to an Image or URLContent.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li>(<a class="res Class" href="#Image" title="http://nesfit.github.io/ontology/ta.owl#Image">Image</a> <span class="logic">or</span> <a class="res Class" href="#URLContent" title="http://nesfit.github.io/ontology/ta.owl#URLContent">URLContent</a>)</li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#WebResource" title="http://nesfit.github.io/ontology/ta.owl#WebResource">WebResource</a></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="refersTo">
+	<header>
+		<h3 class="res ObjectProperty">refersTo</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#refersTo">http://nesfit.github.io/ontology/ta.owl#refersTo</code></p>
+	</header>
+	<p class="comment">Assigns an object to an event.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Event" title="http://nesfit.github.io/ontology/ta.owl#Event">Event</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Object" title="http://nesfit.github.io/ontology/ta.owl#Object">Object</a></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="sourceTimeline">
+	<header>
+		<h3 class="res ObjectProperty FunctionalProperty">sourceTimeline</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#sourceTimeline">http://nesfit.github.io/ontology/ta.owl#sourceTimeline</code></p>
+	</header>
+	<p class="comment">Assigns a source timeline to an event.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Event" title="http://nesfit.github.io/ontology/ta.owl#Event">Event</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Timeline" title="http://nesfit.github.io/ontology/ta.owl#Timeline">Timeline</a></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+
+</section>
+
+<section id="datatype-properties">
+	<h2>Datatype Properties</h2>
+	<ul class="subtoc">
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#fileName" title="http://nesfit.github.io/ontology/ta.owl#fileName">fileName</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#latitude" title="http://nesfit.github.io/ontology/ta.owl#latitude">latitude</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#longitude" title="http://nesfit.github.io/ontology/ta.owl#longitude">longitude</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#path" title="http://nesfit.github.io/ontology/ta.owl#path">path</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#resourceTitle" title="http://nesfit.github.io/ontology/ta.owl#resourceTitle">resourceTitle</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#sourceId" title="http://nesfit.github.io/ontology/ta.owl#sourceId">sourceId</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#sourceUrl" title="http://nesfit.github.io/ontology/ta.owl#sourceUrl">sourceUrl</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#tags" title="http://nesfit.github.io/ontology/ta.owl#tags">tags</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#text" title="http://nesfit.github.io/ontology/ta.owl#text">text</a></li>
+	<li><a class="res DatatypeProperty FunctionalProperty" href="#timestamp" title="http://nesfit.github.io/ontology/ta.owl#timestamp">timestamp</a></li>
+</ul>
+
+
+		<div class="entity" id="fileName">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">fileName</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#fileName">http://nesfit.github.io/ontology/ta.owl#fileName</code></p>
+	</header>
+	<p class="comment">A name of a file.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#LocalFile" title="http://nesfit.github.io/ontology/ta.owl#LocalFile">LocalFile</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#string">xsd:string</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="latitude">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">latitude</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#latitude">http://nesfit.github.io/ontology/ta.owl#latitude</code></p>
+	</header>
+	<p class="comment">Geographical latitude.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#GeoContent" title="http://nesfit.github.io/ontology/ta.owl#GeoContent">GeoContent</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#double">xsd:double</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="longitude">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">longitude</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#longitude">http://nesfit.github.io/ontology/ta.owl#longitude</code></p>
+	</header>
+	<p class="comment">Geographical longitude.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#GeoContent" title="http://nesfit.github.io/ontology/ta.owl#GeoContent">GeoContent</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#double">xsd:double</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="path">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">path</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#path">http://nesfit.github.io/ontology/ta.owl#path</code></p>
+	</header>
+	<p class="comment">A file path in a local filesystem.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#LocalFile" title="http://nesfit.github.io/ontology/ta.owl#LocalFile">LocalFile</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#string">xsd:string</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="resourceTitle">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">resourceTitle</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#resourceTitle">http://nesfit.github.io/ontology/ta.owl#resourceTitle</code></p>
+	</header>
+	<p class="comment">A title of a web resource (e.g. a web page title, if present).</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#WebResource" title="http://nesfit.github.io/ontology/ta.owl#WebResource">WebResource</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#string">xsd:string</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="sourceId">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">sourceId</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#sourceId">http://nesfit.github.io/ontology/ta.owl#sourceId</code></p>
+	</header>
+	<p class="comment">A unique identifier of the entry in the source timeline (e.g. Twitter id).</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li>(<a class="res Class" href="#Entry" title="http://nesfit.github.io/ontology/ta.owl#Entry">Entry</a> <span class="logic">or</span> <a class="res Class" href="#Timeline" title="http://nesfit.github.io/ontology/ta.owl#Timeline">Timeline</a>)</li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#string">xsd:string</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="sourceUrl">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">sourceUrl</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#sourceUrl">http://nesfit.github.io/ontology/ta.owl#sourceUrl</code></p>
+	</header>
+	<p class="comment">Source URL of the media.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#WebResource" title="http://nesfit.github.io/ontology/ta.owl#WebResource">WebResource</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#string">xsd:string</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="tags">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">tags</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#tags">http://nesfit.github.io/ontology/ta.owl#tags</code></p>
+	</header>
+	<p class="comment">Tags specifying the properties of the entry (e.g. &#39;download&#39;, &#39;visit&#39;, etc.)</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Entry" title="http://nesfit.github.io/ontology/ta.owl#Entry">Entry</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#string">xsd:string</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="text">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">text</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#text">http://nesfit.github.io/ontology/ta.owl#text</code></p>
+	</header>
+	<p class="comment">Associated text content.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li>(<a class="res Class" href="#TextContent" title="http://nesfit.github.io/ontology/ta.owl#TextContent">TextContent</a> <span class="logic">or</span> <a class="res Class" href="#URLContent" title="http://nesfit.github.io/ontology/ta.owl#URLContent">URLContent</a>)</li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#string">xsd:string</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+		<div class="entity" id="timestamp">
+	<header>
+		<h3 class="res DatatypeProperty FunctionalProperty">timestamp</h3>
+		<p class="IRI"><code title="http://nesfit.github.io/ontology/ta.owl#timestamp">http://nesfit.github.io/ontology/ta.owl#timestamp</code></p>
+	</header>
+	<p class="comment">A timestamp of an event.</p>
+	<dl>
+		<dt>has domain</dt> 
+		<dd><ul class="rel domain">
+	<li><a class="res Class" href="#Event" title="http://nesfit.github.io/ontology/ta.owl#Event">Event</a></li>
+</ul>
+</dd>
+		<dt>has range</dt> 
+		<dd><ul class="rel domain">
+	<li><span class="res other" title="http://www.w3.org/2001/XMLSchema#dateTime">xsd:dateTime</span></li>
+</ul>
+</dd>
+	
+	</dl>
+</div>
+
+
+</section>
+
+<footer>
+	<p>Generated by <a href="https://github.com/radkovo/OwlDocGen">OwlDocGen</a>.</p>
+</footer>
+
+</body>
+</html>
